@@ -1,0 +1,16 @@
+﻿@model IEnumerable<UsExpress.Transport.Web.FrontEnd.Models.SelectItemBase>
+@if (Model != null)
+{
+    <option value="">Chọn quận huyện</option>
+    foreach (var item in Model)
+    {
+        if (ViewBag.Selected != null && item.Id == ViewBag.Selected.ToString())
+        {
+            <option value="@item.Id" selected>@item.Name</option>
+        }
+        else
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    }
+}

@@ -1,0 +1,11 @@
+﻿@foreach (var item in Model)
+{
+    <tr>
+        <td style="color:#236852">@item.FullName</td>
+        <td>@item.Add1</td>
+        <td>@item.Add2</td>
+        <td>@Html.Raw(Html.Action("GetCityNameByID", "Common", new { cityID = item.CityId }))</td>
+        <td>@item.Phone</td>
+        <td><a style="color:#236852;border-bottom:1px solid #236852" href="/store/RecieverManager/@item.id">update</a></td>
+    </tr>
+}

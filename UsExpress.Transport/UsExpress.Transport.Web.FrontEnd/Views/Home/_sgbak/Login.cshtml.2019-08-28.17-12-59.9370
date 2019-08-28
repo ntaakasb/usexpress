@@ -1,0 +1,67 @@
+﻿@model UsExpress.Transport.Web.FrontEnd.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+<div class="cms_nav">
+    <div class="container">
+        <div class="left">ORDER #:</div>
+        <div class="right">07/13/2018</div>
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40 width_100">
+        @using (Ajax.BeginForm("Login", "Home", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess"
+        }, new { @class = "form_cms", @id = "login_cms" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="left">
+                <img src="/content/images/icons/user.png" alt="">
+            </div>
+
+
+            <div class="right">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(model => model.LoginUsername, new { @class = "form-control" })
+
+                    <i class="fas fa-user"></i>
+                    <div class="error">
+                        @Html.ValidationMessageFor(model => model.LoginUsername)
+                    </div>
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.PasswordFor(model => model.LoginPassword, new { @class = "form-control" })
+                    <i class="fas fa-lock"></i>
+                    <div class="error"> @Html.ValidationMessageFor(model => model.LoginPassword)</div>
+                </div>
+                <label class="checkbox"><input type="checkbox">Keep me signed in</label>
+                <div class="form-group width-100 btn_bottom center">
+                    <button type="submit" class="btn btn-default">Sign In</button>
+                </div>
+                <div class="bottom center">
+                    <a href="#">Forget Your Password ?</a>
+                </div>
+            </div>
+
+        }
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function OnSuccess(avg) {
+
+            if (avg.Result > 0) {
+                window.location.href = "/";
+            }
+            else {
+                alert(avg.Message);
+            }
+        }
+    </script>
+}
+

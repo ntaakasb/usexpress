@@ -1,0 +1,648 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UsTransportModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EmailTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="500" />
+    <Property Name="Body" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'UsTransport.dbo.Log' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Thread" />
+      <PropertyRef Name="Level" />
+      <PropertyRef Name="Logger" />
+      <PropertyRef Name="Message" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Thread" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Level" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Logger" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="Exception" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="tblAppUserRoleMenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="AppMenuId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tax" Type="int" />
+    <Property Name="TypeCategoryID" Type="int" />
+  </EntityType>
+  <EntityType Name="tblCity">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="int" />
+    <Property Name="airport" Type="int" />
+  </EntityType>
+  <EntityType Name="tblCountry">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="AllowsBilling" Type="bit" Nullable="false" />
+    <Property Name="AllowsShipping" Type="bit" Nullable="false" />
+    <Property Name="TwoLetterIsoCode" Type="nvarchar" MaxLength="2" />
+    <Property Name="ThreeLetterIsoCode" Type="nvarchar" MaxLength="3" />
+    <Property Name="NumericIsoCode" Type="int" Nullable="false" />
+    <Property Name="SubjectToVat" Type="bit" Nullable="false" />
+    <Property Name="Published" Type="bit" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="LimitedToStores" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblDistrict">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="DistrictName" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="tblDistrictStateProvice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="StateProvinceID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblItemInPackage">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PackageId" Type="int" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+    <Property Name="BarCode" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tblKerryOrderProgress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderCode" Type="varchar" MaxLength="50" />
+    <Property Name="StatusService" Type="varchar" MaxLength="10" />
+    <Property Name="StatusServiceDescription" Type="nvarchar" MaxLength="200" />
+    <Property Name="Weight" Type="varchar" MaxLength="10" />
+    <Property Name="Dimension" Type="varchar" MaxLength="20" />
+    <Property Name="Cost" Type="varchar" MaxLength="20" />
+    <Property Name="Fee" Type="varchar" MaxLength="20" />
+    <Property Name="TimeStatus" Type="varchar" MaxLength="50" />
+    <Property Name="Note" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tblKerryPostNewOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="bigint" />
+    <Property Name="Status" Type="nvarchar" MaxLength="100" />
+    <Property Name="Message" Type="nvarchar" MaxLength="200" />
+    <Property Name="OrderNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Cost" Type="varchar" MaxLength="50" />
+    <Property Name="WoodBaleFee" Type="varchar" MaxLength="50" />
+    <Property Name="RemoteDeliverFee" Type="varchar" MaxLength="50" />
+    <Property Name="DeliveryDate" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tblKerryStatusService">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tblMenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+    <Property Name="Action" Type="varchar" MaxLength="50" />
+    <Property Name="Controller" Type="varchar" MaxLength="50" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="IsShow" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblMenuPermission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="MenuId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblOrder">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="SenderId" Type="int" />
+    <Property Name="RecipientId" Type="int" />
+    <Property Name="TotalPackage" Type="int" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TotalCharge" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Exedite" Type="int" />
+    <Property Name="CreateDate" Type="bigint" Nullable="false" />
+    <Property Name="PickupDate" Type="bigint" />
+    <Property Name="ShippingDate" Type="bigint" />
+    <Property Name="ClearCustomDate" Type="bigint" />
+    <Property Name="Deliver" Type="bigint" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Tracking" Type="nvarchar" MaxLength="50" />
+    <Property Name="Destination" Type="int" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="StoreId" Type="int" />
+    <Property Name="NotifyToCustomer" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="BarCode" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="TotalItems" Type="bigint" />
+    <Property Name="TotalDeclareValues" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ShippingFree" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tblPackageInfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="bigint" Nullable="false" />
+    <Property Name="Ordinal" Type="int" Nullable="false" />
+    <Property Name="Expedite" Type="int" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Depth" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Fee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TotalItem" Type="int" Nullable="false" />
+    <Property Name="TotalValue" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PackName" Type="nvarchar" MaxLength="250" />
+    <Property Name="WarehouseId" Type="int" />
+    <Property Name="Destination" Type="int" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="ShipmentCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="ShipmentId" Type="int" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="CreateTime" Type="bigint" Nullable="false" />
+    <Property Name="Tracking" Type="nvarchar" MaxLength="50" />
+    <Property Name="PickupTime" Type="bigint" />
+    <Property Name="ShippingTime" Type="bigint" />
+    <Property Name="ClearCustomTime" Type="bigint" />
+    <Property Name="DeliverTime" Type="bigint" />
+    <Property Name="StoreId" Type="int" Nullable="false" />
+    <Property Name="CreateDateLocal" Type="datetime" Nullable="false" />
+    <Property Name="PickupDateLocal" Type="datetime" />
+    <Property Name="ShippingDateLocal" Type="datetime" />
+    <Property Name="NotifyToCustomer" Type="int" />
+    <Property Name="HistoryTransport" Type="nvarchar(max)" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblProduct">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" />
+    <Property Name="BarCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="ScheduleBCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryID" Type="int" />
+  </EntityType>
+  <EntityType Name="tblRecipientsInfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Add1" Type="nvarchar" MaxLength="250" />
+    <Property Name="Add2" Type="nvarchar" MaxLength="250" />
+    <Property Name="CityId" Type="varchar" MaxLength="50" />
+    <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="StoreId" Type="int" />
+    <Property Name="WardId" Type="varchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="bigint" />
+    <Property Name="UpdateDate" Type="bigint" />
+    <Property Name="FullAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblSender">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreId" Type="int" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Add1" Type="nvarchar" MaxLength="250" />
+    <Property Name="Add2" Type="nvarchar" MaxLength="250" />
+    <Property Name="CityId" Type="varchar" MaxLength="50" />
+    <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+    <Property Name="StateId" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Zip" Type="varchar" MaxLength="10" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="bigint" />
+    <Property Name="UpdateDate" Type="bigint" />
+    <Property Name="FullAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblShipment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShipmentCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Destination" Type="int" />
+    <Property Name="WarehouseId" Type="int" />
+    <Property Name="TotalWeight" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="CreateTime" Type="bigint" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="ExtraData" Type="nvarchar(max)" />
+    <Property Name="LogChange" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="tblShippingInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="256" />
+    <Property Name="AddressLine1" Type="nvarchar" MaxLength="256" />
+    <Property Name="AddressLine2" Type="nvarchar" MaxLength="256" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="CityId" Type="varchar" MaxLength="50" />
+    <Property Name="StateId" Type="varchar" MaxLength="50" />
+    <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+    <Property Name="WardId" Type="varchar" MaxLength="50" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="256" />
+    <Property Name="FullAddress1" Type="nvarchar" MaxLength="512" />
+    <Property Name="FullAddress2" Type="nvarchar" MaxLength="512" />
+    <Property Name="OrderId" Type="bigint" />
+    <Property Name="TypeUser" Type="int" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ClearCustomDateLocal" Type="datetime" />
+    <Property Name="DeliverDateLocal" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tblState">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="tblStateProvice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Published" Type="bit" />
+    <Property Name="DisplayOrder" Type="int" />
+    <Property Name="AirPort" Type="int" />
+    <Property Name="AirPortCode" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tblStatusOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="DisplayOrder" Type="int" />
+    <Property Name="ParentId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblStoreAccount">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+    <Property Name="StoreName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address1" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address2" Type="nvarchar" MaxLength="250" />
+    <Property Name="CityId" Type="varchar" MaxLength="150" />
+    <Property Name="DistrictId" Type="int" />
+    <Property Name="StateId" Type="varchar" MaxLength="150" />
+    <Property Name="WarehouseId" Type="int" />
+    <Property Name="TypeId" Type="int" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Password" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="AliasFullName" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblTypeAcount">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeAccount" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="tblTypeCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeCategory" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="WarehouseID" Type="int" />
+    <Property Name="Add1" Type="nvarchar" MaxLength="200" />
+    <Property Name="KeyChange" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreateDateKey" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tblUserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblWard">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+    <Property Name="WardName" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="tblWarehouse">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Warehouse" Type="nvarchar" MaxLength="100" />
+    <Property Name="CityId" Type="nvarchar" MaxLength="200" />
+    <Property Name="StateId" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Add1" Type="nvarchar" MaxLength="400" />
+    <Property Name="Add2" Type="nvarchar" MaxLength="400" />
+    <Property Name="Zip" Type="varchar" MaxLength="10" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="250" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="150" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_StateProvince_Country_CountryId">
+    <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblStateProvice" Type="Self.tblStateProvice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCountry">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblStateProvice">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblCategory_tblTypeCategory">
+    <End Role="tblTypeCategory" Type="Self.tblTypeCategory" Multiplicity="0..1" />
+    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTypeCategory">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblCategory">
+        <PropertyRef Name="TypeCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblItemInPackage_tblCategory">
+    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+    <End Role="tblItemInPackage" Type="Self.tblItemInPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCategory">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblItemInPackage">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblItemInPackage_tblPackageInfo">
+    <End Role="tblPackageInfo" Type="Self.tblPackageInfo" Multiplicity="0..1" />
+    <End Role="tblItemInPackage" Type="Self.tblItemInPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPackageInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblItemInPackage">
+        <PropertyRef Name="PackageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblProduct_tblCategory">
+    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+    <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCategory">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblProduct">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRecipientsInfo_tblStoreAccount">
+    <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="0..1" />
+    <End Role="tblRecipientsInfo" Type="Self.tblRecipientsInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblStoreAccount">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblRecipientsInfo">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblSender_tblStoreAccount">
+    <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="0..1" />
+    <End Role="tblSender" Type="Self.tblSender" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblStoreAccount">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblSender">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblStoreAccount_tblTypeAcount">
+    <End Role="tblTypeAcount" Type="Self.tblTypeAcount" Multiplicity="0..1" />
+    <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTypeAcount">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblStoreAccount">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblStoreAccount_tblWarehouse">
+    <End Role="tblWarehouse" Type="Self.tblWarehouse" Multiplicity="0..1" />
+    <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblWarehouse">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblStoreAccount">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="UsTransportModelStoreContainer">
+    <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAppUserRoleMenu" EntityType="Self.tblAppUserRoleMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCity" EntityType="Self.tblCity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDistrict" EntityType="Self.tblDistrict" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDistrictStateProvice" EntityType="Self.tblDistrictStateProvice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblItemInPackage" EntityType="Self.tblItemInPackage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblKerryOrderProgress" EntityType="Self.tblKerryOrderProgress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblKerryPostNewOrder" EntityType="Self.tblKerryPostNewOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblKerryStatusService" EntityType="Self.tblKerryStatusService" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMenuPermission" EntityType="Self.tblMenuPermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPackageInfo" EntityType="Self.tblPackageInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRecipientsInfo" EntityType="Self.tblRecipientsInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblSender" EntityType="Self.tblSender" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblShipment" EntityType="Self.tblShipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblShippingInfo" EntityType="Self.tblShippingInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblStateProvice" EntityType="Self.tblStateProvice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblStatusOrder" EntityType="Self.tblStatusOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblStoreAccount" EntityType="Self.tblStoreAccount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTypeAcount" EntityType="Self.tblTypeAcount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTypeCategory" EntityType="Self.tblTypeCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUserRole" EntityType="Self.tblUserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblWard" EntityType="Self.tblWard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblWarehouse" EntityType="Self.tblWarehouse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Log].[Id] AS [Id], 
+    [Log].[Date] AS [Date], 
+    [Log].[Thread] AS [Thread], 
+    [Log].[Level] AS [Level], 
+    [Log].[Logger] AS [Logger], 
+    [Log].[Message] AS [Message], 
+    [Log].[Exception] AS [Exception]
+    FROM [dbo].[Log] AS [Log]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_StateProvince_Country_CountryId" Association="Self.FK_StateProvince_Country_CountryId">
+      <End Role="tblCountry" EntitySet="tblCountry" />
+      <End Role="tblStateProvice" EntitySet="tblStateProvice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblCategory_tblTypeCategory" Association="Self.FK_tblCategory_tblTypeCategory">
+      <End Role="tblTypeCategory" EntitySet="tblTypeCategory" />
+      <End Role="tblCategory" EntitySet="tblCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblItemInPackage_tblCategory" Association="Self.FK_tblItemInPackage_tblCategory">
+      <End Role="tblCategory" EntitySet="tblCategory" />
+      <End Role="tblItemInPackage" EntitySet="tblItemInPackage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblItemInPackage_tblPackageInfo" Association="Self.FK_tblItemInPackage_tblPackageInfo">
+      <End Role="tblPackageInfo" EntitySet="tblPackageInfo" />
+      <End Role="tblItemInPackage" EntitySet="tblItemInPackage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
+      <End Role="tblCategory" EntitySet="tblCategory" />
+      <End Role="tblProduct" EntitySet="tblProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRecipientsInfo_tblStoreAccount" Association="Self.FK_tblRecipientsInfo_tblStoreAccount">
+      <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+      <End Role="tblRecipientsInfo" EntitySet="tblRecipientsInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblSender_tblStoreAccount" Association="Self.FK_tblSender_tblStoreAccount">
+      <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+      <End Role="tblSender" EntitySet="tblSender" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblStoreAccount_tblTypeAcount" Association="Self.FK_tblStoreAccount_tblTypeAcount">
+      <End Role="tblTypeAcount" EntitySet="tblTypeAcount" />
+      <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblStoreAccount_tblWarehouse" Association="Self.FK_tblStoreAccount_tblWarehouse">
+      <End Role="tblWarehouse" EntitySet="tblWarehouse" />
+      <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

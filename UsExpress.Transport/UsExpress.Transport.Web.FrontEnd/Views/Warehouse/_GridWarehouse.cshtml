@@ -1,0 +1,61 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblWarehouse>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Warehouse ID</th>
+                <th>Warehouse's name</th>
+                <th>Full Name</th>
+                <th>Address line 1</th>
+                <th>Address line 2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Phone</th>
+                <th>Create Date</th>
+                <th>Status</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                int i = ViewBag.Index;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@i</td>
+                        <td>@item.id</td>
+                        <td>@item.Warehouse</td>
+                        <td>@item.FullName</td>
+                        <td>@item.Add1</td>
+                        <td>@item.Add2</td>
+                        <td>@item.CityId</td>
+                        <td>@item.StateId</td>
+                        <td>@item.Zip</td>
+                        <td>@item.Phone</td>
+                        <td>@item.CreateDate</td>
+                        <td>@item.Status</td>
+
+                        <td><a style="color:#236852;border-bottom:1px solid #236852" href="/WareHouse/DetailWareHouse/@item.id">update</a></td>
+                    </tr>
+                    i++;
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+<div id="container" style="margin-left: 20px">
+    <p></p>
+    <p></p>
+    <div class="pagination" style="margin-left: 400px">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Manager", new { page }))
+    </div>
+</div>

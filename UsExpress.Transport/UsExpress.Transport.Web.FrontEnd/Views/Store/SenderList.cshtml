@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "SenderList";
+}
+<style>
+</style>
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Senders</h1>
+
+        <div class="tr tr1 mb10">
+            @using (Ajax.BeginForm("AJXSearchSender", "Store", null, new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "grid-sender",
+
+            }, new { id = "frmSearch" }))
+            {
+                <div id="search" class="mb20">
+                    <input type="text" class="input_search" name="SearchKeyword" value="" placeholder="Search">
+                    <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                </div>
+
+                <div class="form-group">
+                    <select name="SearchType" class="form-control">
+                        <option value="1">Phone</option>
+                        <option value="2">Full Name</option>
+                    </select>
+                </div>
+                if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsStore())
+                {
+                    <div class="form-group" style="margin-left:40px">
+                        <input type="checkbox" name="IsActive" checked onchange="$('#frmSearch').submit()" /> Active
+                    </div>
+                    <div class="form-group">
+                        <select name="ddlStore" id="ddlStore" class="form-control">
+                            @Html.Action("_HtmlSelectBoxStore", new { selected = 0 })
+                        </select>
+                    </div>
+                }
+
+            }
+
+        </div>
+
+        <div id="grid-sender" class="table_cms mb30">
+            @Html.Action("_SenderGrid")
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $(document).on("click", "a[data-id]", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Store/SetActiveSender",
+                    data: JSON.stringify({ senderId: id }),
+                    dataType: "json",
+                    contentType: "application/json;charset:utf-8",
+                    success: function (rs) {
+                        if (rs == false) {
+                            notification(notifiType.success, "Update Successful", "Thành công");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000)
+                        } else {
+                            notification(notifiType.error, "Cập nhật thất bại", "Thất bại")
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
+            })
+        })
+    </script>
+}

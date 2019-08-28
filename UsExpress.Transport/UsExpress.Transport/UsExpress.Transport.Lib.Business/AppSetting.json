@@ -1,0 +1,23 @@
+﻿{  
+  "Environment":"Dev",
+  "Dev":{
+    "Database": {
+      "ConnectionString": "Data Source=118.69.198.215; Initial Catalog=UsTransport; uid=cuonglv;pwd=1234Abcd",
+      "Metadata": "res://*/Models.DBContext.UsTransport.UsTransport.csdl|res://*/Models.DBContext.UsTransport.UsTransport.ssdl|res://*/Models.DBContext.UsTransport.UsTransport.msl"
+    },
+    "Kerry":{  
+      "ApiUri":"http://gw.kerryexpress.com.vn/api/WS001PostNewOrderInfor",
+      "Token":"OPxwpQe9IogBmqpCteo7Sw=="
+    }
+  },
+  "Prod":{
+    "Database": {
+      "ConnectionString": "Data Source=118.69.198.215; Initial Catalog=UsTransport; uid=cuonglv;pwd=1234Abcd",
+      "Metadata": "res://*/Models.DBContext.UsTransport.UsTransport.csdl|res://*/Models.DBContext.UsTransport.UsTransport.ssdl|res://*/Models.DBContext.UsTransport.UsTransport.msl"
+    },
+    "Kerry":{  
+      "ApiUri":"http://gw.kerryexpress.com.vn/api/WS001PostNewOrderInfor",
+      "Token":"OpuA90w4ZHcW3ZfVYZbO3g=="
+    }
+  }
+}

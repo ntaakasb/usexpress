@@ -1,0 +1,51 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblStoreAccount>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stores ID</th>
+            <th>Store's name</th>
+            <th>Full Name</th>
+            <th>Address line 1</th>
+            <th>Address line 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Phone</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td style="color:#236852">@item.Code</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.FullName</td>
+                    <td>@item.Address1</td>
+                    <td>@item.Address2</td>
+                    <td>@Html.Raw(Html.Action("GetCityNameByID", "Common", new { cityID = item.CityId }))
+                   </td>
+                    <td>@Html.Raw(Html.Action("GetStateNameByID", "Common", new { stateID = item.StateId }))</td>
+                    <td>@item.Zip</td>
+                    <td>@item.Phone</td>
+                    <td><a style="color:#236852;border-bottom:1px solid #236852" href="/Store/DetailStore/@item.id">update</a></td>
+                </tr>
+
+            }
+        }
+
+    </tbody>
+</table>
+<div id="container" style="margin-left: 20px">
+    <p></p>
+    <p></p>
+    <div class="pagination" style="margin-left: 400px">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>

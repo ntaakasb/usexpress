@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3afa26f72aad4a9fab65475decd2d7cb" Name="Diagram1">
+        <EntityTypeShape EntityType="UsTransportModel.Test" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UsTransportModel.tblUser" Width="1.5" PointX="2.75" PointY="2.25" />
+        <EntityTypeShape EntityType="UsTransportModel.tblMenu" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblMenuPermission" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblRole" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblUserRole" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblStoreAccount" Width="1.5" PointX="8.125" PointY="4.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblCity" Width="1.5" PointX="5.875" PointY="7.25" />
+        <AssociationConnector Association="UsTransportModel.FK_tblStoreAccount_tblCity" />
+        <EntityTypeShape EntityType="UsTransportModel.tblDistrict" Width="1.5" PointX="5.875" PointY="12.875" />
+        <EntityTypeShape EntityType="UsTransportModel.tblWarehouse" Width="1.5" PointX="5.875" PointY="9.875" />
+        <AssociationConnector Association="UsTransportModel.FK_tblStoreAccount_tblDistrict" />
+        <AssociationConnector Association="UsTransportModel.FK_tblStoreAccount_tblWarehouse" />
+        <EntityTypeShape EntityType="UsTransportModel.tblState" Width="1.5" PointX="5.875" PointY="15.5" />
+        <AssociationConnector Association="UsTransportModel.FK_tblStoreAccount_tblState" />
+        <EntityTypeShape EntityType="UsTransportModel.tblCategory" Width="1.5" PointX="14.875" PointY="2.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblCountry" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblPackageInfo" Width="1.5" PointX="14.875" PointY="13.25" />
+        <EntityTypeShape EntityType="UsTransportModel.tblItemInPackage" Width="1.5" PointX="17.125" PointY="8.25" />
+        <AssociationConnector Association="UsTransportModel.FK_tblItemInPackage_tblCategory" />
+        <AssociationConnector Association="UsTransportModel.FK_tblItemInPackage_tblPackageInfo" />
+        <EntityTypeShape EntityType="UsTransportModel.tblKerryOrderProgress" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblKerryPostNewOrder" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblKerryStatusService" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblDistrictStateProvice" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblStateProvice" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="UsTransportModel.tblWard" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="UsTransportModel.FK_StateProvince_Country_CountryId" />
+        <EntityTypeShape EntityType="UsTransportModel.tblShippingInfo" Width="1.5" PointX="8.375" PointY="11.75" />
+        <EntityTypeShape EntityType="UsTransportModel.tblRecipientsInfo" Width="1.5" PointX="10.375" PointY="4.375" />
+        <EntityTypeShape EntityType="UsTransportModel.tblSender" Width="1.5" PointX="10.375" PointY="7.875" />
+        <AssociationConnector Association="UsTransportModel.FK_tblRecipientsInfo_tblStoreAccount" />
+        <AssociationConnector Association="UsTransportModel.FK_tblSender_tblStoreAccount" />
+        <EntityTypeShape EntityType="UsTransportModel.tblOrder" Width="1.5" PointX="12.625" PointY="13.25" />
+        <AssociationConnector Association="UsTransportModel.FK_tblPackageInfo_tblOrder" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

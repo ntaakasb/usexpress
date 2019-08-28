@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="cms_nav">
+    <div class="container">
+        @{
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-GB");
+            <div class="right">@DateTime.Now.ToString("MMM-dd-yyyy", culture)</div>
+        }
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Recipients</h1>
+        <div class="tr tr1 mb10">
+            @using (Ajax.BeginForm("AJXSearchUser", "User", null, new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "grid-user",
+
+            }, new { }))
+            {
+                <div id="search" class="mb20">
+                    <input type="text" class="input_search" name="SearchKeyword" value="" placeholder="Search">
+                    <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                </div>
+
+                <div class="form-group">
+                    <select name="SearchType" class="form-control">
+                        <option value="1">Phone</option>
+                        <option value="2">Full Name</option>
+                        <option value="3">Warehouse</option>
+                    </select>
+                </div>
+            }
+        </div>
+
+
+        <div id="grid-user" class="table_cms mb30">
+            @Html.Action("_GridEmployees", new { lsModel = Model, pageIndex = ViewBag.Index })
+        </div>
+    </div>
+</div>
+

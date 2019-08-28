@@ -1,0 +1,139 @@
+﻿@model UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblUser
+
+@{
+    ViewBag.Title = "DetailEmployees";
+}
+@{
+    bool IsUpdate = false;
+    string formtitle = "Create Employee's Account";
+    int roleID = ViewBag.RoleID ?? -1;
+    if (Model != null && Model.Id > 0)
+    {
+        IsUpdate = true;
+        formtitle = "Update Employee's Account";
+    }
+}
+<style>
+    .form_cms {
+        width: 500px;
+        margin: 0 auto;
+    }
+</style>
+<div class="cms_nav">
+    <div class="container">
+        @{
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-GB");
+            <div class="right">@DateTime.Now.ToString("MMM-dd-yyyy", culture)</div>
+        }
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40">
+        @using (Ajax.BeginForm("AJXCreateUser", "User", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess"
+        }, new { @class = "form_cms", @id = "form-user" }))
+        {
+            <h2>@formtitle</h2>
+            if (IsUpdate)
+            {
+                <input type="hidden" id="hId" name="Id" value="@Model.Id" />
+            }
+            <div class="warp">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @placeholder = "Full Name", @style = "width: 60%;display: inline-block;" })
+
+                    <select name="slRole" class="form-control" style="width: 35%;display: inline-block;margin-left:5%;padding-left: 10px;" onchange="ChangeRole(this)">
+                        <option value="@UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.Admin"
+                                @(UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.Admin == roleID ? "selected" : "")>
+                            Admin
+                        </option>
+                        @*<option value="@UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.Store">Store</option>*@
+                        <option value="@UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.UserVN"
+                                @(UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.UserVN == roleID ? "selected" : "")>
+                            UserVN
+                        </option>
+                        <option value="@UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.UserUSA"
+                                @(UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.UserUSA == roleID ? "selected" : "")>
+                            UserUSA
+                        </option>
+                        <option value="@UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.SupplierEmployee"
+                                @(UsExpress.Transport.Web.FrontEnd.Common.RoleEnum.SupplierEmployee == roleID ? "selected" : "")>
+                            SupplierEmployee
+                        </option>
+                    </select>
+
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Add1, new { @class = "form-control", @placeholder = "Địa Chỉ" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "Phone" })
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email" })
+                    <i class="fas fa-envelope"></i>
+                </div>
+                @if (!IsUpdate)
+                {
+                    <div class="form-group width-100">
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Password" })
+                        <i class="fas fa-lock"></i>
+                    </div>
+                }
+
+                <div class="form-group width-100" style="width:70%; display: none;">
+                    <select id="WarehouseID" name="WarehouseID" class="form-control">
+
+                        <option value="">Select Warehouse</option>
+                        @Html.Action("_HtmlSelectBoxWareHouse", "Common", new { Selected = Model.WarehouseID })
+                    </select>
+
+                </div>
+
+                <div class="form-group width-100" style="width:70%; display: none;">
+                    <select id="StoreID" name="StoreID" class="form-control">
+
+                        <option value="">Select Store</option>
+                        @Html.Action("_HtmlSelectBoxStore", "Store")
+                    </select>
+
+                </div>
+                <div class="form-group width-100" style="width:70%">
+                    <select name="IsActive" class="form-control">
+
+                        <option value="1">Active</option>
+                        <option value="0" @(!Model.IsActive ? "selected" : "")>Non-Active</option>
+
+                    </select>
+
+                </div>
+                <div class="form-group width-100 btn_bottom">
+                    <button type="submit" class="btn btn-default">@(IsUpdate ? "Update" : "Add")</button>
+                    <a href="/User/Manage" type="button" class="btn btn-default">Cancel</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="~/scripts/object-prototype/user.js"></script>
+    <script>
+        User.Innit();
+        function OnSuccess(avg) {
+            notification(avg.Result > 0 ? notifiType.success : notifiType.error, avg.Message, avg.Result > 0 ? "Success" : "Error");
+            if (avg.Result > 0) {
+                window.location.href = "/User";
+            }
+        }
+    </script>
+}

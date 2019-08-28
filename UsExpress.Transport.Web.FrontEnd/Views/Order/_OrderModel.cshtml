@@ -1,0 +1,344 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style>
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+    }
+
+    /*input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+    }*/
+
+    input[type=text] {
+        background-color: #f1f1f1;
+        width: 100%;
+    }
+
+    input[type=submit] {
+        background-color: DodgerBlue;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+            color: black;
+            font-size: 16px;
+        }
+
+            .autocomplete-items div:hover {
+                /*when hovering an item:*/
+                background-color: #e9e9e9;
+            }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+
+    .select2-container .select2-choice {
+        height: 35px;
+        line-height: 35px;
+        border: none;
+        box-shadow: -1px -1px 4px 0px #ccc;
+        background-image: none;
+    }
+
+    .required {
+        position: absolute;
+        top: 10px;
+        right: -10px;
+        color: red;
+    }
+</style>
+<div class="cms_nav">
+    <div class="container">
+        @*<div class="left">ORDER #:{{orderCtrl.orderDetail.Code}}</div>*@
+        @*<div class="left">@(string.IsNullOrEmpty(ViewBag.StoreName) == true ? "CSKH" : "Store Name") @ViewBag.StoreName</div>
+            <div class="right">{{orderCtrl.orderDetail.CreateDate}}</div>*@
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="order_details">
+        <div class="mt20 tr1">
+            <h2>{{orderCtrl.Title}}</h2>
+            @*<p>Create Date {{orderCtrl.orderDetail.CreateDate}}</p>*@
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xs-6 col-tn-12">
+                <form id="create_order1" class="form_cms" name="create_order1" novalidate="">
+                    <h2>Sender's Info</h2>
+                    <div class="warp">
+                        <input type="hidden" ng-model="orderCtrl.senderInfo.Id" />
+                        <div class="form-group width-100">
+                            <input type="text" class="form-control autocomplete cus_disabled" ng-model="orderCtrl.senderInfo.Phone"
+                                   id="ip-sender-phone" name="ipsenderphone" placeholder="Phone" required> <span class="required">*</span>
+                            <i class="fas fa-mobile-alt"></i>
+                            <div ng-show="create_order1.$submitted || create_order1.ipsenderphone.$dirty && create_order1.ipsenderphone.$invalid">
+                                <p class="help-block font-red" ng-show="create_order1.ipsenderphone.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group width-100" style="width:60%">
+                            <input class="form-control cus_disabled" name="senderInfoFullName" ng-model="orderCtrl.senderInfo.FullName" placeholder="Full Name" required> <span class="required">*</span>
+                            @*<span class="error">thông báo</span>*@
+                            <i class="fas fa-user"></i>
+                            <div ng-show="create_order1.$submitted || create_order1.senderInfoFullName.$dirty && create_order1.senderInfoFullName.$invalid">
+                                <p class="help-block font-red" ng-show="create_order1.senderInfoFullName.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control cus_disabled" name="senderInfoAddressLine1" ng-model="orderCtrl.senderInfo.AddressLine1" id="" placeholder="Address line 1" required> <span class="required">*</span>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div ng-show="create_order1.$submitted || create_order1.senderInfoAddressLine1.$dirty && create_order1.senderInfoAddressLine1.$invalid">
+                                <p class="help-block font-red" ng-show="create_order1.senderInfoAddressLine1.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control cus_disabled" name="senderInfo.AddressLine2" id="" ng-model="orderCtrl.senderInfo.AddressLine2" placeholder="Address line 2">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="form-group width-100" style="width:70%">
+                            <input class="form-control cus_disabled" id="" name="senderInfoCityName" ng-model="orderCtrl.senderInfo.CityName" placeholder="City" required>
+                            @*<select id="sl-city-sender" class="form-control">
+            <option ng-repeat="item in orderCtrl.citySender" value="{{item.Id}}">{{item.Name}}</option>
+        </select>*@
+                            <i class=""><img src="/images/icons/city.png" alt=""></i> <span class="required">*</span>
+                            <div ng-show="create_order1.$submitted || create_order1.senderInfoCityName.$dirty && create_order1.senderInfoCityName.$invalid">
+                                <p class="help-block font-red" ng-show="create_order1.senderInfoCityName.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <input type="" class="form-control cus_disabled" id="ip-StateId" name="senderInfoStateName" ng-model="orderCtrl.senderInfo.StateName"
+                                       placeholder="State" required>
+                                <div ng-show="create_order1.$submitted || create_order1.senderInfoStateName.$dirty && create_order1.senderInfoStateName.$invalid">
+                                    <p class="help-block font-red" ng-show="create_order1.senderInfoStateName.$error.required">Required</p>
+                                </div>
+                                <span class="required">*</span>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="" class="form-control cus_disabled" id="" name="senderInfoZip" ng-model="orderCtrl.senderInfo.Zip" placeholder="ZIP"
+                                       required>
+                                <div ng-show="create_order1.$submitted || create_order1.senderInfoZip.$dirty && create_order1.senderInfoZip.$invalid">
+                                    <p class="help-block font-red" ng-show="create_order1.senderInfoZip.$error.required">Required</p>
+                                </div>
+                                <span class="required">*</span>
+                            </div>
+                        </div>
+                        <div class="form-group width-100">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control cus_disabled" name="senderInfoEmail" ng-model="orderCtrl.senderInfo.Email" id="" placeholder="Email">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                        <button type="submit" ng-click="orderCtrl.saveSender()" class="btn btn-default mt20 cus_disabled">Save This Sender</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 col-xs-6 col-tn-12">
+                <form id="create_order2" class="form_cms" name="create_order2" novalidate="">
+                    <h2>Recipient's info</h2>
+                    <div class="warp">
+                        <input type="hidden" ng-model="orderCtrl.recipientInfo.Id" />
+                        <div class="form-group width-100">
+                            <input type="" class="form-control autocomplete cus_disabled" ng-model="orderCtrl.recipientInfo.Phone" name="recipientInfoPhone" id="ip-recipient-phone" placeholder="Phone" required>
+                            <i class="fas fa-mobile-alt"></i> <span class="required">*</span>
+                            <div ng-show="create_order2.$submitted || create_order2.recipientInfoPhone.$dirty && create_order2.recipientInfoPhone.$invalid">
+                                <p class="help-block font-red" ng-show="create_order2.recipientInfoPhone.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group width-100" style="width:60%">
+                            <input class="form-control cus_disabled" ng-model="orderCtrl.recipientInfo.FullName" name="recipientInfoFullName" id="" placeholder="Full Name" required>
+                            <i class="fas fa-user"></i> <span class="required">*</span>
+                            <div ng-show="create_order2.$submitted || create_order2.recipientInfoFullName.$dirty && create_order2.recipientInfoFullName.$invalid">
+                                <p class="help-block font-red" ng-show="create_order2.recipientInfoFullName.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control cus_disabled" id="" ng-model="orderCtrl.recipientInfo.AddressLine1" name="recipientInfoAddressLine1" placeholder="Address line 1" required>
+                            <i class="fas fa-map-marker-alt"></i> <span class="required">*</span>
+                            <div ng-show="create_order2.$submitted || create_order2.recipientInfoAddressLine1.$dirty && create_order2.recipientInfoAddressLine1.$invalid">
+                                <p class="help-block font-red" ng-show="create_order2.recipientInfoAddressLine1.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control cus_disabled" id="" ng-model="orderCtrl.recipientInfo.AddressLine2" name="recipientInfo.AddressLine2" placeholder="Address line 2">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="form-group width-100" style="width:100%">
+
+                            <select id="sl-city-recipient" ng-model="orderCtrl.recipientInfo.slcityrecipient" class="cus_disabled" style="display:block;width:100%;height:34px;font-size:14px;line-height:1.42857143;color:#555;" required name="slcityrecipient">
+                                <option value="">Thành phố</option>
+                                <option ng-repeat="item in orderCtrl.cityRecipient" value="{{item.Id}}" data-airport="{{item.AttributeId}}">{{item.Name}}</option>
+                            </select> <span class="required">*</span>
+                            <div ng-show="create_order2.$submitted || create_order2.slcityrecipient.$dirty && create_order2.slcityrecipient.$invalid">
+                                <p class="help-block font-red" ng-show="create_order2.slcityrecipient.$error.required">Required</p>
+                            </div>
+                            @*<input  class="form-control cus_disabled" id="sl-city-recipient" type="text"/>
+        <i class=""><img src="images/icons/city.png" alt=""></i>*@
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <select id="sl-district-recipient" ng-model="orderCtrl.recipientInfo.sldistrictrecipient" class="form-control cus_disabled" required name="sldistrictrecipient">
+                                    <option value="">Quận/Huyện</option>
+                                    <option ng-repeat="item in orderCtrl.districtRecipient" value="{{item.Id}}">{{item.Name}}</option>
+                                </select> <span class="required">*</span>
+                                <div ng-show="create_order2.$submitted || create_order2.sldistrictrecipient.$dirty && create_order2.sldistrictrecipient.$invalid">
+                                    <p class="help-block font-red" ng-show="create_order2.sldistrictrecipient.$error.required">Required</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <select id="sl-ward-recipient" ng-model="orderCtrl.recipientInfo.slwardrecipient" class="form-control cus_disabled" name="slwardrecipients">
+                                    <option value="">Phường/xã</option>
+                                    <option ng-repeat="item in orderCtrl.wardRecipient" value="{{item.Id}}">{{item.Name}}</option>
+                                </select> <span class="required">*</span>
+                            </div>
+                        </div>
+                        <button type="submit" ng-click="orderCtrl.saveRecipient()"  class="btn btn-default mt20 cus_disabled">Save This Recipient</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="tr tr2">
+            <div class="row">
+                <div class="col-md-9 col-tn-12 mb30">
+                    <h2>Package's info</h2>
+                    <div class="checkbox_cms row">
+                        @*<div class="col-md-2 col-xs-2 col-tn-12 mb10">
+                                <label class="checkbox"><input type="checkbox" ng-model="orderCtrl.orderDetail.Expedite">Expedite</label>
+                            </div>*@
+                        <div class="col-md-5 col-xs-5 col-tn-12 mb10">
+                            <input type="number" class="form-control cus_disabled" ng-model="orderCtrl.packageShow.Weight" value="orderCtrl.packageShow.Weight" placeholder="Weight">
+                            <input type="number" class="form-control cus_disabled" ng-model="orderCtrl.packageShow.Fee" value="orderCtrl.packageShow.Fee" placeholder="Fee/lbs">
+                        </div>
+                        <div class="col-3 col-md-5 col-xs-5 col-tn-12 mb10">
+                            <input type="number" class="form-control cus_disabled" ng-model="orderCtrl.packageShow.Height" value="orderCtrl.packageShow.Height" placeholder="Height">
+                            <input type="number" class="form-control cus_disabled" ng-model="orderCtrl.packageShow.Width" value="orderCtrl.packageShow.Width" placeholder="Width">
+                            <input type="number" class="form-control cus_disabled" ng-model="orderCtrl.packageShow.Depth" value="orderCtrl.packageShow.Depth" placeholder="Depth">
+                        </div>
+                    </div>
+                    <div class="table_cms mt30">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Description</th>
+                                        <th>Barcode</th>
+                                        <th style="width:260px">Categories</th>
+                                        <th style="width:80px">Code</th>
+                                        <th style="width:50px">Quanity</th>
+                                        <th class="hidden">Unit</th>
+                                        <th style="width:50px">Value</th>
+                                        <th>Total</th>
+                                        <th style="width:180px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in orderCtrl.packageShow.Items">
+                                        <td><span ng-show="item.CategoryId > 0 || item.IsNew == true">{{$index + 1}}</span></td>
+                                        <td>
+                                            <input id="desctiption_code_{{$index}}" type="" ng-model="item.Description" class="cus_disabled autocompleteinput" ng-focus="autocompeleteDescription(this)"
+                                                   ng-blur="loadDetailProduct(this, 'des')" data-index="{{$index}}">
+                                        </td>
+                                        <td><input id="bar_code_{{$index}}" ng-blur="loadDetailProduct(this, 'bar')" type="" ng-model="item.BarCode" class="cus_disabled autocompletebarcode" ng-focus="autocompeleteBarcode(this)"></td>
+                                        <td>
+                                            <p style="margin:0">
+                                                <input class="populate auto-category cus_disabled" id="category_{{$index}}" style="width:200px">
+                                            </p>
+                                            @*<div class="width-100">
+
+                                                    <input type="" id="category_{{$index}}" ng-model="item.NameCategory" class="auto-category cus_disabled">
+                                                </div>*@
+                                        </td>
+                                        <td id="category_code_{{$index}}">{{item.Code}}</td>
+                                        <td><input type="number" ng-model="item.Quantity" class="cus_disabled"></td>
+                                        <td class="hidden"><input ng-model="item.Unit" class="cus_disabled" disabled></td>
+                                        <td><input type="number" id="" ng-model="item.Value" class="cus_disabled"></td>
+                                        <td>{{((item.Quantity || 0) * (item.Value || 0))}}</td>
+                                        <td>
+                                            <button ng-show="item.CategoryId > 0 || item.IsNew == true" ng-click="orderCtrl.removeItemPackage($index)" class="btn btn-default cus_disabled">Remove</button>
+                                            <button id="btnAddProduct_{{$index}}" ng-show="item.IsNew == true" ng-click="addNewProduct($index)" class="btn btn-info cus_disabled" title="Add product">Add</button>
+                                        </td>
+                                    </tr>
+                                    @*<tr ng-show="orderCtrl.showItemPackageInfo">
+                                            <td><input ng-model="orderCtrl.itemPackageInfo.Description" placeholder="Description" class="cus_disabled"/></td>
+                                            <td>
+                                                <select id="sl-category">
+                                                    <option ng-repeat="item in orderCtrl.categoryStore" data-code="{{item.Code}}" value="{{item.Id}}">{{item.Name}}</option>
+                                                </select>
+                                            </td>
+                                            <td id="td-code-selected"></td>
+                                            <td><input type="number" ng-model="orderCtrl.itemPackageInfo.Quantity" placeholder="Quantity" /></td>
+                                            <td><input ng-model="orderCtrl.itemPackageInfo.Unit" placeholder="Unit" /></td>
+                                            <td><input type="number" ng-model="orderCtrl.itemPackageInfo.Value" placeholder="Value" /></td>
+                                            <td>
+                                                <button ng-click="orderCtrl.addItemPackage()" class="btn btn-default">Add</button>
+                                                <button ng-click="orderCtrl.clearItemPackage()" class="btn btn-default">Clear</button>
+                                            </td>
+                                        </tr>*@
+                                    <tr ng-hide="orderCtrl.showItemPackageInfo">
+                                        <td></td>
+                                        <td colspan="7"> <button ng-click="orderCtrl.oneMoreItemPackage()" class="btn btn-default cus_disabled">One more</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-tn-12 mb30">
+                    <h2>Your Cart</h2>
+                    <div ng-repeat="item in orderCtrl.lstPackage" ng-click="orderCtrl.setPackageSelected($index)" class="form-control mb20 cus_disabled">Package {{item.Ordinal}}</div>
+                    <button ng-show="orderCtrl.packageIndexSelected != -1" ng-click="orderCtrl.oneMorePackage()" type="button" class="btn btn-default mt20 cus_disabled one-more-package">One more package</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tr tr3">
+            <div class="tr mb30">
+                <span class="btn btn-default">Total items:{{orderCtrl.calc_TotalItem()}}</span>
+                <span class="btn btn-default">Total declare Values:{{orderCtrl.calc_TotalValue()}}</span>
+                <span class="btn btn-default">Shipping Fee($):{{orderCtrl.calc_TotalFee()| currency:"":2}}</span>
+            </div>
+            <div class="tr center mb30">
+                <button ng-show="orderCtrl.packageIndexSelected == -1" type="button" ng-click="orderCtrl.addPackage()" class="btn btn-default cus_disabled">Add more package</button>
+                <button ng-show="orderCtrl.packageIndexSelected != -1" type="button" ng-click="orderCtrl.updatePackage()" class="btn btn-default cus_disabled hidden">Update</button>
+                <button ng-show="orderCtrl.packageIndexSelected != -1" ng-click="orderCtrl.removePackage()" type="button" class="btn btn-default cus_disabled">Clear</button>
+                <button ng-show="orderCtrl.orderId > 0" type="button" ng-click="orderCtrl.printLabel()" class="btn btn-default">Print this labels</button>
+                <button ng-show="orderCtrl.orderId > 0" ng-click="orderCtrl.printInvoice()" type="button" class="btn btn-default">Print this invoices</button>
+                <button ng-show="orderCtrl.lstPackage.length > 0 && orderCtrl.showbtnSubmit" ng-click="orderCtrl.submitOrder()" type="button" class="btn btn-default mt20 cus_disabled">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

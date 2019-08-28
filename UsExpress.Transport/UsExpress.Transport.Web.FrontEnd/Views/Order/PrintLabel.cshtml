@@ -1,0 +1,203 @@
+﻿@model UsExpress.Transport.Lib.Business.Models.Extension.PackageViewDTO
+@{
+    Layout = null;
+    decimal coso = 0.45359237M;
+    string lstItem = "";
+}
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <script src="/scripts/jquery-1.10.2.js"></script>
+</head>
+
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: black;
+        background-color: #fff;
+    }
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+        .row:after, .row:before {
+            display: table;
+            content: " ";
+            clear: both;
+        }
+
+    .col {
+        float: left;
+        padding: 5px;
+        position: relative;
+        min-height: 1px;
+    }
+
+    .col-1 {
+        width: 16.6666667%;
+    }
+
+    .col-2 {
+        width: 33.3333333%;
+    }
+
+    .col-3 {
+        width: 50%;
+    }
+
+    .col-4 {
+        width: 66.6666667%;
+    }
+
+    .col-5 {
+        width: 83.3333333%;
+    }
+
+    .col-6 {
+        width: 100%;
+    }
+
+    .col-40 {
+        width: 40%;
+    }
+
+    .col-60 {
+        width: 60%;
+    }
+
+    .txt-center {
+        text-align: center;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .font15 {
+        font-size: 15px !important;
+    }
+
+    .font13 {
+        font-size: 13px !important;
+    }
+
+    .border {
+        border: 1px solid;
+    }
+
+    .border-right {
+        border-right: 1px solid;
+    }
+
+    .border-left {
+        border-left: 1px solid;
+    }
+
+    .border-top {
+        border-top: 1px solid;
+    }
+
+    .border-lr {
+        border-left: 1px solid;
+        border-right: 1px solid;
+    }
+
+    p {
+        margin-top: 0;
+    }
+</style>
+
+<body style="width: 700px;margin: auto;">
+    <div class="border" style="padding-left: 5px;padding-right: 5px; height:960px;    max-height: 900px;">
+        <div class="row">
+            <div class="col col-1 txt-center" style="font-size:45px;">
+                
+            </div>
+            <div class="col col-4 txt-center border-lr">
+                <svg id="barcode2"></svg>
+            </div>
+            <div class="col col-1 txt-center" style="font-size:45px;">
+                @(Model.DestinationName)
+            </div>
+        </div>
+        <div class="row border-top">
+            <div class="col col-2">
+                Wt: @(Model.Weight) lbs (@(Model.Weight * coso )kg)
+            </div>
+            <div class="col col-2 border-lr">
+                HxWxD: @($"{Model.Height} x {Model.Width} x {Model.Depth}")
+            </div>
+            <div class="col col-2">
+                @($"{Model.Ordinal} of {Model.TotalPackage}")
+            </div>
+        </div>
+        <div class="row border-top">
+            <div class="col col-40 border-right">
+                <div><strong>US Xpress</strong></div>
+                <p>
+                    6210 NE 92ND DR STE 105
+                    PORTLAND, OR 97220-1341
+                    United States
+                </p>
+                <div class="font13">
+                    From: @Model.SenderInfo.FullName <br />
+                    @Model.SenderInfo.AddressLine1 <br />
+                    @Model.SenderInfo.CityName <br />
+                    @Model.SenderInfo.Zip <br />
+                    @Model.SenderInfo.Phone
+                </div>
+            </div>
+            <div class="col col-60">
+                <p>
+                    <strong class="font15">Công ty cổ phần US Express</strong> <br />
+                    Liên hệ: <a href="">cskh@usexpress.vn</a> <br />
+                    Số đt: <strong class="font15">1900 633 600</strong>
+                </p>
+                <p>
+                    Gửi đến: <strong>
+                        @Model.RecipientInfo.FullName,
+                        @Model.RecipientInfo.AddressLine1
+                    </strong> <br />
+                    Điện thoại: <strong>@Model.RecipientInfo.Phone</strong>
+                </p>
+            </div>
+        </div>
+        <div class="row border-top">
+            <div class="col col-6">
+               @foreach(var item in Model.Items)
+               {
+                   lstItem += $"{item.Quantity} {item.Description}; ";
+               }
+               @Html.Raw(lstItem)
+            </div>
+        </div>
+    </div>
+    <div>
+        Anh/Chị vui lòng kiểm tra kĩ sản phẩm, nếu có phát hiện bất kì sai sót nào về đơn hàng,
+        vui lòng liên hệ cho US Express trong vòng 48h kể từ khi nhận được sản phẩm.
+    </div>
+
+    <script src="~/scripts/JsBarcode.all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            JsBarcode("#barcode2", '@Model.Code');
+            window.print();
+        })
+    </script>
+</body>
+</html>

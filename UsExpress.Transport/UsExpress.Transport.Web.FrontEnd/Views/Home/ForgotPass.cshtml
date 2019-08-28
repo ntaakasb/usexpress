@@ -1,0 +1,52 @@
+﻿@model UsExpress.Transport.Web.FrontEnd.Models.LoginModel
+
+@{
+    ViewBag.Title = "ForgotPass";
+}
+
+<div class="cms_nav">
+    <div class="container">
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40 width_100">
+        @using (Ajax.BeginForm("SendLinks", "Home", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess",
+            OnBegin = "OnBegin"
+        }, new { @class = "form_cms", @id = "login_cms" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div style="padding:15px; padding-bottom:1px">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(model => model.LoginUsername, new { @class = "form-control", @placeholder = "Email" })
+
+                    <i class="fas fa-user"></i>
+                    <div class="error">
+                        @Html.ValidationMessageFor(model => model.LoginUsername)
+                    </div>
+                </div>
+                <div class="form-group center">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        function OnSuccess(avg) {
+            hideLoading();
+            notification(avg.Result === 1 ? notifiType.success : notifiType.error, avg.Message, avg.Result === 1 ? "Success" : "Faile");
+        }
+
+        function OnBegin() {
+            showLoading();
+        }
+    </script>
+}

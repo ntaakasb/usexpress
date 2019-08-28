@@ -1,0 +1,9 @@
+﻿@model IEnumerable<SelectListItem>
+
+@if(Model != null && Model.Any())
+{
+    foreach(var item in Model)
+    {
+        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+    }
+}

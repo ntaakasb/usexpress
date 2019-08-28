@@ -1,0 +1,58 @@
+﻿
+@using UsExpress.Transport.Web.FrontEnd.Common;
+@model IEnumerable<UsExpress.Transport.Web.FrontEnd.Models.MenuModel>
+@{
+    Layout = null;
+}
+<style>
+    ul.ul_submenu, ul.ul_submenu_2 {
+        display: none;
+    }
+</style>
+
+<ul id="ul-menu-top">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="@($"/{item.Controller}/{item.Action}")">@item.Name</a>
+            @if (item.LstMenuChild != null && item.LstMenuChild.Any())
+            {
+                <div class="sub_menu">
+
+                    @foreach (var mc in item.LstMenuChild)
+                    {
+
+                        <a href="@($"/{mc.Controller}/{mc.Action}")">@mc.Name</a>
+
+                    }
+                </div>
+            }
+        </li>
+    }
+    @*<li><a class="active" href="#">Create order</a></li>*@
+    @*@if (Session[Constant.SessionUsername] == null)
+    {
+        <li><a href="@("/StoreNoLogin/RegisterStore")">Register</a></li>
+    }*@
+</ul>
+
+
+@section Scripts {
+
+    <script>
+        $("#ul-menu-top >a").each(function () {
+            var menuLink = $(this).attr("href").toLowerCase();
+            if (url.endsWith(menuLink)) {
+                $(this).addClass("active");
+            }
+        });
+        $('li.submenu a[href="#"]').click(
+            function (e) {
+                e.preventDefault();
+                $(this).next().toggle();
+                return false;
+            });
+
+    </script>
+}
+

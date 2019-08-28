@@ -1,0 +1,64 @@
+﻿@model UsExpress.Transport.Lib.Business.Models.ProductDTO
+
+@{ 
+    bool IsUpdate = false;
+    int intCategory = -1;
+    string action = "InsertProduct";
+    if (Model != null && Model.id > 0)
+    {
+        IsUpdate = true;
+        int intTemp = 0;
+        intCategory = int.TryParse(Model.CategoryID.ToString(), out intTemp) ? int.Parse(Model.CategoryID.ToString()) : -1;
+        action = "UpdateProduct";
+
+    }
+}
+<style>
+    .select2-selection--single span {
+        text-align: left;
+    }
+</style>
+
+<h3>Add New Product</h3>
+@using (Ajax.BeginForm(action, "Product", new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "OnSuccess"
+}, new { @id = "frm_create_catelogy" }))
+{
+
+    if (IsUpdate)
+    {
+        <input name="id" type="hidden" value="@Model.id" />
+    }
+    <div>
+        @Html.TextBoxFor(x => x.Description, new { @class = "form-control mb20", @placeholder = "Description" })
+        @Html.TextBoxFor(x => x.BarCode, new { @class = "form-control mb20", @placeholder = "Barcode" })
+        <div class="mb20">
+            <select name="CategoryID" class="form-control mb20" onchange="LoadCodeByCategory(this)">
+                <option value="">-- Select Category --</option>
+                @Html.Action("_OptionGetAllCategory", "Category", new { selectedValue = intCategory })
+            </select>
+        </div>
+      
+        @Html.TextBoxFor(x => x.ScheduleBCode, new { @class = "form-control mb20", @placeholder = "Code", @disabled="disabled", @readonly="true" })
+    </div>
+    <button type="submit" class="btn btn-default">@Html.Raw(IsUpdate ? "Update" : "Add New")</button>
+    if (IsUpdate)
+    {
+        <label for="btnCancel" class="btn btn-default">Cancel</label>
+    }
+
+}
+@using (Ajax.BeginForm("AJXUpdateForm", "Category", new AjaxOptions
+{
+    HttpMethod = "POST",
+    //OnSuccess = "ReloadValidate",
+    UpdateTargetId = "divUpdate"
+}))
+{
+    <button id="btnCancel" type="submit" class="btn btn-default" style="visibility: hidden;">Cancel</button>
+}
+
+
+

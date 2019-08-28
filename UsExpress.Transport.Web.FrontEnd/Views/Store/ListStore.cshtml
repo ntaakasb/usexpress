@@ -1,0 +1,90 @@
+﻿@model IEnumerable<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblStoreAccount>
+
+@{
+    ViewBag.Title = "ListStore";
+}
+<div class="cms_nav">
+    <div class="container">
+        <div class="left">ORDER #:</div>
+        <div class="right">07/13/2018</div>
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Stores</h1>
+        <div class="tr tr1 mb10">
+            <form id="search" class="mb20">
+                <input type="text" class="input_search" name="" value="" placeholder="Tìm kiếm">
+                <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+        <div class="tr tr2">
+            <div class="mb20 cms_col_left">
+                <ul>
+                    <li><a class="active" href="#">Manage Shipments</a></li>
+                    <li><a href="#">Manage Order</a></li>
+                    <li><a href="#">Tracking</a></li>
+                    <li><a href="#">Category Codes</a></li>
+                    <li><a href="#">Employee Accounts</a></li>
+                    <li><a href="#">Store Accounts</a></li>
+                    <li><a href="#">Reports</a></li>
+                </ul>
+            </div>
+            <div class="table_cms mb30 cms_col_right">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Stores ID</th>
+                                <th>Store's name</th>
+                                <th>Full Name</th>
+                                <th>Address line 1</th>
+                                <th>Address line 2</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Zip</th>
+                                <th>Phone</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                    <td style="color:#236852">ABC</td>
+                                    <td>Chuyển nhanh</td>
+                                    <td>Nguyễn Văn B</td>
+                                    <td>123 lampson</td>
+                                    <td></td>
+                                    <td>Vista</td>
+                                    <td>CA</td>
+                                    <td>93045</td>
+                                    <td>44545454</td>
+                                    <td><a style="color:#236852;border-bottom:1px solid #236852" href="#">update</a></td>
+                                </tr>*@
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="color:#236852">@item.Code</td>
+                                        <td>@item.StoreName</td>
+                                        <td>@item.FullName</td>
+                                        <td>@item.Address1</td>
+                                        <td>@item.Address2</td>
+                                        <td>@item.CityId</td>
+                                        <td>@item.StateId</td>
+                                        <td>@item.Zip</td>
+                                        <td>@item.Phone</td>
+                                        <td><a style="color:#236852;border-bottom:1px solid #236852" href="/detail-store/@item.id">update</a></td>
+                                    </tr>
+
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

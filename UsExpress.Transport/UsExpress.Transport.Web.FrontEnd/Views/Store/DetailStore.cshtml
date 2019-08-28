@@ -1,0 +1,298 @@
+﻿@model  UsExpress.Transport.Web.FrontEnd.Models.StoreModel
+
+@{
+    ViewBag.Title = "DetailStore";
+}
+<style>
+    .form_cms {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="cms_nav">
+    <div class="container">
+
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40">
+        @{
+            bool IsUpdate = Model.StoreAccount != null ? true : false;
+            int WareHouseID = -1;
+            int RoleID = -1;
+            long UserID = -1;
+            int StoreID = -1;
+            string FormTitle = "Create A New Store";
+            bool IsUpdateYourStore = false;
+            string formid = "frm_create_store";
+            bool IsAdmin = ViewBag.IsAdmin != null ? bool.Parse(ViewBag.IsAdmin.ToString()) : false;
+
+
+            if (IsUpdate)
+            {
+                if (Model.UserRole != null)
+                {
+                    RoleID = Model.UserRole.RoleId;
+                    UserID = Model.UserRole.UserId;
+                }
+                FormTitle = "Update Store";
+
+                if (ViewBag.UpdateYourStore != null)
+                {
+                    IsUpdateYourStore = true;
+                }
+                formid = "frm_create_store";
+                StoreID = Model.StoreAccount.id;
+                WareHouseID = int.TryParse(Model.StoreAccount.WarehouseId.ToString(), out WareHouseID) ? int.Parse(Model.StoreAccount.WarehouseId.ToString()) : -1;
+            }
+        }
+        @using (Ajax.BeginForm("UpdateStore", "Store", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess"
+        }, new { @class = "form_cms", @id = formid }))
+        {
+            if (IsUpdate)
+            {
+                <input type="hidden" id="hId" name="StoreAccount.id" value="@Model.StoreAccount.id" />
+                <input type="hidden" name="UserID" value="@UserID" />
+                <input type="hidden" name="hUserName" value="@Model.StoreAccount.Email" />
+                <input type="hidden" id="hWareHouseID" value="@WareHouseID" />
+            }
+
+            <h2>@FormTitle</h2>
+            <div class="warp">
+                <div class="form-group width-100">
+                    <div style="width: 60%;display: inline-grid;">
+                        @Html.TextBoxFor(x => x.StoreAccount.FullName, new { @class = "form-control", @placeholder = "Full Name", @style = "display: inline-block;" })
+
+                        <i class="fas fa-user"></i>
+
+                    </div>
+
+                    @*@if (IsUpdate)
+                        {
+                            <div style="width: 35%;display: inline-grid;margin-left:5%;">
+                                <select name="RoleID" class="form-control" style="padding-left: 0;">
+                                    @Html.Action("_HtmlSelectBoxRole", "Common", new { Selected = RoleID })
+                                </select>
+                            </div>
+
+                        }*@
+
+
+                </div>
+                @if (IsUpdateYourStore)
+                {
+                    <div class="form-group width-100">
+                        <input type="text" class="form-control" disabled value="@Model.StoreAccount.StoreName" style="width: 60%;display: inline-block;" />
+                        <input type="text" class="form-control" disabled value="@Model.StoreAccount.Code" style="width: 35%;display: inline-block;margin-left:5%;padding-left: 10px;" />
+                        <input type="hidden" name="StoreAccount.StoreName" value="@Model.StoreAccount.StoreName" />
+                        <input type="hidden" name="StoreAccount.Code" value="@Model.StoreAccount.Code" />
+                        <i class="fas fa-store-alt"></i>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group width-100">
+                        @Html.TextBoxFor(x => x.StoreAccount.StoreName, new { @class = "form-control", @placeholder = "Store's Name", @style = "width: 60%;display: inline-block;" })
+                        @Html.TextBoxFor(x => x.StoreAccount.Code, new { @class = "form-control", @placeholder = "Code", @style = "width: 35%;display: inline-block;margin-left:5%;padding-left: 10px; float:right", @data_id = StoreID })
+                        <i class="fas fa-store-alt"></i>
+                    </div>
+                }
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.StoreAccount.Address1, new { @class = "form-control", @placeholder = "Address 1" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.StoreAccount.Address2, new { @class = "form-control", @placeholder = "Address 2" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="form-group width-100" style="width:70%">
+                    @*<select id="CityId" name="StoreAccount.CityId" class="form-control" onchange="CityChange(this)">
+
+                            @Html.Action("_HtmlSelectBoxCity", "Common", new { Selected = CityID })
+                        </select>*@
+                    @Html.TextBoxFor(x => x.StoreAccount.CityId, new { @class = "form-control", @placeholder = "City" })
+                    <i class="fa fa-university"><img src="images/icons/city.png" alt=""></i>
+                </div>
+
+
+                <div class="form-group">
+                    <div style="width:60%; display: inline-grid;">
+                        @*<select id="StateID" name="StoreAccount.StateID" class="form-control" onchange="StateChange(this)">
+                                @Html.Action("_HtmlSelectBoxState", "Common", new { Selected = StateID })
+                            </select>*@
+                        @Html.TextBoxFor(x => x.StoreAccount.StateId, new { @class = "form-control", @placeholder = "State" })
+                    </div>
+                    <div style="width: 30%; display: inline-grid; margin-left: 20px;">
+                        @Html.TextBoxFor(x => x.StoreAccount.Zip, new { @class = "form-control", @placeholder = "Zip" })
+                    </div>
+
+
+
+                </div>
+                @*@if (IsUpdate)
+                    {
+                        <div class="form-group width-100" style="width:70%">
+                            <select id="WarehouseID" name="StoreAccount.WarehouseID" class="form-control">
+
+                                @Html.Action("_HtmlSelectBoxWareHouse", "Common", new { Selected = WareHouseID })
+                            </select>
+                            <i class="fa fa-industry"><img src="images/icons/city.png" alt=""></i>
+                        </div>
+                    }*@
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.StoreAccount.Phone, new { @class = "form-control", @placeholder = "Phone" })
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @if (IsUpdate)
+                    {
+                        <input type="text" class="form-control" disabled value="@Model.StoreAccount.Email" />
+                        <input type="hidden" name="StoreAccount.Email" value="@Model.StoreAccount.Email" />
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(x => x.StoreAccount.Email, new { @class = "form-control", @placeholder = "Email" })
+                    }
+
+
+                    <i class="fas fa-envelope"></i>
+                </div>
+                @if (IsAdmin)
+                {
+                    <div class="form-group width-100">
+                        <select name="StoreAccount.WarehouseId" id="StoreAccount_WarehouseId" class="form-control">
+                            <option value="">Select WareHouse</option>
+                            @Html.Action("_HtmlSelectBoxWareHouse", "Common", new { Selected = WareHouseID })
+                        </select>
+                        <i class="fa fa-archive" aria-hidden="true"></i>
+                    </div>
+                }
+                @if (IsUpdate)
+                {
+                    <input name="StoreAccount.WarehouseId" type="hidden" value="@WareHouseID" />
+                    if (IsAdmin)
+                    {
+
+                        <div class="form-group width-100" style="width:70%">
+                            <select id="slActiveStore" name="StoreAccount.Status" class="form-control">
+                                <option value="0">UnActive</option>
+                                <option value="1">Active</option>
+                            </select>
+                            <i class="fa fa-industry"><img src="images/icons/city.png" alt=""></i>
+                        </div>
+                    }
+
+                    <div class="form-group width-100 btn_bottom">
+                        <button type="submit" class="btn btn-default">Update</button>
+                        @if (IsAdmin)
+                        {
+                            <a href="/Store/Manager" class="btn btn-default">Cancel</a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group width-100">
+                        @Html.PasswordFor(x => x.StoreAccount.Password, new { @class = "form-control", @placeholder = "Password" })
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="form-group width-100 btn_bottom">
+                        <button type="submit" class="btn btn-default">@(IsUpdate ? "Update" : "Sign up")</button>
+
+                    </div>
+                }
+
+
+            </div>
+
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/scripts/object-prototype/store.js"></script>
+    <script>
+        var isADmin = ('@IsAdmin' == 'True');
+
+    /**/
+    @if (IsUpdate)
+    {
+        @Html.Raw("$('#CityId').trigger('change');");
+        @Html.Raw("$('#slActiveStore').val(" + Model.StoreAccount.Status + ");");
+    }
+    /**/
+    Store.ValidateStoreForm();
+
+
+    function OnSuccess(avg) {
+        notification(avg.Result > 0 ? notifiType.success : notifiType.error, avg.Message, avg.Result > 0 ? "Success" : "Error");
+        if (avg.Result > 0) {
+            if (isADmin) {
+                window.location.href = '/Store/Manager';
+            }
+
+    }
+    }
+    function CityChange(_this) {
+
+    var value = _this.value;
+    $.ajax({
+
+    url: '/Common/LoadDistrictByCity',
+    type: 'GET',
+    data: {
+    'CityID': value
+    },
+    dataType: 'json',
+    success: function (data) {
+    $('#DistrictID').html(data);
+    LoadWarehouse();
+    }
+    });
+    }
+
+    function StateChange(_this) {
+
+    LoadWarehouse();
+    }
+
+    function LoadWarehouse() {
+    var city = $('#CityId option:selected').val();
+    var state = $('#StateID option:selected').val();
+    $.ajax({
+
+    url: '/Common/LoadWarehouse',
+    type: 'GET',
+    data: {
+    'CityID': city,
+    'StateID': state
+    },
+    dataType: 'json',
+    success: function (data) {
+    $('#WarehouseID').html(data);
+    if (@WareHouseID != -1) {
+    $('#WarehouseID').val(@WareHouseID);
+
+    }
+    else {
+    $("#WarehouseID").val($("#target option:first").val());
+    }
+    }
+    });
+    }
+    </script>
+    <script>
+        $(function () {
+
+            $("#StoreAccount_StateId").autocomplete({
+                source: availableState
+            });
+        });
+    </script>
+}

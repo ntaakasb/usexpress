@@ -1,0 +1,209 @@
+﻿
+@model IEnumerable<UsExpress.Transport.Web.FrontEnd.Models.OrderPositionModels>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="cms_nav">
+    <div class="container">
+        <div class="left">ORDER #:</div>
+        <div class="right">07/13/2018</div>
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Shipments</h1>
+        <div class="tr tr1 mb10">
+            <form id="search" class="mb20">
+                <input type="text" class="input_search" name="" value="" placeholder="Tìm kiếm">
+                <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+        <div class="tr tr2">
+            <div class="mb20 cms_col_left">
+                <ul>
+                    <li><a class="active" href="#">Manage Shipments</a></li>
+                    <li><a href="#">Manage Order</a></li>
+                    <li><a href="#">Tracking</a></li>
+                    <li><a href="#">Category Codes</a></li>
+                    <li><a href="#">Employee Accounts</a></li>
+                    <li><a href="#">Store Accounts</a></li>
+                    <li><a href="#">Reports</a></li>
+                </ul>
+            </div>
+            <div class="table_cms mb30 cms_col_right">
+               @Html.Action("_GridOrder")
+            </div>
+        </div>
+
+    </div>
+
+    <div class="manage_order mt20">
+        <h1>Orders Details</h1>
+        <h2>Shipment number: USCN06261810</h2>
+        <div class="table_cms mb30">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>SENDER</th>
+                            <th>No of package</th>
+                            <th>weight(lbs)</th>
+                            <th>Expedite</th>
+                            <th>Created date</th>
+                            <th>Pickup date</th>
+                            <th>Shiping date</th>
+                            <th>Clear vn custom</th>
+                            <th>Deliver</th>
+                            <th>Starts</th>
+                            <th>Destination</th>
+                            <th>Tracking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><label class="checkbox"><input type="checkbox"></label></td>
+                            <td style="color:#236852">KDP180613132012</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>1</td>
+                            <td>40</td>
+                            <td>Yes</td>
+                            <td>06/13/2018</td>
+                            <td style="background:#c2000b;color:#fff">06/14/2018</td>
+                            <td style="background:#fea621;color:#fff">06/14/2018</td>
+                            <td></td>
+                            <td>USA</td>
+                            <td>To VN</td>
+                            <td>HCM</td>
+                            <td style="color:#236852">Tracking</td>
+                        </tr>
+                        <tr>
+                            <td><label class="checkbox"><input type="checkbox"></label></td>
+                            <td style="color:#236852">KDP180613132012</td>
+                            <td>Nguyễn Văn B</td>
+                            <td>2</td>
+                            <td>40</td>
+                            <td>Yes</td>
+                            <td>06/13/2018</td>
+                            <td style="background:#fea621;color:#fff">06/14/2018</td>
+                            <td style="background:#fea621;color:#fff">06/14/2018</td>
+                            <td>06/14/2018</td>
+                            <td>USA</td>
+                            <td>To VN</td>
+                            <td>HCM</td>
+                            <td style="color:#236852">Tracking</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Total:</td>
+                            <td></td>
+                            <td></td>
+                            <td>4</td>
+                            <td>90</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb20 export_cms">
+            <div class="export mb10">
+                <button type="button" class="btn btn-default">Export US invoice</button>
+                <button type="button" class="btn btn-default">Export VN invoice</button>
+            </div>
+            <div class="btn_bottom">
+                <button type="button" class="btn btn-default">Save</button>
+                <button type="button" class="btn btn-default">Remove</button>
+                <button type="button" class="btn btn-default">Upload</button>
+            </div>
+        </div>
+
+        <div class="mb40 download_cms">
+            <h3>Download File</h3>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+        </div>
+
+    </div>
+</div>

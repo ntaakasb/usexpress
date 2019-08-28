@@ -1,0 +1,65 @@
+﻿@using UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport
+@model UsExpress.Transport.Web.FrontEnd.Models.MenuModel
+@{
+    Layout = null;
+    List<tblMenu> LstMenu = new List<tblMenu>();
+    if (ViewBag.LstMenuParent != null)
+    {
+        LstMenu = (List<tblMenu>)ViewBag.LstMenuParent;
+    }
+}
+
+<div class="sale-setup-label-container"><label for="Name">Name</label></div>
+<div class="sale-setup-input-container">
+    <input name="Name" type="text" value="@Model.Name" />
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+
+<div class="sale-setup-label-container"><label for="Description">Description</label></div>
+<div class="sale-setup-input-container">
+    <textarea cols="20" name="Description" rows="2">@Html.Raw((!string.IsNullOrEmpty(Model.Description) ? Model.Description : ""))</textarea>
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+
+<div class="sale-setup-label-container"><label for="Controller">Controller</label></div>
+<div class="sale-setup-input-container">
+    <input name="Controller" type="text" value="@Model.Controller" />
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+
+<div class="sale-setup-label-container"><label for="Action">Action</label></div>
+<div class="sale-setup-input-container">
+    <input name="Action" type="text" value="@Model.Action" />
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+
+<div class="sale-setup-label-container"><label for="Parent">Parent</label></div>
+<div class="sale-setup-input-container">
+    <select name="ParentId">
+        <option value="0">--Main Controller--</option>
+        @foreach (var m in LstMenu)
+        {
+            <option value="@m.Id" @(m.Id == Model.ParentId ? "selected = 'selected'" : "")>@m.Controller</option>
+        }
+    </select>
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+
+<div class="sale-setup-label-container"><label for="DisplayOrder">Display Order</label></div>
+<div class="sale-setup-input-container">
+    <input name="DisplayOrder" type="text" value="@Model.DisplayOrder" />
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+
+<div class="sale-setup-label-container"><label for="IsActive">Is Active</label></div>
+<div class="sale-setup-input-container">
+    <input name="IsActive" type="checkbox" value="@(Model.IsActive ? "true": "false")" @(Model.IsActive ? "checked = 'checked'" : "")/>
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+<div class="sale-setup-label-container"><label for="IsShow">Is Show</label></div>
+<div class="sale-setup-input-container">
+    <input name="IsShow" type="checkbox" value="@(Model.IsShow ? "true": "false")" @(Model.IsShow ? "checked = 'checked'" : "")/>
+</div>
+<div style="clear: both; height: 10px; font-size: 0px"></div>
+<input name="Id" type="hidden" value="@Model.Id" />
+

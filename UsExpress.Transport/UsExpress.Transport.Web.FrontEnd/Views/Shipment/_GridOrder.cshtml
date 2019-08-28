@@ -1,0 +1,53 @@
+﻿@model UsExpress.Transport.Web.FrontEnd.Models.ListOrderModels
+<div class="table-responsive" style="overflow: scroll;">
+    @if (Model != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                   
+                    @{
+                        for (DateTime i = Model.FromDate; i <= Model.ToDate; i = i.AddDays(1))
+                        {
+                            <th>@i.ToString("dd/MM/yyyy")</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (int j = 0; j < Model.ListResult.Max(x => x.Y); j++)
+                {
+                    <tr>
+                        @for (int i = 0; i <= 14; i++)
+                        {
+                            if (Model.ListResult.Where(x => x.Y == j && x.X == i).Count() > 0)
+                            {
+                                var item = @Model.ListResult.SingleOrDefault(x => x.Y == j && x.X == i).OrderItem;
+                                <td>
+                                    @using (Ajax.BeginForm("AJXLoadPackageOrderDetail", "Shipment", new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        OnSuccess = "ReloadValidate",
+                                        UpdateTargetId = "gridPackages"
+                                    }))
+                                    {
+                                        <input name="OrderId" type="hidden" value="@item.Id" />
+                                        <a ><label style="min-width: 115px;" for="btnShowDetail@(item.Id)"> @item.Code</label></a>
+                                        <input id="btnShowDetail@(item.Id)"  style="visibility:hidden;" type="submit" value="av" />
+                                    }
+
+
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>

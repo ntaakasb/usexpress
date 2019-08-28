@@ -1,0 +1,146 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="description" content="Trang thương mại điện tử">
+    <meta name="keywords" content="Bán lẻ, bán buôn">
+    <!-- Android icon precomposed so it takes precedence -->
+    <title>Usexpress</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;subset=vietnamese" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/content/fonts/fontAwesome/css/fontawesome-all.css" media="all" />
+    <link rel="stylesheet" href="/content/css/jquery.mmenu.css" media="all" />
+    <link rel="stylesheet" href="/content/css/animations.css" media="all" />
+    <link href="/Content/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/content/css/bootstrap.min.css" media="all" />
+    <link href="~/Content/css/toast/toastr.css" rel="stylesheet" />
+    <link href="~/Content/css/toast/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/content/css/style.css" media="all" />
+    <link href="/Content/css/style-dev.css" rel="stylesheet" />
+    @RenderSection("headcss", false)
+</head>
+<body>
+    <!-- Mobile -->
+    <div id="topbar" class="topbar nav-down fixed-top clearfix">
+        <div class="container">
+            <a href="#" class="logo" id="logo"><img src="/content/images/graphics/logo.png" alt="" class="m-only img-100"></a>
+            <a href="" aria-label="0 items in cart" class="in_cart">
+                <span aria-hidden="true" class="nav-line-1"></span>
+                <span aria-hidden="true" class="nav-line-2">Cart<span class="nav-icon nav-arrow"></span></span>
+                <span class="nav-cart-icon nav-sprite"></span><span id="nav-cart-count" aria-hidden="true" class="nav-cart-count nav-cart-0">0</span>
+            </a>
+            <span class="right search_icon"><i class="fa fa-search"></i></span>
+        </div>
+        <a class="icon_menu" href="#menu"><span></span></a>
+        <nav id="menu">
+            <ul>
+                @Html.Action("MenuMobile", "Menu")
+            </ul>
+        </nav>
+    </div>
+    <div class="box_search_topbar">
+        <div class="box_input">
+            <input type="text" class="search_mobile" placeholder="Tìm kiếm" />
+            <button class="btn_search_m"><i class="fa fa-search"></i></button>
+            <span class="btn_reset"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <span class="cancel_search">Hủy</span>
+    </div>
+    <!--End Mobile -->
+    <div id="page_usexpress">
+        <div id="loading" class="loader ui-widget-overlay bg-black opacity-80 loader-box" style="display:none; background:black">
+            <div class="spinftw"><span>Loading...</span></div>
+        </div>
+        <section id="header" class="width_100">
+            <header class="width_100">
+                <div class="container">
+                    <a class="logo" href="#"><img src="/content/images/graphics/logo.png" alt=""></a>
+                    <!--Begin menu top-->
+                    @Html.Action("MenuTop", "Menu")
+                    <!--End menu top-->
+                </div>
+            </header>
+        </section>
+
+        <section id="main_container" class="width_100">
+            @RenderBody()
+
+        </section>
+
+        <section id="footer" class="width_100">
+            @*<div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-6 col-tn-12">
+                        <h3>về USEXPRESS</h3>
+                        <ul>
+                            <li><a href="#">Quy chế hoạt động Sàn TMĐT</a></li>
+                            <li><a href="#">Điều khoản và điều kiện giao dịch</a></li>
+                            <li><a href="#">Thông báo</a></li>
+                            <li><a href="#">Tra cứu hóa đơn</a></li>
+                            <li><a href="#">Liên hệ </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-6 col-tn-12">
+                        <h3>ĐỊa chỉ trụ sở</h3>
+                        <p>Tại Hà Nội:</p>
+                        <p>Tầng 5 Tòa nhà Diamond Flower, Số 1 Hoàng Đạo Thúy, Thanh Xuân, Hà Nội</p>
+                        <p><img src="/content/images/graphics/bocongthuong.jpg"></p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-6 col-tn-12">
+                        <h3>Đăng ký email để nhận ưu đãi</h3>
+                        <form action="">
+                            <input type="text" class="input_search" name="" value="" placeholder="Email của bạn">
+                            <button type="submit" class="icon_seach_web"><i class="fa fa-envelope"></i></button>
+                        </form>
+                        <p><img src="/content/images/graphics/facebook.jpg"></p>
+                    </div>
+                </div>
+            </div>*@
+        </section>
+
+    </div>
+    <script>
+        var lb_succeed = '@LabelResources.Language.lb_Succeed';
+        var lb_failed = '@LabelResources.Language.lb_Failed';
+        var lb_error = '@LabelResources.Language.lb_Error';
+        var lb_DescriptionRequired = '@LabelResources.Language.lb_DescriptionRequired';
+        var lb_Required = '@LabelResources.Language.lb_Required';
+        var lb_BarcodeRequired = '@LabelResources.Language.lb_BarcodeRequired';
+        var lb_CategoryRequired = '@LabelResources.Language.lb_CategoryRequired';
+        var lb_PackageRequired =  '@LabelResources.Language.lb_PackageRequired';
+        var lb_SendersInfoRequired =  '@LabelResources.Language.lb_SendersInfoRequired';
+        var lb_PackageInfoRequired =  '@LabelResources.Language.lb_PackageInfoRequired';
+        var lb_OrderCreatedSuccesful =  '@LabelResources.Language.lb_OrderCreatedSuccesful';
+        var lb_OrderUpdatedSuccesful =  '@LabelResources.Language.lb_OrderUpdatedSuccesful';
+        var lb_UpdateFailed =  '@LabelResources.Language.lb_UpdateFailed';
+        var lb_ShipmentRequired =  '@LabelResources.Language.lb_ShipmentRequired';
+        var lb_UpdateSucceed =  '@LabelResources.Language.lb_UpdateSucceed';
+
+
+    </script>
+
+    <script type="text/javascript" src="/content/js/jquery-2.1.4.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/Content/js/toastr.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/content/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/content/js/jquery.mmenu.js"></script>
+    <script type="text/javascript" src="/content/js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+    @*<script src="~/scripts/jquery.validate.min.js"></script>*@
+    <script src="~/scripts/validate-jquery/jquery.validate.min.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/scripts/1.12.1.jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="~/scripts/object-prototype/lib-validate.js"></script>
+    <script src="~/scripts/object-prototype/common.js"></script>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>
+
+

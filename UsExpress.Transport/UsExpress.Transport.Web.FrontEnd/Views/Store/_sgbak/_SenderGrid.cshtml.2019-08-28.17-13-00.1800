@@ -1,0 +1,42 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblSender>
+<div class="tr tr1 mb10 right">
+    @using (Ajax.BeginForm("AJXSearchSender", "Store", null, new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "tbSenderGrid",
+
+    }, new { @id = "search", @class = "mb20" }))
+    {
+        <input type="text" class="input_search" name="SearchKeyword" placeholder="Tìm kiếm">
+        <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+    }
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Address line 1</th>
+                <th>Address line 2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Phone</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbSenderGrid">
+            @Html.Partial("_TableGridSender", Model)
+
+
+        </tbody>
+    </table>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("_SenderGrid", new { page }))
+        </div>
+    </div>
+</div>

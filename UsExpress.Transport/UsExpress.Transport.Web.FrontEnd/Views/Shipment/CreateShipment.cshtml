@@ -1,0 +1,359 @@
+﻿
+@{
+    ViewBag.Title = "Create Shipment";
+}
+
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<input type="hidden" id="ip-fromdate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+<input type="hidden" id="ip-todate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+<div class="container" id="div-angular" ng-app="OrderApp" ng-controller="ShipmentController as manCtrl">
+    <div class="manage_order mt20">
+        <h1>Create Shipments</h1>
+        <div class="tr tr1 mb10">
+            <form id="search" class="mb20">
+                <input type="text" class="input_search" name="" value="" placeholder="Tìm kiếm">
+                <button type="button" ng-click="manCtrl.searchShipment()" class="icon_seach_web"><i class="fa fa-search"></i></button>
+            </form>
+            <div class="form-group mb20">
+                <select class="form-control" ng-model="manCtrl.filter.TypeSearch" ng-options="option.Id as option.Name for option in manCtrl.optionsSearch"></select>
+            </div>
+            @*<div class="padding-left" ng-show="manCtrl.showAdvanceSearch">
+                <div class="form-group mb20">
+                    from
+                    <input type="date" id="ip-fromdate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                </div>
+                <div class="form-group mb20">
+                    to
+                    <input type="date" id="ip-todate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                </div>
+            </div>*@
+            <div class="form-group mb20 right">
+                <div>Warehouse</div>
+                <select class="form-control" ng-model="manCtrl.filter.WarehouseId" ng-change="manCtrl.searchShipment()" ng-options="option.AttributeId as option.Name for option in manCtrl.lstWarehouse"></select>
+            </div>
+        </div>
+        <div class="tr tr1 mb10">
+            <label ng-click="manCtrl.searchAdvance = !manCtrl.searchAdvance"> Advance search</label>
+        </div>
+        <div class="tr tr1 mb10" ng-hide="!manCtrl.searchAdvance">
+            <div class="form-group mb20">
+                <div>From Date</div>
+                <input type="date" class="form-control" id="ip-fromdate" ng-model="manCtrl.FromDate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" ng-change="manCtrl.ChangeFromDate(manCtrl.FromDate)">
+            </div>
+            <div class="form-group mb20">
+                <div>To Date</div>
+                <input type="date" class="form-control" id="ip-todate" ng-model="manCtrl.ToDate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" ng-change="manCtrl.ChangeToDate(manCtrl.ToDate)">
+            </div>
+        </div>
+        <div class="tr tr2">
+            <div class="order_silde mb40" ng-hide="manCtrl.searchAdvance">
+                <p>Orders:</p>
+                <div class="owl-carousel">
+                    @for (int i = -13; i < 1; i++)
+                    {
+                        <a id="ngay_@((DateTime.Now.AddDays(i)).Day)" class="item_slider_tt @(DateTime.Now.AddDays(i).Day == DateTime.Now.Day ? "active" : "")" ng-click="manCtrl.setDate('@(DateTime.Now.AddDays(i).ToString("MM/dd/yyyy"))')">@(DateTime.Now.AddDays(i).ToString("MMM dd yyyy"))</a>
+                    }
+
+                </div>
+            </div>
+            <div class="table_cms mb20">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>No Of Packages</th>
+                                <th>Weight (lbs) - (kg)</th>
+                                @*<th>Status</th>*@
+                                <th>Destinations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in manCtrl.lstShipment">
+                                <td><label class="checkbox" ng-click="manCtrl.setShowBtnForShipment()"><input type="checkbox" ng-model="item.checked"></label></td>
+                                <td ng-click="manCtrl.setShipmentSelected($index)"><a style="color:#236852" href="javascript:void(0)">{{item.ShipmentCode}}</a></td>
+                                <td>{{item.TotalPackage}}</td>
+                                <td>{{item.TotalWeight}}(lb) - {{item.TotalWeightKg}}(kg)</td>
+                                @*<td>{{item.StatusName}}</td>*@
+                                <td>{{item.DestinationName}}</td>
+                            </tr>
+                            <tr ng-if="manCtrl.lstShipment.length < 1">
+                                <td colspan="5" class="text-center">No data to display</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @*<div class="pagination" style="margin-left: 400px">
+                    <div class="pagination-container">
+                         pager
+                        <ul ng-if="manCtrl.pager.pages.length" class="pagination">
+                            <li ng-class="{disabled:manCtrl.pager.currentPage === 1}">
+                                <a ng-click="vm.setPage(manCtrl.currentPage - 1)"><</a>
+                            </li>
+                            <li ng-repeat="page in manCtrl.pager.pages" ng-class="{active:manCtrl.pager.currentPage === page}">
+                                <a ng-click="manCtrl.setPage(page)">{{page}}</a>
+                            </li>
+                            <li ng-class="{disabled:manCtrl.pager.currentPage === manCtrl.pager.totalPages}">
+                                <a ng-click="manCtrl.setPage(manCtrl.pager.currentPage + 1)">></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>*@
+            </div>
+            <div class="btn_bottom center mb20">
+                <button type="button" ng-show="manCtrl.isShowBtnAddShipment" id="btnAddShipment" ng-click="manCtrl.addNewShipment()" class="btn btn-default color">Add</button>
+                <script type="text/ng-template" id="myModalContent.html">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title">Destination</h3>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <select class="form-control" ng-model="manCtrl.selected.destinationId" ng-options="option.Id as option.Name for option in manCtrl.items"></select>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <div>Warehouse</div>
+                        <select class="form-control" ng-model="manCtrl.selected.warehouseId" ng-options="option.AttributeId as option.Name for option in manCtrl.warehouse"></select>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default color" type="button" ng-click="manCtrl.ok()">OK</button>
+                        <button class="btn btn-default color" type="button" ng-click="manCtrl.cancel()">Cancel</button>
+                    </div>
+                </script>
+                <button ng-show="manCtrl.isShowBtnForShipment" ng-click="manCtrl.removeShipment()" class="btn btn-default color">Remove</button>
+                <button ng-show="manCtrl.isShowBtnForShipment" type="button" class="btn btn-default" ng-click="manCtrl.exportMultiShipment(1)">Export US invoice</button>
+                <button ng-show="manCtrl.isShowBtnForShipment" type="button" class="btn btn-default" ng-click="manCtrl.exportMultiShipment(2)">Export VN invoice</button>
+            </div>
+        </div>
+
+        <div ng-show="manCtrl.isShowShipmentDetail" class="manage_order mt20" style="border-top: 1px solid #ccc;padding-top: 20px;">
+            <h1>Shipment Detail</h1>
+            <div class="row">
+                <div class="col-md-5 col-sm-5 col-xs-5 col-tn-12">
+                    <h2>Shipment number: {{manCtrl.shipmentSelected.ShipmentCode}} - warehouse: {{manCtrl.shipmentSelected.WarehouseName}}</h2>
+                    <div class="shipment-scroll table_cms table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Sender</th>
+                                    <th>Items In Package</th>
+                                    <th>Weight (lbs) / (kg)</th>
+                                    <th>Create Date</th>
+                                    <th>Recipient's City</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in manCtrl.shipmentSelected.LstPackage">
+                                    <td><label class="checkbox" ng-click="manCtrl.showBtnRemovePackage()"><input type="checkbox" ng-model="item.checked"></label></td>
+                                    <td><a style="color:#236852" href="#">{{item.Code}}</a></td>
+                                    <td>{{item.StoreName}}</td>
+                                    <td>
+                                        <div ng-repeat="itemInPackage in item.Items">
+                                            <span style="list-style:circle; color:red; font-size:9px">{{itemInPackage.Quantity}} {{itemInPackage.Description}} , </span>
+                                        </div>
+                                    </td>
+                                    <td><span style="float:right;">{{item.Weight}} (lb) - {{item.WeightKg}}(kg)</span></td>
+                                    <td>{{item.CreateDate}}</td>
+                                    <td>{{item.RecipientCityName}}</td>
+                                    <td>{{item.StatusName}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <td><span style="float:right; font-weight: bolder;">{{manCtrl.computedWeightShipmentSelected()}}(lb) - {{manCtrl.computedWeightShipmentSelectedPound()}}(kg)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2 col-tn-12">
+                    <button type="button" ng-show="manCtrl.isShowBtnAddPackage" ng-click="manCtrl.addPackageInShipment()" class="btn btn-default"> < Add</button>
+                    <button type="button" ng-show="manCtrl.isShowBtnRemovePackage" ng-click="manCtrl.removePackageInShipment()" class="btn btn-default">Remove></button>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 col-tn-12">
+                    <div class="tr tr1 mb10">
+
+                        <h2 style="display: inline-block; margin-right: 30px;">Available Package in warehouse</h2>
+
+                    </div>
+
+                    <div class="shipment-scroll table_cms table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Sender</th>
+                                    <th>Items In Package</th>
+                                    <th>Weight (lbs) - (kg)</th>
+                                    <th>Create Date</th>
+                                    <th>Recipient's City</th>
+                                    <th>Warehouse</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in manCtrl.lstPackageAvaiable">
+                                    <td><label class="checkbox" ng-click="manCtrl.showBtnAddPackage()"><input type="checkbox" ng-model="item.checked"></label></td>
+                                    <td>
+                                        <a style="color:#236852" href="#">{{item.Code}}</a>
+                                        <div>
+
+                                        </div>
+                                    </td>
+                                    <td>{{item.StoreName}}</td>
+                                    <td>
+                                        <div ng-repeat="itemInPackage in item.Items">
+                                            <span style="list-style:circle; color:red; font-size:9px">{{itemInPackage.Quantity}} {{itemInPackage.Description}} , </span>
+                                        </div>
+                                    </td>
+                                    <td>{{item.Weight}} (lb) - {{item.WeightKg }} (kg)</td>
+                                    <td>{{item.CreateDate}}</td>
+                                    <td>{{item.RecipientCityName}}</td>
+                                    <td>{{item.WarehouseName}}</td>
+                                    <td>{{item.StatusName}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <td><span style="float:right; font-weight: bolder;">{{manCtrl.computedWeightPackageAvaiable()}}(lb) - {{manCtrl.computedWeightPackageAvaiablePound()}}(kg)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mb40 mt20 export_cms center">
+                <div class="export mb10">
+                    <button type="button" class="btn btn-default" ng-click="manCtrl.exportShipment(1)">Export US invoice</button>
+                    <button type="button" class="btn btn-default" ng-click="manCtrl.exportShipment(2)">Export VN invoice</button>
+                </div>
+                <div class="btn_bottom">
+                    <button type="button" ng-click="manCtrl.saveShipment()" class="btn btn-default">Save</button>
+                    <button type="button" ng-click="manCtrl.cancelUpdateShipment()" class="btn btn-default">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript" src="@Url.Content("~/scripts/select2/select2.js")"></script>
+    <script src="~/scripts/angularjs/moment.min.js"></script>
+    @*<script src="~/scripts/angularjs/angular.min.js"></script>*@
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="~/scripts/angularjs/angular-moment.min.js"></script>
+
+    @*<script src="~/scripts/angularjs/angular-filter.min.js"></script>*@
+    <script>
+        angular
+            .module('OrderApp', ['ui.bootstrap',
+                //'angular.filter',
+                //'ngMaterial',
+                'ngAnimate', 'ngSanitize', 'ui.bootstrap',
+                'angularMoment'])
+    </script>
+    <script src="~/scripts/model/pageService.js"></script>
+    <script src="~/scripts/model/shipment/shipmentCtrl.js"></script>
+    <script>
+        var lstWarehouse = @(Html.Raw(Json.Encode(ViewBag.LstWarehouse)));
+        $(document).ready(function () {
+            var owl_slider_1 = $(".order_silde .owl-carousel");
+            var currentday = $('#currentdate').val();
+            var middate = $("#middate").val();
+            owl_slider_1.owlCarousel({
+                items: 6,
+                loop: false,
+                margin: 35,
+                autoplay: false,
+                autoplayTimeout: 7000,
+                nav: true,
+                smartSpeed: 650,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    590: {
+                        items: 3,
+                        margin: 20
+                    },
+                    1000: {
+                        items: 5
+                    },
+                    1280: {
+                        items: 6
+                    }
+                }
+            });
+            var mn_active_lichdau = $('#ngay_' + $('#currentdate').val());
+            var currentdateEnd = $('#currentdate').val();
+            var left_mn_active_lichdau = 0;
+            if (mn_active_lichdau.length > 0) {
+                //set default
+                left_mn_active_lichdau = mn_active_lichdau.position().left - 550;
+                $('.order_silde .owl-stage').css({ 'left': '0px', 'display': 'block', 'transform': 'translate3d(-' + left_mn_active_lichdau + 'px, 0px, 0px)', 'transition': 'all 200ms ease' });
+            }
+            $(".order_silde .owl-next").click(function () {
+                if (currentday <= currentdateEnd) {
+                    currentday++;
+                    owl_slider_1.trigger('owl.next');
+                    var left_mn_active_lichdau_next = left_mn_active_lichdau + 109;
+                    left_mn_active_lichdau = left_mn_active_lichdau_next;
+                    $('.order_silde .owl-stage').css({ 'left': '0px', 'display': 'block', 'transform': 'translate3d(-' + left_mn_active_lichdau_next + 'px, 0px, 0px)', 'transition': 'all 200ms ease' });
+                }
+
+            });
+            $(".order_silde .owl-prev").click(function () {
+                if (currentday >= middate) {
+                    currentday--;
+                    owl_slider_1.trigger('owl.prev');
+                    var left_mn_active_lichdau_prev = left_mn_active_lichdau - 109;
+                    left_mn_active_lichdau = left_mn_active_lichdau_prev;
+                    $('.order_silde .owl-stage').css({ 'left': '0px', 'display': 'block', 'transform': 'translate3d(-' + left_mn_active_lichdau_prev + 'px, 0px, 0px)', 'transition': 'all 200ms ease' });
+                }
+                else {
+                    left_mn_active_lichdau_prev = 0;
+                    left_mn_active_lichdau = left_mn_active_lichdau_prev;
+                    $('.order_silde .owl-wrapper').css({ 'left': '0px', 'display': 'block', 'transform': 'translate3d(-' + left_mn_active_lichdau_prev + 'px, 0px, 0px)', 'transition': 'all 200ms ease' });
+                }
+
+            });
+            $(".order_silde .item_slider_tt").click(function () {
+                $(".order_silde .item_slider_tt").removeClass("active")
+                if (!$(this).hasClass("active")) {
+                    $(this).addClass("active");
+                }
+                else {
+                    $(this).removeClass("active");
+                }
+                SearchOrder($(this).text());
+            });
+            SearchOrder(getDateActive())
+            $(".owl-carousel.owl-loaded").data('owl.carousel').to($(".order_silde .owl-item").length, 100, true);
+        });
+        function SearchOrder(date) {
+            var setDate = date;
+            if (setDate == '') {
+                setDate = getDateActive();
+            }
+            angular.element(document.getElementById('div-angular')).scope().manCtrl.setDateText(setDate);
+        }
+        function getDateActive() {
+            var $dots = $('.owl-dot');
+            var active = $(".owl-item").find("a.active");
+            return active.text();
+        }
+    </script>
+}
+

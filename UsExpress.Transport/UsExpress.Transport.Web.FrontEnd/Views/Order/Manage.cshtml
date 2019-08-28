@@ -1,0 +1,327 @@
+﻿@using UsExpress.Transport.Web.FrontEnd.Models
+@using UsExpress.Transport.Web.FrontEnd.Common
+@{
+    ViewBag.Title = "Manage order";
+
+    List<CategoryModel> category = (List<CategoryModel>)ViewBag.Category;
+    List<SelectItemBase> citySender = (List<SelectItemBase>)ViewBag.CitySender;
+    List<SelectItemBase> cityRecipient = (List<SelectItemBase>)ViewBag.CityRecipient;
+    List<DateTime> lstDate = new List<DateTime>();
+    int startDate = DateTime.Now.Date.Day - 30;
+    int endDate = DateTime.Now.Date.Day;
+}
+<div id="div-angular" ng-app="OrderApp" ng-controller="ManageController as manCtrl">
+
+    <div class="cms_nav">
+        <div class="container">
+            @*<div class="left"> @(string.IsNullOrEmpty(ViewBag.StoreName) == true ? "CSKH" : "Store Name") @ViewBag.StoreName</div>*@
+            @Html.Action("_HeaderPage", "Home")
+        </div>
+    </div>
+    <div class="container">
+        <div class="manage_order mt20">
+            <h1>Manage Orders</h1>
+            <div class="tr tr1 mb10">
+                <form id="search" class="mb20">
+                    <input type="text" class="input_search" name="" ng-model="manCtrl.filter.Keyword" placeholder="Tìm kiếm">
+                    <button onclick="SearchOrder('');" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                </form>
+                <div class="form-group mb20">
+                    <select class="form-control" ng-model="manCtrl.filter.TypeSearch" ng-options="option.Id as option.Name for option in manCtrl.options"></select>
+                </div>
+                <div class="form-group mb20">
+                    <select class="form-control" ng-if="manCtrl.storeList != null && manCtrl.storeList.length > 0" ng-model="manCtrl.filter.StoreId" ng-change="manCtrl.SearchOrder()" ng-options="option.id as option.StoreName for option in manCtrl.storeList">
+                        <option value="">All</option>
+                    </select>
+                </div>
+                @if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsStore())
+                {
+                    <div class="form-group mb20">
+                        <input type="checkbox" ng-model="manCtrl.filter.IsActive" ng-false-value="false" ng-true-value="true" ng-change="manCtrl.search()" id="chkActive" /> <label for="chkActive">Active</label>
+                    </div>
+                }
+                <div class="padding-left" ng-show="manCtrl.showAdvanceSearch">
+                    <div class="form-group mb20">
+                        from
+                        <input type="date" id="ip-fromdate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                    </div>
+                    <div class="form-group mb20">
+                        to
+                        <input type="date" id="ip-todate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                    </div>
+                </div>
+                <input type="hidden" id="currentdate" value="@(DateTime.Now.Day)" />
+                <input type="hidden" id="firstdate" value="@(DateTime.Now.AddDays(-13).Day)" />
+                <input type="hidden" id="middate" value="@(DateTime.Now.AddDays(-7).Day)" />
+            </div>
+            <div class="mb10">
+                <a href="javascript:void(0)" ng-show="manCtrl.showAdvanceSearch" ng-click="manCtrl.setShowAdvanceSearch(false)">
+                    Basic Search
+                </a>
+                <a href="javascript:void(0)" ng-hide="manCtrl.showAdvanceSearch" ng-click="manCtrl.setShowAdvanceSearch(true)">
+                    Advance Search
+                </a>
+
+            </div>
+        </div>
+        <div class="order_silde mb40" ng-hide="manCtrl.showAdvanceSearch">
+            <p>Orders:</p>
+            <div class="owl-carousel">
+                @for (int i = -13; i < 1; i++)
+                {
+                    <a id="ngay_@((DateTime.Now.AddDays(i)).Day)" class="item_slider_tt @(DateTime.Now.AddDays(i).Day == DateTime.Now.Day ? "active" : "")">@(DateTime.Now.AddDays(i).ToString("MMM dd yyyy"))</a>
+                }
+
+            </div>
+        </div>
+        <div class="table_cms mb30" ng-controller="OrderController as orderCtrl">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>ID</th>
+                            <th>SENDER</th>
+                            <th>weight(lbs)</th>
+                            <th>Store</th>
+                            <th>Shipment</th>
+                            <th>Created date</th>
+                            <th>Pickup date</th>
+                            <th>Shiping date</th>
+                            <th>Clear vn custom</th>
+                            <th>Deliver</th>
+                            <th>Status</th>
+                            <th>Recipient's City</th>
+                            @if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsStore())
+                            {
+                                <th>Hide/Unhide</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in manCtrl.lstResult">
+                            <td class="text-center">{{(manCtrl.pager.currentPage - 1) * manCtrl.pager.pageSize + ($index + 1)}}</td>
+                            <td style="color:#236852" ng-click="manCtrl.showDetailOrder(item.OrderId, 'model-dialog')">{{item.Code}}</td>
+                            <td>{{item.FullName}}</td>
+                            <td>{{item.Weight}}</td>
+                            <td>{{item.StoreName}}</td>
+                            <td>{{item.ShipmentCode}}</td>
+                            <td><span>{{item.CreateDate}}</span></td>
+                            <td>{{item.PickupDate}}</td>
+                            <td>{{item.ShippingDate}}</td>
+                            <td>{{item.ClearCustomDate}}</td>
+                            <td>{{item.DeliverDate}}</td>
+                            <td style="color:#236852">
+                                @if (!HttpContext.Current.Session[Constant.SessionUserRole].ToString().Contains(RoleEnum.Store + ""))
+                                {
+                                    <select class="form-control" ng-model="item.StatusIdChange" ng-change="manCtrl.changeStatus(item)" data-status-current="{{item.StatusId}}" id="sl-package-id-{{item.Id}}" ng-options="option.Id as option.Name for option in item.LstStatusCanChange"></select>
+                                }
+                                else
+                                {
+                                    <span>{{item.StatusName}}</span>
+                                }
+                            </td>
+                            <td>{{item.RecipientCityName}}</td>
+                            @if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsStore())
+                            {
+                                <td>
+                                    <a style="color:#236852;border-bottom:1px solid #236852" href="javascript:void(0)" ng-click="manCtrl.setActive(item)">{{(item.IsActive ? "hide" : "unhide")}}</a>
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" style="margin-left: 400px">
+                <div class="pagination-container">
+                    <!-- pager -->
+                    <ul ng-if="manCtrl.pager.pages.length" class="pagination">
+                        <li ng-class="{disabled:manCtrl.pager.currentPage === 1}">
+                            <a ng-click="vm.setPage(manCtrl.currentPage - 1)"><</a>
+                        </li>
+                        <li ng-repeat="page in manCtrl.pager.pages" ng-class="{active:manCtrl.pager.currentPage === page}">
+                            <a ng-click="manCtrl.setPage(page)">{{page}}</a>
+                        </li>
+                        <li ng-class="{disabled:manCtrl.pager.currentPage === manCtrl.pager.totalPages}">
+                            <a ng-click="manCtrl.setPage(manCtrl.pager.currentPage + 1)">></a>
+                        </li>
+                        @*<li ng-class="{disabled:manCtrl.pager.currentPage === manCtrl.pager.totalPages}">
+                                <a ng-click="manCtrl.setPage(manCtrl.pager.totalPages)">Last</a>
+                            </li>*@
+                    </ul>
+                    @*<ul class="pagination">
+                            <li class="PagedList-skipToNext">
+                                <a href="" rel="next"><</a>
+                            </li>
+                            <li class="active">
+                                <a>1</a>
+                            </li>
+                            <li>
+                                <a href="/list-store?page=2">2</a>
+                            </li>
+                            <li>
+                                <a href="/list-store?page=2">3</a>
+                            </li>
+                            <li>
+                                <a href="/list-store?page=2">..</a>
+                            </li>
+                            <li>
+                                <a href="/list-store?page=2">5</a>
+                            </li>
+                            <li class="PagedList-skipToNext">
+                                <a href="" rel="next">></a>
+                            </li>
+                        </ul>*@
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section headcss {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/select2/select2.css")" />
+}
+
+@section Scripts {
+    @*<script src="~/scripts/jquery-1.10.2.min.js"></script>*@
+    <script type="text/javascript" src="@Url.Content("~/scripts/select2/select2.js")"></script>
+    <script src="~/scripts/angularjs/moment.min.js"></script>
+    <script src="~/scripts/angularjs/angular.min.js"></script>
+    <script src="~/scripts/angularjs/angular-filter.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="~/scripts/angularjs/angular-moment.min.js"></script>
+    <script src="~/Scripts/angularjs/ui-bootstrap-tpls-0.13.0.js"></script>
+    <script>
+        //label
+        var lb_UpdateSuccessful =  '@LabelResources.Language.lb_UpdateSuccessful';
+        var lb_UpdateFailed =  '@LabelResources.Language.lb_UpdateFailed';
+
+        angular
+            .module('OrderApp', ['ui.bootstrap', 'angular.filter', 'ngMaterial', 'angularMoment'])
+    </script>
+    <script src="~/scripts/model/pageService.js"></script>
+    <script src="~/scripts/model/order/manageCtrl.js"></script>
+    <script src="~/scripts/model/order/orderCtrl.js"></script>
+    <script>
+        var orderId = -1;
+        var category = @(Html.Raw(Json.Encode(category)));
+        var citySender = @(Html.Raw(Json.Encode(citySender)));
+        var cityRecipient = @(Html.Raw(Json.Encode(cityRecipient)));
+        @*var storeId = '@(ViewBag.StoreId)'*@
+        $(document).ready(function(){
+            var owl_slider_1 = $(".order_silde .owl-carousel");
+            var currentday = $('#currentdate').val();
+            var middate = $("#middate").val();
+            owl_slider_1.owlCarousel({
+                items: 6,
+                loop: false,
+                margin: 35,
+                autoplay: false,
+                autoplayTimeout: 7000,
+                nav: true,
+                smartSpeed: 650,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    590: {
+                        items: 3,
+                        margin: 20
+                    },
+                    1000: {
+                        items: 5
+                    },
+                    1280: {
+                        items: 6
+                    }
+                }
+            });
+            var mn_active_lichdau = $('#ngay_'+ $('#currentdate').val());
+            var currentdateEnd = $('#currentdate').val();
+            var left_mn_active_lichdau =0;
+            if(mn_active_lichdau.length > 0)
+            {
+                //set default
+                left_mn_active_lichdau = mn_active_lichdau.position().left - 550;
+                $('.order_silde .owl-stage').css({'left':'0px','display':'block','transform':'translate3d(-'+left_mn_active_lichdau+'px, 0px, 0px)','transition':'all 200ms ease'});
+            }
+            $(".order_silde .owl-next").click(function() {
+                if(currentday <= currentdateEnd)
+                {
+                    currentday ++;
+                    owl_slider_1.trigger('owl.next');
+                    var left_mn_active_lichdau_next = left_mn_active_lichdau + 109;
+                    left_mn_active_lichdau = left_mn_active_lichdau_next;
+                    $('.order_silde .owl-stage').css({'left':'0px','display':'block','transform':'translate3d(-'+left_mn_active_lichdau_next+'px, 0px, 0px)','transition':'all 200ms ease'});
+                }
+
+            });
+            $(".order_silde .owl-prev").click(function() {
+                if(currentday >= middate )
+                {
+                    currentday --;
+                    owl_slider_1.trigger('owl.prev');
+                    var left_mn_active_lichdau_prev = left_mn_active_lichdau - 109;
+                    left_mn_active_lichdau = left_mn_active_lichdau_prev;
+                    $('.order_silde .owl-stage').css({'left':'0px','display':'block','transform':'translate3d(-'+left_mn_active_lichdau_prev+'px, 0px, 0px)','transition':'all 200ms ease'});
+                }
+                else
+                {
+                    left_mn_active_lichdau_prev = 0;
+                    left_mn_active_lichdau = left_mn_active_lichdau_prev;
+                    $('.order_silde .owl-wrapper').css({'left':'0px','display':'block','transform':'translate3d(-'+left_mn_active_lichdau_prev+'px, 0px, 0px)','transition':'all 200ms ease'});
+                }
+
+            });
+            $(".order_silde .item_slider_tt").click(function () {
+                $(".order_silde .item_slider_tt").removeClass("active")
+                if(!$(this).hasClass("active")){
+                    $(this).addClass("active");
+                }
+                else{
+                    $(this).removeClass("active");
+                }
+                SearchOrder($(this).text());
+            });
+            //$(document).on('click', '.owl-item', function(){
+            //    n = $(this).index();
+            //    console.log(n)
+            //    $(".owl-item >a").removeClass("active");
+            //    console.log($(this).text());
+            //    $(this).find("a").addClass("active");
+            //    SearchOrder($(this).text());
+            //});
+            //var $dots = $('.owl-dot');
+            //var active = $(".owl-item").find("a.active");
+            //var indexCurrent = active.parent().index();
+            //var $next = $dots.filter('.active').next();
+            //if (!$next.length)
+            //    $next = $dots.first();
+            //var pageIndex = indexCurrent % 6;
+            //for(var i=0; i< pageIndex; i++){
+            //    $next.trigger('click');
+            //}
+            SearchOrder(getDateActive())
+            $(".owl-carousel.owl-loaded").data('owl.carousel').to($(".order_silde .owl-item").length, 100, true);
+        });
+        function SearchOrder(date) {
+            var setDate = date;
+            if(setDate == ''){
+                setDate = getDateActive();
+            }
+            angular.element(document.getElementById('div-angular')).scope().manCtrl.setDateText(setDate);
+        }
+        function getDateActive(){
+            var $dots = $('.owl-dot');
+            var active = $(".owl-item").find("a.active");
+            return active.text();
+        }
+    </script>
+}
+
+
+

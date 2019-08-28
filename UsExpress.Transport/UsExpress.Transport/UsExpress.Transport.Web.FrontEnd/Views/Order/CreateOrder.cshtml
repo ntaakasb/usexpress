@@ -1,0 +1,40 @@
+﻿@using UsExpress.Transport.Web.FrontEnd.Models
+@{
+    ViewBag.Title = "CreateOrder";
+    //OrderModel orderDetail = (OrderModel)ViewBag.OrderDetail;
+    List<CategoryModel> category = (List<CategoryModel>)ViewBag.Category;
+    List<SelectItemBase> citySender = (List<SelectItemBase>)ViewBag.CitySender;
+    List<SelectItemBase> cityRecipient = (List<SelectItemBase>)ViewBag.CityRecipient;
+}
+<section id="main_container" class="width_100" ng-app="OrderApp" ng-controller="OrderController as orderCtrl">
+@Html.Partial("_OrderModel")
+</section>
+}
+@section headcss {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/select2/select2.css")" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/select2/select2.js")"></script>
+    <script src="~/Scripts/angularjs/angular.min.js"></script>
+    <script src="~/Scripts/angularjs/angular-filter.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    @*<script src="~/Scripts/angularjs/ui-bootstrap-tpls-0.13.0.js"></script>*@
+    <script>
+        angular
+            .module('OrderApp', ['angular.filter', 'ngMaterial'])
+    </script>
+    <script src="~/Scripts/model/order/orderCtrl.js"></script>
+    <script>
+        var orderId = 0;
+        var category = @(Html.Raw(Json.Encode(category)));
+        var citySender = @(Html.Raw(Json.Encode(citySender)));
+        var cityRecipient = @(Html.Raw(Json.Encode(cityRecipient)));
+    </script>
+}
+
+
+

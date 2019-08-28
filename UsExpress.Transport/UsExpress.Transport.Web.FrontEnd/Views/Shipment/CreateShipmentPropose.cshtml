@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Create Shipment Propose";
+}
+@section headcss {
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+}
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<!-- Main component for a primary marketing message or call to action -->
+<h1 style="text-transform:uppercase">Create Shipment Propose: <span></span></h1>
+<div id="sortable-div" class="col-sm-12 col-xs-12 col-md-9 addSub">
+    <div class="padLR10">
+    </div>
+    <div id="dragdrop" class="col-sm-6 col-xs-6 col-md-6">
+        <div class="well clearfix">
+
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6 col-md-6">
+                        Code
+                    </div>
+                    <div class="col-sm-3 col-xs-3 col-md-3">
+                        Weight
+                    </div>
+                    <div class="col-sm-3 col-xs-3 col-md-3">
+                        Info
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:right">500kg</div>
+            <div class="dragbleList">
+                <ul class="sortable-list">
+                    <li class="sortable-item">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6 col-md-6">
+                                Code <br />
+                                Items: 
+                            </div>
+                            <div class="col-sm-3 col-xs-3 col-md-3">
+                                Weight
+                            </div>
+                            <div class="col-sm-3 col-xs-3 col-md-3">
+                                Info
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="dragdrop" class="col-sm-6 col-xs-6 col-md-6">
+        <div class="well clearfix">
+
+            <div class="header">Container 2</div>
+            <ul class="sortable-list">
+                <li class="sortable-item">Item51</li>
+                <li class="sortable-item">Item52</li>
+                <li class="sortable-item">Item53</li>
+                <li class="sortable-item">Item54</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="dragdrop" class="col-sm-6 col-xs-6 col-md-6">
+        <div id="my-timesheet" class="well clearfix">
+            <div class="header">Container 3</div>
+            <ul class="sortable-list">
+                <li class="sortable-item">Item6</li>
+                <li class="sortable-item">Item7</li>
+                <li class="sortable-item">Item8</li>
+                <li class="sortable-item">Item9</li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/scripts/1.12.1.jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Example 1.3: Sortable and connectable lists with visual helper
+            $('#sortable-div .sortable-list').sortable({
+                connectWith: '#sortable-div .sortable-list',
+                placeholder: 'placeholder',
+            });
+        });
+    </script>
+
+}
+

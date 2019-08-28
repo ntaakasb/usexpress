@@ -1,0 +1,10 @@
+﻿  @{
+      string storename = Session[UsExpress.Transport.Web.FrontEnd.Common.Constant.SessionStoreName] != null ? Session[UsExpress.Transport.Web.FrontEnd.Common.Constant.SessionStoreName].ToString() : "";
+      string loginuser = Session[UsExpress.Transport.Web.FrontEnd.Common.Constant.SessionUsername] != null ? Session[UsExpress.Transport.Web.FrontEnd.Common.Constant.SessionUsername].ToString() : "";
+      <div class="left">
+                
+                @(!string.IsNullOrEmpty(storename) ? "Store Name: " + storename : "Xin chào: " + loginuser)
+            </div>
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-GB");
+            <div class="right">@DateTime.Now.ToString("MMM-dd-yyyy", culture)</div>
+}

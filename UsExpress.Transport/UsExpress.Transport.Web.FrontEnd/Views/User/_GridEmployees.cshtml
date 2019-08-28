@@ -1,0 +1,61 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.Extension.EmployeesDTO>
+
+@{
+    if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:2%">STT</th>
+                        <th>ID</th>
+                        <th>Full Name</th>
+
+                        <th>Phone</th>
+                        <th>Địa Chỉ</th>
+                        <th>Email</th>
+                        <th>Warehouse</th>
+                        <th>Type</th>
+                        <th>Status</th>
+
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int i = ViewBag.Index;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.Id</td>
+                                <td>@item.FullName</td>
+
+                                <td>@item.Phone</td>
+                                <td>@item.Add1</td>
+                                <td>@item.Email</td>
+                                <td>@item.WarehouseName</td>
+                                <td>@Html.Action("GetRoleUser", new { userID = item.Id }) </td>
+                                <td>@(bool.Parse(item.IsActive.ToString()) ? "Active" : "UnActive")</td>
+                                <td><a style="color:#236852;border-bottom:1px solid #236852" href="/User/CreateUser/@item.Id">update</a></td>
+                            </tr>
+                            i++;
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Manage", new { page }))
+        </div>
+
+    }
+}
+
+

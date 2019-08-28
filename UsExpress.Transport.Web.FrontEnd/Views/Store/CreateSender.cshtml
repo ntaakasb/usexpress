@@ -1,0 +1,140 @@
+﻿@model UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblSender
+@{
+    ViewBag.Title = "SenderManager";
+}
+@{
+    bool IsUpdate = Model != null && Model.Id > 0 ? true : false;
+    string formTitle = "CREATE SENDER";
+    if (IsUpdate)
+    {
+        //CityID = int.Parse(Model.CityId.ToString());
+        formTitle = "UPDATE SENDER";
+    }
+}
+
+<style>
+    .form_cms {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+</style>
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40">
+        @using (Ajax.BeginForm("AJXUpdateSender", "Store", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess"
+        }, new { @class = "form_cms", @id = "frm_create_sender" }))
+        {
+            <input type="hidden" name="FullAddress" id="FullAddress" />
+            if (IsUpdate)
+            {
+                <input type="hidden" name="Id" value="@Model.Id" />
+            }
+            <h2>@formTitle</h2>
+            <div class="warp">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @placeholder = "Full name" })
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Add1, new { @class = "form-control", @placeholder = "Address 1" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Add2, new { @class = "form-control", @placeholder = "Address 2" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                @*<div class="form-group width-100">
+                        <select id="CityId" name="CityId" class="form-control" style="width: 60%;display: inline-block;">
+
+                            @Html.Action("_HtmlSelectBoxCity", "Common", new { Selected = CityID })
+                        </select>
+                        <i class="fa fa-university"><img src="images/icons/city.png" alt=""></i>
+                    </div>*@
+                <div class="form-group width-100" style="width:70%">
+                    @Html.TextBoxFor(x => x.CityId, new { @class = "form-control", @placeholder = "City" })
+                    <i class=""><img src="/content/images/icons/city.png" alt=""></i>
+                </div>
+                @*<div class="form-group width-100">
+                        <select id="StateID" name="StateID" class="form-control" style="width: 60%;display: inline-block;">
+                            @Html.Action("_HtmlSelectBoxState", "Common", new { Selected = StateID })
+                        </select>
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>*@
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.StateId, new { @class = "form-control", @placeholder = "State", @style = "width:45%;    display: inline-block;" })
+                    @*@Html.TextBoxFor(x => x.z, new { @class = "form-control", @placeholder = "State", @style = "width:50%;    display: inline-block;margin-left:5%;" })*@
+                    @Html.TextBoxFor(x => x.Zip, new { @class = "form-control", @placeholder = "Zip", @style = "width:50%;    display: inline-block;margin-left:5%;" })
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "Phone number" })
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email" })
+                    <i class="fas fa-envelope"></i>
+                </div>
+
+                @if (ViewBag.HadStore != null && bool.Parse(ViewBag.HadStore.ToString()))
+                {
+                    <input type="hidden" name="StoreId" value="@ViewBag.StoreID" />
+                    <div class="form-group width-100 btn_bottom">
+                        @if (IsUpdate)
+                        {
+                        <button type="submit" class="btn btn-default">Update</button>
+                        <a type="button" href="/Store/SenderList" class="btn btn-default">Cancel</a>
+                        }
+                        else
+                        {
+                        <button type="submit" class="btn btn-default">Add</button>
+                        <a type="button" href="/Store/SenderList" class="btn btn-default">Cancel</a>
+                        }
+                    </div>
+                }
+                else if (UsExpress.Transport.Web.FrontEnd.Common.Libs.IsAdmin())
+                {
+                    int storeID = Model != null && Model.StoreId != null ? int.Parse(Model.StoreId.ToString()) : 0;
+                    <div class="form-group width-100">
+                        <select name="StoreId" class="form-control">
+                            @Html.Action("_HtmlSelectBoxStore", new { selected = storeID })
+                        </select>
+                    </div>
+                    <div class="form-group width-100 btn_bottom">
+                        <button type="submit" class="btn btn-default">@(IsUpdate ? "Update" : "Add")</button>
+                        <a type="button" href="/Store/SenderList" class="btn btn-default">Cancel</a>
+                    </div>
+                }
+                else
+                {
+                    <label class="error">Bạn không có quyền tạo Sender</label>
+                }
+
+            </div>
+
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/scripts/object-prototype/store.js"></script>
+    <script>
+        Store.ValidateFormSender();
+        function OnSuccess(avg) {
+            Store.UpdateSenderSuccess(avg);
+        }
+
+        $("#StateId").autocomplete({
+            source: availableState
+        });
+    </script>
+
+}

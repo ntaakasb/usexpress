@@ -1,0 +1,62 @@
+﻿@using UsExpress.Transport.Lib.Utilities;
+
+@model IEnumerable<UsExpress.Transport.Lib.Business.Models.ReportOrderModel>
+<table id="tbReportOrder" class="table" data-paging="#pagination" data-totalrows="@ViewBag.TotalRows" style="min-width: 2000px">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Code</th>
+            <th width="200px">Sender</th>
+            <th width="200px">Sender Address</th>
+            <th width="200px">Phone Sender</th>
+            <th width="200px">Recipient </th>
+            <th width="200px">Recipient Address</th>
+            <th width="200px">Recipient Phone</th>
+            <th>Fee</th>
+            <th>Weight</th>
+            <th width="100px">Total fee</th>
+            <th width="100px">Total value</th>
+            <th width="200px">Total number of Items</th>
+            <th width="100px">Store</th>
+            <th width="300px">Create date</th>
+            <th>Pickup date</th>
+            <th>Shipping date</th>
+            <th width="100px">Clear vn custom</th>
+            <th>Deliver</th>
+            @*<th>Recipient city</th>*@
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.STT</td>
+                    <td>@item.Code</td>
+                    <td>@item.Sender</td>
+                    <td>@item.AddressSender</td>
+                    <td>@item.PhoneSender</td>
+                    <td>@item.Recipient</td>
+                    <td>@item.AddressRecippient</td>
+                    <td>@item.PhoneRecippient</td>
+                    
+                    <td>@item.Fee</td>
+                    <td>@item.Totalweigh</td>
+                    <td>@item.Totalfee</td>
+                    <td>@item.Totalvalue</td>
+                    <td>@item.Totalpackage</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.CreateDate.UnixTimeStampToDateTime().CheckNullDateTime()</td>
+                    <td>@item.PickupDate.UnixTimeStampToDateTime().CheckNullDateTime()</td>
+                    <td>@item.ShippingDate.UnixTimeStampToDateTime().CheckNullDateTime()</td>
+                    <td>@item.ClearCustomDate.UnixTimeStampToDateTime().CheckNullDateTime()</td>
+                    <td>@item.Deliver</td>
+                    @*<td>@item.CityName</td>*@
+                </tr>
+            }
+        }
+    </tbody>
+</table>

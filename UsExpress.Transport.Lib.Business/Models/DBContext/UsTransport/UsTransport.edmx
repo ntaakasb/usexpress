@@ -1,0 +1,1835 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UsTransportModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="500" />
+          <Property Name="Body" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UsTransport.dbo.Log' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Thread" />
+            <PropertyRef Name="Level" />
+            <PropertyRef Name="Logger" />
+            <PropertyRef Name="Message" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Thread" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Level" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Logger" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Exception" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="tblAppUserRoleMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="AppMenuId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tax" Type="int" />
+          <Property Name="TypeCategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="airport" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AllowsBilling" Type="bit" Nullable="false" />
+          <Property Name="AllowsShipping" Type="bit" Nullable="false" />
+          <Property Name="TwoLetterIsoCode" Type="nvarchar" MaxLength="2" />
+          <Property Name="ThreeLetterIsoCode" Type="nvarchar" MaxLength="3" />
+          <Property Name="NumericIsoCode" Type="int" Nullable="false" />
+          <Property Name="SubjectToVat" Type="bit" Nullable="false" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="LimitedToStores" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblDistrict">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblDistrictStateProvice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StateProvinceID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblItemInPackage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageId" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="BarCode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblKerryOrderProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="50" />
+          <Property Name="StatusService" Type="varchar" MaxLength="10" />
+          <Property Name="StatusServiceDescription" Type="nvarchar" MaxLength="200" />
+          <Property Name="Weight" Type="varchar" MaxLength="10" />
+          <Property Name="Dimension" Type="varchar" MaxLength="20" />
+          <Property Name="Cost" Type="varchar" MaxLength="20" />
+          <Property Name="Fee" Type="varchar" MaxLength="20" />
+          <Property Name="TimeStatus" Type="varchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblKerryPostNewOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
+          <Property Name="Message" Type="nvarchar" MaxLength="200" />
+          <Property Name="OrderNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Cost" Type="varchar" MaxLength="50" />
+          <Property Name="WoodBaleFee" Type="varchar" MaxLength="50" />
+          <Property Name="RemoteDeliverFee" Type="varchar" MaxLength="50" />
+          <Property Name="DeliveryDate" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblKerryStatusService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tblMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+          <Property Name="Action" Type="varchar" MaxLength="50" />
+          <Property Name="Controller" Type="varchar" MaxLength="50" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsShow" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblMenuPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="MenuId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SenderId" Type="int" />
+          <Property Name="RecipientId" Type="int" />
+          <Property Name="TotalPackage" Type="int" />
+          <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCharge" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Exedite" Type="int" />
+          <Property Name="CreateDate" Type="bigint" Nullable="false" />
+          <Property Name="PickupDate" Type="bigint" />
+          <Property Name="ShippingDate" Type="bigint" />
+          <Property Name="ClearCustomDate" Type="bigint" />
+          <Property Name="Deliver" Type="bigint" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Tracking" Type="nvarchar" MaxLength="50" />
+          <Property Name="Destination" Type="int" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="NotifyToCustomer" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="BarCode" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="TotalItems" Type="bigint" />
+          <Property Name="TotalDeclareValues" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ShippingFree" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblPackageInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="Ordinal" Type="int" Nullable="false" />
+          <Property Name="Expedite" Type="int" />
+          <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Height" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Width" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Depth" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Fee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalItem" Type="int" Nullable="false" />
+          <Property Name="TotalValue" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PackName" Type="nvarchar" MaxLength="250" />
+          <Property Name="WarehouseId" Type="int" />
+          <Property Name="Destination" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ShipmentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShipmentId" Type="int" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="bigint" Nullable="false" />
+          <Property Name="Tracking" Type="nvarchar" MaxLength="50" />
+          <Property Name="PickupTime" Type="bigint" />
+          <Property Name="ShippingTime" Type="bigint" />
+          <Property Name="ClearCustomTime" Type="bigint" />
+          <Property Name="DeliverTime" Type="bigint" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="CreateDateLocal" Type="datetime" Nullable="false" />
+          <Property Name="PickupDateLocal" Type="datetime" />
+          <Property Name="ShippingDateLocal" Type="datetime" />
+          <Property Name="NotifyToCustomer" Type="int" />
+          <Property Name="HistoryTransport" Type="nvarchar(max)" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="BarCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ScheduleBCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblRecipientsInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Add1" Type="nvarchar" MaxLength="250" />
+          <Property Name="Add2" Type="nvarchar" MaxLength="250" />
+          <Property Name="CityId" Type="varchar" MaxLength="50" />
+          <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="WardId" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="bigint" />
+          <Property Name="UpdateDate" Type="bigint" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Add1" Type="nvarchar" MaxLength="250" />
+          <Property Name="Add2" Type="nvarchar" MaxLength="250" />
+          <Property Name="CityId" Type="varchar" MaxLength="50" />
+          <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+          <Property Name="StateId" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="bigint" />
+          <Property Name="UpdateDate" Type="bigint" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblShipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShipmentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Destination" Type="int" />
+          <Property Name="WarehouseId" Type="int" />
+          <Property Name="TotalWeight" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="bigint" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ExtraData" Type="nvarchar(max)" />
+          <Property Name="LogChange" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblShippingInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="256" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="256" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="256" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="CityId" Type="varchar" MaxLength="50" />
+          <Property Name="StateId" Type="varchar" MaxLength="50" />
+          <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+          <Property Name="WardId" Type="varchar" MaxLength="50" />
+          <Property Name="Zip" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="256" />
+          <Property Name="FullAddress1" Type="nvarchar" MaxLength="512" />
+          <Property Name="FullAddress2" Type="nvarchar" MaxLength="512" />
+          <Property Name="OrderId" Type="bigint" />
+          <Property Name="TypeUser" Type="int" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClearCustomDateLocal" Type="datetime" />
+          <Property Name="DeliverDateLocal" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblState">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="tblStateProvice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="AirPort" Type="int" />
+          <Property Name="AirPortCode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblStatusOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="ParentId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblStoreAccount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="250" />
+          <Property Name="CityId" Type="varchar" MaxLength="150" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="StateId" Type="varchar" MaxLength="150" />
+          <Property Name="WarehouseId" Type="int" />
+          <Property Name="TypeId" Type="int" />
+          <Property Name="Zip" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="AliasFullName" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTypeAcount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeAccount" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblTypeCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeCategory" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="WarehouseID" Type="int" />
+          <Property Name="Add1" Type="nvarchar" MaxLength="200" />
+          <Property Name="KeyChange" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDateKey" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblUserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblWard">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DistrictId" Type="varchar" MaxLength="50" />
+          <Property Name="WardName" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblWarehouse">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Warehouse" Type="nvarchar" MaxLength="100" />
+          <Property Name="CityId" Type="nvarchar" MaxLength="200" />
+          <Property Name="StateId" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Add1" Type="nvarchar" MaxLength="400" />
+          <Property Name="Add2" Type="nvarchar" MaxLength="400" />
+          <Property Name="Zip" Type="varchar" MaxLength="10" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_StateProvince_Country_CountryId">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblStateProvice" Type="Self.tblStateProvice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblStateProvice">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCategory_tblTypeCategory">
+          <End Role="tblTypeCategory" Type="Self.tblTypeCategory" Multiplicity="0..1" />
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTypeCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblCategory">
+              <PropertyRef Name="TypeCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblItemInPackage_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+          <End Role="tblItemInPackage" Type="Self.tblItemInPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblItemInPackage">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblItemInPackage_tblPackageInfo">
+          <End Role="tblPackageInfo" Type="Self.tblPackageInfo" Multiplicity="0..1" />
+          <End Role="tblItemInPackage" Type="Self.tblItemInPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPackageInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblItemInPackage">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProduct_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRecipientsInfo_tblStoreAccount">
+          <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="0..1" />
+          <End Role="tblRecipientsInfo" Type="Self.tblRecipientsInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStoreAccount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblRecipientsInfo">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSender_tblStoreAccount">
+          <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="0..1" />
+          <End Role="tblSender" Type="Self.tblSender" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStoreAccount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblSender">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStoreAccount_tblTypeAcount">
+          <End Role="tblTypeAcount" Type="Self.tblTypeAcount" Multiplicity="0..1" />
+          <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTypeAcount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblStoreAccount">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStoreAccount_tblWarehouse">
+          <End Role="tblWarehouse" Type="Self.tblWarehouse" Multiplicity="0..1" />
+          <End Role="tblStoreAccount" Type="Self.tblStoreAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWarehouse">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblStoreAccount">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UsTransportModelStoreContainer">
+          <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAppUserRoleMenu" EntityType="Self.tblAppUserRoleMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCity" EntityType="Self.tblCity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDistrict" EntityType="Self.tblDistrict" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDistrictStateProvice" EntityType="Self.tblDistrictStateProvice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblItemInPackage" EntityType="Self.tblItemInPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKerryOrderProgress" EntityType="Self.tblKerryOrderProgress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKerryPostNewOrder" EntityType="Self.tblKerryPostNewOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKerryStatusService" EntityType="Self.tblKerryStatusService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMenuPermission" EntityType="Self.tblMenuPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPackageInfo" EntityType="Self.tblPackageInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRecipientsInfo" EntityType="Self.tblRecipientsInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSender" EntityType="Self.tblSender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblShipment" EntityType="Self.tblShipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblShippingInfo" EntityType="Self.tblShippingInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStateProvice" EntityType="Self.tblStateProvice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatusOrder" EntityType="Self.tblStatusOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStoreAccount" EntityType="Self.tblStoreAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTypeAcount" EntityType="Self.tblTypeAcount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTypeCategory" EntityType="Self.tblTypeCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserRole" EntityType="Self.tblUserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblWard" EntityType="Self.tblWard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblWarehouse" EntityType="Self.tblWarehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Log].[Id] AS [Id], 
+    [Log].[Date] AS [Date], 
+    [Log].[Thread] AS [Thread], 
+    [Log].[Level] AS [Level], 
+    [Log].[Logger] AS [Logger], 
+    [Log].[Message] AS [Message], 
+    [Log].[Exception] AS [Exception]
+    FROM [dbo].[Log] AS [Log]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_StateProvince_Country_CountryId" Association="Self.FK_StateProvince_Country_CountryId">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblStateProvice" EntitySet="tblStateProvice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCategory_tblTypeCategory" Association="Self.FK_tblCategory_tblTypeCategory">
+            <End Role="tblTypeCategory" EntitySet="tblTypeCategory" />
+            <End Role="tblCategory" EntitySet="tblCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblItemInPackage_tblCategory" Association="Self.FK_tblItemInPackage_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblItemInPackage" EntitySet="tblItemInPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblItemInPackage_tblPackageInfo" Association="Self.FK_tblItemInPackage_tblPackageInfo">
+            <End Role="tblPackageInfo" EntitySet="tblPackageInfo" />
+            <End Role="tblItemInPackage" EntitySet="tblItemInPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblProduct" EntitySet="tblProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRecipientsInfo_tblStoreAccount" Association="Self.FK_tblRecipientsInfo_tblStoreAccount">
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+            <End Role="tblRecipientsInfo" EntitySet="tblRecipientsInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSender_tblStoreAccount" Association="Self.FK_tblSender_tblStoreAccount">
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+            <End Role="tblSender" EntitySet="tblSender" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStoreAccount_tblTypeAcount" Association="Self.FK_tblStoreAccount_tblTypeAcount">
+            <End Role="tblTypeAcount" EntitySet="tblTypeAcount" />
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStoreAccount_tblWarehouse" Association="Self.FK_tblStoreAccount_tblWarehouse">
+            <End Role="tblWarehouse" EntitySet="tblWarehouse" />
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccount" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UsTransportModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="UsTransportEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tests" EntityType="Self.Test" />
+          <EntitySet Name="tblMenus" EntityType="UsTransportModel.tblMenu" />
+          <EntitySet Name="tblMenuPermissions" EntityType="UsTransportModel.tblMenuPermission" />
+          <EntitySet Name="tblRoles" EntityType="UsTransportModel.tblRole" />
+          <EntitySet Name="tblUserRoles" EntityType="UsTransportModel.tblUserRole" />
+          <EntitySet Name="tblCities" EntityType="UsTransportModel.tblCity" />
+          <EntitySet Name="tblDistricts" EntityType="UsTransportModel.tblDistrict" />
+          <EntitySet Name="tblStates" EntityType="UsTransportModel.tblState" />
+          <EntitySet Name="tblCategories" EntityType="UsTransportModel.tblCategory" />
+          <EntitySet Name="tblCountries" EntityType="UsTransportModel.tblCountry" />
+          <EntitySet Name="tblItemInPackages" EntityType="UsTransportModel.tblItemInPackage" />
+          <AssociationSet Name="FK_tblItemInPackage_tblCategory" Association="UsTransportModel.FK_tblItemInPackage_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategories" />
+            <End Role="tblItemInPackage" EntitySet="tblItemInPackages" />
+          </AssociationSet>
+          <EntitySet Name="tblKerryPostNewOrders" EntityType="UsTransportModel.tblKerryPostNewOrder" />
+          <EntitySet Name="tblKerryStatusServices" EntityType="UsTransportModel.tblKerryStatusService" />
+          <EntitySet Name="tblDistrictStateProvices" EntityType="UsTransportModel.tblDistrictStateProvice" />
+          <EntitySet Name="tblStateProvices" EntityType="UsTransportModel.tblStateProvice" />
+          <EntitySet Name="tblWards" EntityType="UsTransportModel.tblWard" />
+          <AssociationSet Name="FK_StateProvince_Country_CountryId" Association="UsTransportModel.FK_StateProvince_Country_CountryId">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblStateProvice" EntitySet="tblStateProvices" />
+          </AssociationSet>
+          <EntitySet Name="tblShippingInfoes" EntityType="UsTransportModel.tblShippingInfo" />
+          <EntitySet Name="tblRecipientsInfoes" EntityType="UsTransportModel.tblRecipientsInfo" />
+          <EntitySet Name="tblSenders" EntityType="UsTransportModel.tblSender" />
+          <EntitySet Name="tblKerryOrderProgresses" EntityType="UsTransportModel.tblKerryOrderProgress" />
+          <EntitySet Name="tblOrders" EntityType="UsTransportModel.tblOrder" />
+          <EntitySet Name="tblTypeCategories" EntityType="UsTransportModel.tblTypeCategory" />
+          <AssociationSet Name="FK_tblCategory_tblTypeCategory" Association="UsTransportModel.FK_tblCategory_tblTypeCategory">
+            <End Role="tblTypeCategory" EntitySet="tblTypeCategories" />
+            <End Role="tblCategory" EntitySet="tblCategories" />
+          </AssociationSet>
+          <EntitySet Name="tblTypeAcounts" EntityType="UsTransportModel.tblTypeAcount" />
+          <EntitySet Name="tblWarehouses" EntityType="UsTransportModel.tblWarehouse" />
+          <EntitySet Name="tblStoreAccounts" EntityType="UsTransportModel.tblStoreAccount" />
+          <AssociationSet Name="FK_tblRecipientsInfo_tblStoreAccount" Association="UsTransportModel.FK_tblRecipientsInfo_tblStoreAccount">
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccounts" />
+            <End Role="tblRecipientsInfo" EntitySet="tblRecipientsInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSender_tblStoreAccount" Association="UsTransportModel.FK_tblSender_tblStoreAccount">
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccounts" />
+            <End Role="tblSender" EntitySet="tblSenders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStoreAccount_tblTypeAcount" Association="UsTransportModel.FK_tblStoreAccount_tblTypeAcount">
+            <End Role="tblTypeAcount" EntitySet="tblTypeAcounts" />
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStoreAccount_tblWarehouse" Association="UsTransportModel.FK_tblStoreAccount_tblWarehouse">
+            <End Role="tblWarehouse" EntitySet="tblWarehouses" />
+            <End Role="tblStoreAccount" EntitySet="tblStoreAccounts" />
+          </AssociationSet>
+          <EntitySet Name="tblUsers" EntityType="UsTransportModel.tblUser" />
+          <EntitySet Name="tblShipments" EntityType="UsTransportModel.tblShipment" />
+          <EntitySet Name="tblAppUserRoleMenus" EntityType="UsTransportModel.tblAppUserRoleMenu" />
+          <EntitySet Name="tblPackageInfoes" EntityType="UsTransportModel.tblPackageInfo" />
+          <AssociationSet Name="FK_tblItemInPackage_tblPackageInfo" Association="UsTransportModel.FK_tblItemInPackage_tblPackageInfo">
+            <End Role="tblPackageInfo" EntitySet="tblPackageInfoes" />
+            <End Role="tblItemInPackage" EntitySet="tblItemInPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPackageInfo_tblOrder" Association="UsTransportModel.FK_tblPackageInfo_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrders" />
+            <End Role="tblPackageInfo" EntitySet="tblPackageInfoes" />
+          </AssociationSet>
+          <EntitySet Name="tblProducts" EntityType="UsTransportModel.tblProduct" />
+          <AssociationSet Name="FK_tblProduct_tblCategory" Association="UsTransportModel.FK_tblProduct_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategories" />
+            <End Role="tblProduct" EntitySet="tblProducts" />
+          </AssociationSet>
+          <EntitySet Name="EmailTemplates" EntityType="UsTransportModel.EmailTemplate" />
+          <EntitySet Name="tblStatusOrders" EntityType="UsTransportModel.tblStatusOrder" />
+          <EntitySet Name="Logs" EntityType="UsTransportModel.Log" />
+          </EntityContainer>
+        <EntityType Name="tblMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="IsShow" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblMenuPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblUserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="airport" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblDistrict">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="DistrictName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblState">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tax" Type="Int32" />
+          <NavigationProperty Name="tblItemInPackages" Relationship="UsTransportModel.FK_tblItemInPackage_tblCategory" FromRole="tblCategory" ToRole="tblItemInPackage" />
+          <Property Name="TypeCategoryID" Type="Int32" />
+          <NavigationProperty Name="tblTypeCategory" Relationship="UsTransportModel.FK_tblCategory_tblTypeCategory" FromRole="tblCategory" ToRole="tblTypeCategory" />
+          <NavigationProperty Name="tblProducts" Relationship="UsTransportModel.FK_tblProduct_tblCategory" FromRole="tblCategory" ToRole="tblProduct" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AllowsBilling" Type="Boolean" Nullable="false" />
+          <Property Name="AllowsShipping" Type="Boolean" Nullable="false" />
+          <Property Name="TwoLetterIsoCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="ThreeLetterIsoCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="NumericIsoCode" Type="Int32" Nullable="false" />
+          <Property Name="SubjectToVat" Type="Boolean" Nullable="false" />
+          <Property Name="Published" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="LimitedToStores" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblStateProvices" Relationship="UsTransportModel.FK_StateProvince_Country_CountryId" FromRole="tblCountry" ToRole="tblStateProvice" />
+        </EntityType>
+        <EntityType Name="tblItemInPackage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCategory" Relationship="UsTransportModel.FK_tblItemInPackage_tblCategory" FromRole="tblItemInPackage" ToRole="tblCategory" />
+          <NavigationProperty Name="tblPackageInfo" Relationship="UsTransportModel.FK_tblItemInPackage_tblPackageInfo" FromRole="tblItemInPackage" ToRole="tblPackageInfo" />
+          <Property Name="BarCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_tblItemInPackage_tblCategory">
+          <End Type="UsTransportModel.tblCategory" Role="tblCategory" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblItemInPackage" Role="tblItemInPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblItemInPackage">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblKerryPostNewOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cost" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WoodBaleFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RemoteDeliverFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblKerryStatusService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblDistrictStateProvice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StateProvinceID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblStateProvice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="AirPort" Type="Int32" />
+          <NavigationProperty Name="tblCountry" Relationship="UsTransportModel.FK_StateProvince_Country_CountryId" FromRole="tblStateProvice" ToRole="tblCountry" />
+          <Property Name="AirPortCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblWard">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WardName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_StateProvince_Country_CountryId">
+          <End Type="UsTransportModel.tblCountry" Role="tblCountry" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="UsTransportModel.tblStateProvice" Role="tblStateProvice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblStateProvice">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblShippingInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="CityId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StateId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="FullAddress1" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="FullAddress2" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="TypeUser" Type="Int32" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClearCustomDateLocal" Type="DateTime" Precision="3" />
+          <Property Name="DeliverDateLocal" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblRecipientsInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Add1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Add2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StoreId" Type="Int32" />
+          <Property Name="WardId" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="tblStoreAccount" Relationship="UsTransportModel.FK_tblRecipientsInfo_tblStoreAccount" FromRole="tblRecipientsInfo" ToRole="tblStoreAccount" />
+          <Property Name="CreateDate" Type="Int64" />
+          <Property Name="UpdateDate" Type="Int64" />
+          <Property Name="FullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblSender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Add1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Add2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StateId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblStoreAccount" Relationship="UsTransportModel.FK_tblSender_tblStoreAccount" FromRole="tblSender" ToRole="tblStoreAccount" />
+          <Property Name="CreateDate" Type="Int64" />
+          <Property Name="UpdateDate" Type="Int64" />
+          <Property Name="FullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblKerryOrderProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusService" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StatusServiceDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Dimension" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cost" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fee" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TimeStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SenderId" Type="Int32" />
+          <Property Name="RecipientId" Type="Int32" />
+          <Property Name="TotalPackage" Type="Int32" />
+          <Property Name="Weight" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCharge" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Exedite" Type="Int32" />
+          <Property Name="CreateDate" Type="Int64" Nullable="false" />
+          <Property Name="PickupDate" Type="Int64" />
+          <Property Name="ShippingDate" Type="Int64" />
+          <Property Name="ClearCustomDate" Type="Int64" />
+          <Property Name="Deliver" Type="Int64" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Tracking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StoreId" Type="Int32" />
+          <NavigationProperty Name="tblPackageInfoes" Relationship="UsTransportModel.FK_tblPackageInfo_tblOrder" FromRole="tblOrder" ToRole="tblPackageInfo" />
+          <Property Name="NotifyToCustomer" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="BarCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="TotalItems" Type="Int64" />
+          <Property Name="TotalDeclareValues" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ShippingFree" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblTypeCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeCategory" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCategories" Relationship="UsTransportModel.FK_tblCategory_tblTypeCategory" FromRole="tblTypeCategory" ToRole="tblCategory" />
+        </EntityType>
+        <Association Name="FK_tblCategory_tblTypeCategory">
+          <End Type="UsTransportModel.tblTypeCategory" Role="tblTypeCategory" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblCategory" Role="tblCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTypeCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblCategory">
+              <PropertyRef Name="TypeCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblTypeAcount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeAccount" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblStoreAccounts" Relationship="UsTransportModel.FK_tblStoreAccount_tblTypeAcount" FromRole="tblTypeAcount" ToRole="tblStoreAccount" />
+        </EntityType>
+        <EntityType Name="tblWarehouse">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Warehouse" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Add1" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Add2" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblStoreAccounts" Relationship="UsTransportModel.FK_tblStoreAccount_tblWarehouse" FromRole="tblWarehouse" ToRole="tblStoreAccount" />
+        </EntityType>
+        <EntityType Name="tblStoreAccount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StoreName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="StateId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="TypeId" Type="Int32" />
+          <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblRecipientsInfoes" Relationship="UsTransportModel.FK_tblRecipientsInfo_tblStoreAccount" FromRole="tblStoreAccount" ToRole="tblRecipientsInfo" />
+          <NavigationProperty Name="tblSenders" Relationship="UsTransportModel.FK_tblSender_tblStoreAccount" FromRole="tblStoreAccount" ToRole="tblSender" />
+          <NavigationProperty Name="tblTypeAcount" Relationship="UsTransportModel.FK_tblStoreAccount_tblTypeAcount" FromRole="tblStoreAccount" ToRole="tblTypeAcount" />
+          <NavigationProperty Name="tblWarehouse" Relationship="UsTransportModel.FK_tblStoreAccount_tblWarehouse" FromRole="tblStoreAccount" ToRole="tblWarehouse" />
+          <Property Name="AliasFullName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblRecipientsInfo_tblStoreAccount">
+          <End Type="UsTransportModel.tblStoreAccount" Role="tblStoreAccount" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblRecipientsInfo" Role="tblRecipientsInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStoreAccount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblRecipientsInfo">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSender_tblStoreAccount">
+          <End Type="UsTransportModel.tblStoreAccount" Role="tblStoreAccount" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblSender" Role="tblSender" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStoreAccount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblSender">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStoreAccount_tblTypeAcount">
+          <End Type="UsTransportModel.tblTypeAcount" Role="tblTypeAcount" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblStoreAccount" Role="tblStoreAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTypeAcount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblStoreAccount">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStoreAccount_tblWarehouse">
+          <End Type="UsTransportModel.tblWarehouse" Role="tblWarehouse" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblStoreAccount" Role="tblStoreAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWarehouse">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblStoreAccount">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="Add1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="KeyChange" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDateKey" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblShipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="TotalWeight" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="Int64" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="ExtraData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LogChange" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAppUserRoleMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="AppMenuId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblPackageInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="Ordinal" Type="Int32" Nullable="false" />
+          <Property Name="Expedite" Type="Int32" />
+          <Property Name="Weight" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Height" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Width" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Depth" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Fee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalItem" Type="Int32" Nullable="false" />
+          <Property Name="TotalValue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PackName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="Destination" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ShipmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShipmentId" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="Int64" Nullable="false" />
+          <Property Name="Tracking" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PickupTime" Type="Int64" />
+          <Property Name="ShippingTime" Type="Int64" />
+          <Property Name="ClearCustomTime" Type="Int64" />
+          <Property Name="DeliverTime" Type="Int64" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDateLocal" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PickupDateLocal" Type="DateTime" Precision="3" />
+          <Property Name="ShippingDateLocal" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblItemInPackages" Relationship="UsTransportModel.FK_tblItemInPackage_tblPackageInfo" FromRole="tblPackageInfo" ToRole="tblItemInPackage" />
+          <NavigationProperty Name="tblOrder" Relationship="UsTransportModel.FK_tblPackageInfo_tblOrder" FromRole="tblPackageInfo" ToRole="tblOrder" />
+          <Property Name="NotifyToCustomer" Type="Int32" />
+          <Property Name="HistoryTransport" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblItemInPackage_tblPackageInfo">
+          <End Type="UsTransportModel.tblPackageInfo" Role="tblPackageInfo" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblItemInPackage" Role="tblItemInPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPackageInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblItemInPackage">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPackageInfo_tblOrder">
+          <End Type="UsTransportModel.tblOrder" Role="tblOrder" Multiplicity="1" />
+          <End Type="UsTransportModel.tblPackageInfo" Role="tblPackageInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblPackageInfo">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduleBCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" />
+          <NavigationProperty Name="tblCategory" Relationship="UsTransportModel.FK_tblProduct_tblCategory" FromRole="tblProduct" ToRole="tblCategory" />
+        </EntityType>
+        <Association Name="FK_tblProduct_tblCategory">
+          <End Type="UsTransportModel.tblCategory" Role="tblCategory" Multiplicity="0..1" />
+          <End Type="UsTransportModel.tblProduct" Role="tblProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblStatusOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="ParentId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Thread" />
+            <PropertyRef Name="Level" />
+            <PropertyRef Name="Logger" />
+            <PropertyRef Name="Message" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Thread" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Logger" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UsTransportModelStoreContainer" CdmEntityContainer="UsTransportEntities">
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="UsTransportModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMenus">
+            <EntityTypeMapping TypeName="UsTransportModel.tblMenu">
+              <MappingFragment StoreEntitySet="tblMenu">
+                <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMenuPermissions">
+            <EntityTypeMapping TypeName="UsTransportModel.tblMenuPermission">
+              <MappingFragment StoreEntitySet="tblMenuPermission">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoles">
+            <EntityTypeMapping TypeName="UsTransportModel.tblRole">
+              <MappingFragment StoreEntitySet="tblRole">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserRoles">
+            <EntityTypeMapping TypeName="UsTransportModel.tblUserRole">
+              <MappingFragment StoreEntitySet="tblUserRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCities">
+            <EntityTypeMapping TypeName="UsTransportModel.tblCity">
+              <MappingFragment StoreEntitySet="tblCity">
+                <ScalarProperty Name="airport" ColumnName="airport" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDistricts">
+            <EntityTypeMapping TypeName="UsTransportModel.tblDistrict">
+              <MappingFragment StoreEntitySet="tblDistrict">
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStates">
+            <EntityTypeMapping TypeName="UsTransportModel.tblState">
+              <MappingFragment StoreEntitySet="tblState">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCategories">
+            <EntityTypeMapping TypeName="UsTransportModel.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="TypeCategoryID" ColumnName="TypeCategoryID" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCountries">
+            <EntityTypeMapping TypeName="UsTransportModel.tblCountry">
+              <MappingFragment StoreEntitySet="tblCountry">
+                <ScalarProperty Name="LimitedToStores" ColumnName="LimitedToStores" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="SubjectToVat" ColumnName="SubjectToVat" />
+                <ScalarProperty Name="NumericIsoCode" ColumnName="NumericIsoCode" />
+                <ScalarProperty Name="ThreeLetterIsoCode" ColumnName="ThreeLetterIsoCode" />
+                <ScalarProperty Name="TwoLetterIsoCode" ColumnName="TwoLetterIsoCode" />
+                <ScalarProperty Name="AllowsShipping" ColumnName="AllowsShipping" />
+                <ScalarProperty Name="AllowsBilling" ColumnName="AllowsBilling" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblItemInPackages">
+            <EntityTypeMapping TypeName="UsTransportModel.tblItemInPackage">
+              <MappingFragment StoreEntitySet="tblItemInPackage">
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKerryPostNewOrders">
+            <EntityTypeMapping TypeName="UsTransportModel.tblKerryPostNewOrder">
+              <MappingFragment StoreEntitySet="tblKerryPostNewOrder">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="RemoteDeliverFee" ColumnName="RemoteDeliverFee" />
+                <ScalarProperty Name="WoodBaleFee" ColumnName="WoodBaleFee" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKerryStatusServices">
+            <EntityTypeMapping TypeName="UsTransportModel.tblKerryStatusService">
+              <MappingFragment StoreEntitySet="tblKerryStatusService">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDistrictStateProvices">
+            <EntityTypeMapping TypeName="UsTransportModel.tblDistrictStateProvice">
+              <MappingFragment StoreEntitySet="tblDistrictStateProvice">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStateProvices">
+            <EntityTypeMapping TypeName="UsTransportModel.tblStateProvice">
+              <MappingFragment StoreEntitySet="tblStateProvice">
+                <ScalarProperty Name="AirPortCode" ColumnName="AirPortCode" />
+                <ScalarProperty Name="AirPort" ColumnName="AirPort" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWards">
+            <EntityTypeMapping TypeName="UsTransportModel.tblWard">
+              <MappingFragment StoreEntitySet="tblWard">
+                <ScalarProperty Name="WardName" ColumnName="WardName" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblShippingInfoes">
+            <EntityTypeMapping TypeName="UsTransportModel.tblShippingInfo">
+              <MappingFragment StoreEntitySet="tblShippingInfo">
+                <ScalarProperty Name="DeliverDateLocal" ColumnName="DeliverDateLocal" />
+                <ScalarProperty Name="ClearCustomDateLocal" ColumnName="ClearCustomDateLocal" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="TypeUser" ColumnName="TypeUser" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="FullAddress2" ColumnName="FullAddress2" />
+                <ScalarProperty Name="FullAddress1" ColumnName="FullAddress1" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="WardId" ColumnName="WardId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRecipientsInfoes">
+            <EntityTypeMapping TypeName="UsTransportModel.tblRecipientsInfo">
+              <MappingFragment StoreEntitySet="tblRecipientsInfo">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="WardId" ColumnName="WardId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Add2" ColumnName="Add2" />
+                <ScalarProperty Name="Add1" ColumnName="Add1" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSenders">
+            <EntityTypeMapping TypeName="UsTransportModel.tblSender">
+              <MappingFragment StoreEntitySet="tblSender">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Add2" ColumnName="Add2" />
+                <ScalarProperty Name="Add1" ColumnName="Add1" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKerryOrderProgresses">
+            <EntityTypeMapping TypeName="UsTransportModel.tblKerryOrderProgress">
+              <MappingFragment StoreEntitySet="tblKerryOrderProgress">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="TimeStatus" ColumnName="TimeStatus" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Dimension" ColumnName="Dimension" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="StatusServiceDescription" ColumnName="StatusServiceDescription" />
+                <ScalarProperty Name="StatusService" ColumnName="StatusService" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrders">
+            <EntityTypeMapping TypeName="UsTransportModel.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrder">
+                <ScalarProperty Name="ShippingFree" ColumnName="ShippingFree" />
+                <ScalarProperty Name="TotalDeclareValues" ColumnName="TotalDeclareValues" />
+                <ScalarProperty Name="TotalItems" ColumnName="TotalItems" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="NotifyToCustomer" ColumnName="NotifyToCustomer" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Tracking" ColumnName="Tracking" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Deliver" ColumnName="Deliver" />
+                <ScalarProperty Name="ClearCustomDate" ColumnName="ClearCustomDate" />
+                <ScalarProperty Name="ShippingDate" ColumnName="ShippingDate" />
+                <ScalarProperty Name="PickupDate" ColumnName="PickupDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Exedite" ColumnName="Exedite" />
+                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="TotalPackage" ColumnName="TotalPackage" />
+                <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTypeCategories">
+            <EntityTypeMapping TypeName="UsTransportModel.tblTypeCategory">
+              <MappingFragment StoreEntitySet="tblTypeCategory">
+                <ScalarProperty Name="TypeCategory" ColumnName="TypeCategory" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTypeAcounts">
+            <EntityTypeMapping TypeName="UsTransportModel.tblTypeAcount">
+              <MappingFragment StoreEntitySet="tblTypeAcount">
+                <ScalarProperty Name="TypeAccount" ColumnName="TypeAccount" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWarehouses">
+            <EntityTypeMapping TypeName="UsTransportModel.tblWarehouse">
+              <MappingFragment StoreEntitySet="tblWarehouse">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Add2" ColumnName="Add2" />
+                <ScalarProperty Name="Add1" ColumnName="Add1" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStoreAccounts">
+            <EntityTypeMapping TypeName="UsTransportModel.tblStoreAccount">
+              <MappingFragment StoreEntitySet="tblStoreAccount">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AliasFullName" ColumnName="AliasFullName" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="UsTransportModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="CreateDateKey" ColumnName="CreateDateKey" />
+                <ScalarProperty Name="KeyChange" ColumnName="KeyChange" />
+                <ScalarProperty Name="Add1" ColumnName="Add1" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblShipments">
+            <EntityTypeMapping TypeName="UsTransportModel.tblShipment">
+              <MappingFragment StoreEntitySet="tblShipment">
+                <ScalarProperty Name="LogChange" ColumnName="LogChange" />
+                <ScalarProperty Name="ExtraData" ColumnName="ExtraData" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="ShipmentCode" ColumnName="ShipmentCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAppUserRoleMenus">
+            <EntityTypeMapping TypeName="UsTransportModel.tblAppUserRoleMenu">
+              <MappingFragment StoreEntitySet="tblAppUserRoleMenu">
+                <ScalarProperty Name="AppMenuId" ColumnName="AppMenuId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPackageInfoes">
+            <EntityTypeMapping TypeName="UsTransportModel.tblPackageInfo">
+              <MappingFragment StoreEntitySet="tblPackageInfo">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="HistoryTransport" ColumnName="HistoryTransport" />
+                <ScalarProperty Name="NotifyToCustomer" ColumnName="NotifyToCustomer" />
+                <ScalarProperty Name="ShippingDateLocal" ColumnName="ShippingDateLocal" />
+                <ScalarProperty Name="PickupDateLocal" ColumnName="PickupDateLocal" />
+                <ScalarProperty Name="CreateDateLocal" ColumnName="CreateDateLocal" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="DeliverTime" ColumnName="DeliverTime" />
+                <ScalarProperty Name="ClearCustomTime" ColumnName="ClearCustomTime" />
+                <ScalarProperty Name="ShippingTime" ColumnName="ShippingTime" />
+                <ScalarProperty Name="PickupTime" ColumnName="PickupTime" />
+                <ScalarProperty Name="Tracking" ColumnName="Tracking" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ShipmentId" ColumnName="ShipmentId" />
+                <ScalarProperty Name="ShipmentCode" ColumnName="ShipmentCode" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="PackName" ColumnName="PackName" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="TotalItem" ColumnName="TotalItem" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="Depth" ColumnName="Depth" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Expedite" ColumnName="Expedite" />
+                <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProducts">
+            <EntityTypeMapping TypeName="UsTransportModel.tblProduct">
+              <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ScheduleBCode" ColumnName="ScheduleBCode" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTemplates">
+            <EntityTypeMapping TypeName="UsTransportModel.EmailTemplate">
+              <MappingFragment StoreEntitySet="EmailTemplate">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStatusOrders">
+            <EntityTypeMapping TypeName="UsTransportModel.tblStatusOrder">
+              <MappingFragment StoreEntitySet="tblStatusOrder">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="UsTransportModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Logger" ColumnName="Logger" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

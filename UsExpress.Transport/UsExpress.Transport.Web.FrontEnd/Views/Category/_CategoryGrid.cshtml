@@ -1,0 +1,69 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblCategory>
+
+<div class="table_cms mb20 cms_col_right">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width:2%">STT</th>
+                    <th>Category</th>
+                   
+                    <th>Schedule B Code</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Model != null && Model.Count > 0)
+                {
+                    int i = ViewBag.Index;
+                    foreach (var item in Model)
+                    {
+                        string strCategory = string.Empty;
+                        switch (item.TypeCategoryID)
+                        {
+                            case 1:
+                                strCategory = "Normal";
+                                break;
+                            case 2:
+                                strCategory = "Flammable";
+                                break;
+                        };
+                        <tr>
+                            <td class="text-center">@i</td>
+                            <td>@item.CategoryName</td>
+                            <td>@item.Code</td>
+                            <td>@strCategory</td>
+                            <td>
+                                @using (Ajax.BeginForm("AJXUpdateForm", "Category", new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnSuccess = "ReloadValidate",
+                                    UpdateTargetId = "divUpdate"
+                                }))
+                                {
+                                    <input type="hidden" name="updateID" value="@item.id" />
+                                    <button type="submit" style="color: #236852;background: #fff;border: none;border-bottom: 1px solid;">update</button>
+                                }
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+        <div id="container" style="margin-left: 20px">
+            <p></p>
+            <p></p>
+            <div class="pagination" style="margin-left: 400px">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Manager", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

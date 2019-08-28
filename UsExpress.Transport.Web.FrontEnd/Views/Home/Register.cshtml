@@ -1,0 +1,70 @@
+﻿@model UsExpress.Transport.Web.FrontEnd.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container">
+    <div class="mt30 mb40">
+
+        @using (Ajax.BeginForm("Register", "Home", new AjaxOptions
+        {
+            HttpMethod = "POST"
+               ,
+            OnSuccess = "OnSuccess"
+               ,
+            OnFailure = "OnFailure"
+        }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-lg-4">Tên tài khoản</div>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(x => x.Username, new { @class = "form-control", @placeholder = "username01" })
+                        @Html.ValidationMessageFor(model => model.Username)
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">Tên đầy đủ</div>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @placeholder = "Nguyễn Văn A" })
+                        @Html.ValidationMessageFor(model => model.FullName)
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        Mật khẩu
+                    </div>
+                    <div class="col-lg-8">
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">Nhập lại mật khẩu</div>
+                    <div class="col-lg-8">
+                        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+
+                <button type="submit" class="btn btn-info">Đăng ký</button>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function OnSuccess(avg) {
+            alert(avg.Message);
+            if (avg.Result > 0) {
+                window.location.href = "/dang-nhap";
+            }
+        }
+    </script>
+}

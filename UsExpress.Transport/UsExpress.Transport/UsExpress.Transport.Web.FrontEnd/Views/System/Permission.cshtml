@@ -1,0 +1,115 @@
+﻿@model UsExpress.Transport.Web.FrontEnd.Models.MenuPermissionModel
+
+@{
+    ViewBag.Title = "Permission";
+}
+
+<form id="fr-permission" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Access control list
+        </h1>
+        <div  class="pull-left" style="margin-top: 27px; margin-left: 27px;">
+            <a href="javascript:void(0)" onclick="submitform();" name="save" style="border:1px solid #ccc; float: left; margin: 0px; padding: 4px 10px;">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>
+                            Access control list is a list of permissions attached to customer roles. This list specifies the access rights of users to objects.
+                        </p>
+                        @if (Model.Roles.Count == 0)
+                        {
+                            <text>No permissions defined</text>
+                        }
+                        else if (Model.Menus.Count == 0)
+                        {
+                            <text>No customer roles available</text>
+                        }
+                        else
+                        {
+                            <div class="scroll-wrapper">
+                                <table class="table table-hover table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="col">
+                                                <strong>Permission URL</strong>
+                                            </th>
+                                            @foreach (var cr in Model.Roles)
+                                            {
+                                                <th scope="col">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" id="selectall-@(cr.Id)" />
+                                                            <strong>@cr.Name</strong>
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                            }
+                                        </tr>
+                                        @foreach (var pr in Model.Menus)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span>@pr.Name</span>
+                                                </td>
+                                                @foreach (var cr in Model.Roles)
+                                                {
+                                                    var allowed = Model.Allowed.ContainsKey(cr.Id) && Model.Allowed[cr.Id][pr.Id];
+                                                    <td>
+                                                        <input class="allow_@(cr.Id)" type="checkbox" value="@(pr.Id)" name="allow_@(cr.Id)" @(allowed ? " checked=checked" : null) />
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script>
+        function submitform() {
+            $.ajax({
+                type: 'POST',
+                url: '/System/Permission',
+                data: $('#fr-permission').serialize(),
+                dataType: 'json',
+                //async: false,
+                success: function (result) {
+                    if (result.Message) {
+                        alert(result.Message);
+                    }
+                    else {
+                        alert('Update success');
+                    }
+                }
+            });
+        }
+        $(document).ready(function () {
+            @foreach (var cr in Model.Roles)
+            {
+                <text>
+            $('#selectall-@(cr.Id)').click(function () {
+                $('.allow_@(cr.Id)').prop('checked', $(this).is(':checked')).change();
+            });
+
+            </text>
+            }
+        });
+    </script>
+}

@@ -1,0 +1,151 @@
+﻿@using UsExpress.Transport.Web.FrontEnd.Models
+@{
+    ViewBag.Title = "Manage order";
+
+    List<CategoryModel> category = (List<CategoryModel>)ViewBag.Category;
+    List<SelectItemBase> citySender = (List<SelectItemBase>)ViewBag.CitySender;
+    List<SelectItemBase> cityRecipient = (List<SelectItemBase>)ViewBag.CityRecipient;
+    List<DateTime> lstDate = new List<DateTime>();
+    int startDate = DateTime.Now.Date.Day - 30 ;
+    int endDate = DateTime.Now.Date.Day;
+}
+<div id="div-angular" ng-app="OrderApp" ng-controller="ManageController as manCtrl">
+
+    <div class="cms_nav">
+        <div class="container">
+            <div class="left">ORDER #:</div>
+            <div class="right">07/13/2018</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="manage_order mt20">
+            <h1>Manage Orders</h1>
+            <div class="tr tr1 mb10">
+                <form id="search" class="mb20">
+                    <input type="text" class="input_search" name="" ng-model="manCtrl.filter.Keyword" placeholder="Tìm kiếm">
+                    <button onclick="SearchOrder('');" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                </form>
+                <div class="form-group mb20">
+                    <select class="form-control" ng-model="manCtrl.filter.TypeSearch" ng-options="option.Id as option.Name for option in manCtrl.options"></select>
+                </div>
+            </div>
+            <div class="order_silde mb40">
+                <p>Orders:</p>
+                <div class="owl-carousel">
+                    @for (int i = -7; i < 7; i++)
+                    {
+                        <a class="@(i == 0 ? "active": "")">@(DateTime.Now.AddDays(i).ToString("dd/MM/yyyy"))</a>
+                    }
+
+                </div>
+            </div>
+            <div class="table_cms mb30" ng-controller="OrderController as orderCtrl">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>SENDER</th>
+                                <th>No of package</th>
+                                <th>weight(lbs)</th>
+                                <th>Created date</th>
+                                <th>Pickup date</th>
+                                <th>Shiping date</th>
+                                <th>Clear vn custom</th>
+                                <th>Deliver</th>
+                                <th>Starts</th>
+                                <th>Destination</th>
+                                <th>Tracking</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in manCtrl.lstResult">
+                                <td style="color:#236852" ng-click="manCtrl.showDetailOrder(item.Id, 'model-dialog')">{{item.Code}}</td>
+                                <td>{{item.FullName}}</td>
+                                <td>{{item.TotalPackage}}</td>
+                                <td>{{item.Weight}}</td>
+                                <td>{{item.CreateDate}}</td>
+                                <td>{{item.PickupDate}}</td>
+                                <td>{{item.ShippingDate}}</td>
+                                <td>{{item.ClearCustomDate}}</td>
+                                <td>{{item.DeliverName}}</td>
+                                <td>{{item.StartsName}}</td>
+                                <td>{{item.Destination}}</td>
+                                <td style="color:#236852">{{item.Tracking}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="model-dialog" style="display:none;">
+    @Html.Partial("_OrderModel")
+</div>
+@section headcss {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/select2/select2.css")" />
+}
+
+@section Scripts {
+    @*<script src="~/scripts/jquery-1.10.2.min.js"></script>*@
+    <script type="text/javascript" src="@Url.Content("~/Scripts/select2/select2.js")"></script>
+    <script src="~/Scripts/angularjs/angular.min.js"></script>
+    <script src="~/Scripts/angularjs/angular-filter.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="~/Scripts/angularjs/ui-bootstrap-tpls-0.13.0.js"></script>
+    <script>
+        angular
+            .module('OrderApp', ['ui.bootstrap','angular.filter', 'ngMaterial'])
+    </script>
+    <script src="~/Scripts/model/order/manageCtrl.js"></script>
+    <script src="~/Scripts/model/order/orderCtrl.js"></script>
+    <script>
+        var orderId = -1;
+        var category = @(Html.Raw(Json.Encode(category)));
+        var citySender = @(Html.Raw(Json.Encode(citySender)));
+        var cityRecipient = @(Html.Raw(Json.Encode(cityRecipient)));
+
+        $(document).ready(function(){
+            $(document).on('click', '.owl-item', function(){
+                n = $(this).index();
+                console.log(n)
+                $(".owl-item >a").removeClass("active");
+                console.log($(this).text());
+                $(this).find("a").addClass("active");
+                SearchOrder($(this).text());
+                $('.owl-wrapper').trigger('owl.goTo', n);
+            });
+            var $dots = $('.owl-dot');
+            var active = $(".owl-item").find("a.active");
+            var indexCurrent = active.parent().index();
+            var $next = $dots.filter('.active').next();
+            if (!$next.length)
+                $next = $dots.first();
+            var pageIndex = indexCurrent % 6;
+            for(var i=0; i< pageIndex; i++){
+                $next.trigger('click');
+            }
+            SearchOrder(getDateActive())
+        });
+        function SearchOrder(date) {
+            var setDate = date;
+            if(setDate == ''){
+                setDate = getDateActive();
+            }
+            angular.element(document.getElementById('div-angular')).scope().manCtrl.setDateText(setDate);
+        }
+        function getDateActive(){
+            var $dots = $('.owl-dot');
+            var active = $(".owl-item").find("a.active");
+            return active.text();
+        }
+    </script>
+}
+
+
+

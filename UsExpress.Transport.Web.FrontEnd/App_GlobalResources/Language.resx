@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="lb_AccountNameRequired" xml:space="preserve">
+    <value>Account Name Required</value>
+  </data>
+  <data name="lb_actionError" xml:space="preserve">
+    <value>Action had error, please try again!</value>
+  </data>
+  <data name="lb_AdditemstoPackage" xml:space="preserve">
+    <value>Add items to Package</value>
+  </data>
+  <data name="lb_BarcodeRequired" xml:space="preserve">
+    <value>Barcode Required</value>
+  </data>
+  <data name="lb_CategoryRequired" xml:space="preserve">
+    <value>Category Required</value>
+  </data>
+  <data name="lb_ChooseCategory" xml:space="preserve">
+    <value>Choose Category</value>
+  </data>
+  <data name="lb_CreateNewRecieverSucceed" xml:space="preserve">
+    <value>Create New Receiver Succeed</value>
+  </data>
+  <data name="lb_CreateNewSenderSucceed" xml:space="preserve">
+    <value>Create New Sender Succeed</value>
+  </data>
+  <data name="lb_CreateNewStoreSucceed" xml:space="preserve">
+    <value>Create New Store Succeed</value>
+  </data>
+  <data name="lb_CreateNewUserSucceed" xml:space="preserve">
+    <value>Create New User Succeed</value>
+  </data>
+  <data name="lb_CreateNewWarehouseSucceed" xml:space="preserve">
+    <value>Create New Warehouse Succeed</value>
+  </data>
+  <data name="lb_CreateProductSuccess" xml:space="preserve">
+    <value>Create new product success!</value>
+  </data>
+  <data name="lb_CreateShipmentError" xml:space="preserve">
+    <value>Create Shipment Failed</value>
+  </data>
+  <data name="lb_CreateStoreSecceed" xml:space="preserve">
+    <value>Create Store Succeed)</value>
+  </data>
+  <data name="lb_DescriptionRequired" xml:space="preserve">
+    <value>Description Required</value>
+  </data>
+  <data name="lb_DontHaveStoreInfo" xml:space="preserve">
+    <value>You dont have store info!</value>
+  </data>
+  <data name="lb_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="lb_errorAccount" xml:space="preserve">
+    <value>The Account has not Activated, Please Contact Administrator</value>
+  </data>
+  <data name="lb_errorActionAndBarCode" xml:space="preserve">
+    <value>Action had error or barcode is exists, please try again!</value>
+  </data>
+  <data name="lb_Failed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="lb_HasError" xml:space="preserve">
+    <value>Has error, please try again!</value>
+  </data>
+  <data name="lb_InvalidInfoReenter" xml:space="preserve">
+    <value>Invalid Info, Reenter</value>
+  </data>
+  <data name="lb_NotPermissionOrder" xml:space="preserve">
+    <value>Your Account Can't Create A New Order</value>
+  </data>
+  <data name="lb_OrderCreatedSuccesful" xml:space="preserve">
+    <value>Order Created Succesful</value>
+  </data>
+  <data name="lb_OrderUpdatedSuccesful" xml:space="preserve">
+    <value>Order Updated Succesful</value>
+  </data>
+  <data name="lb_PackageInfoRequired" xml:space="preserve">
+    <value>Packager's Info Required</value>
+  </data>
+  <data name="lb_PackageRequired" xml:space="preserve">
+    <value>Package Required</value>
+  </data>
+  <data name="lb_PackagesInfoRequired" xml:space="preserve">
+    <value>Package's Info Required</value>
+  </data>
+  <data name="lb_PasswordRequired" xml:space="preserve">
+    <value>Password Required</value>
+  </data>
+  <data name="lb_PhoneNumbersAlreadyExisted" xml:space="preserve">
+    <value>Phone Number's Already Existed</value>
+  </data>
+  <data name="lb_PleaseChooseAPackageToPrint" xml:space="preserve">
+    <value>Please Choose A Package To Print</value>
+  </data>
+  <data name="lb_RecipientsRequire" xml:space="preserve">
+    <value>Recipient's Require</value>
+  </data>
+  <data name="lb_RegisterFailed" xml:space="preserve">
+    <value>Register Failed</value>
+  </data>
+  <data name="lb_RegisterSucceed" xml:space="preserve">
+    <value>Register Succeed</value>
+  </data>
+  <data name="lb_Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="lb_SendersInfoRequired" xml:space="preserve">
+    <value>Sender's Info Required</value>
+  </data>
+  <data name="lb_ShipmentRequired" xml:space="preserve">
+    <value>Shipment Required</value>
+  </data>
+  <data name="lb_Succeed" xml:space="preserve">
+    <value>Succeed</value>
+  </data>
+  <data name="lb_UpdateFailed" xml:space="preserve">
+    <value>Update Failed</value>
+  </data>
+  <data name="lb_UpdateInfodontsuccess" xml:space="preserve">
+    <value>Update Info dont success</value>
+  </data>
+  <data name="lb_UpdateinfoFailed" xml:space="preserve">
+    <value>Update info Failed</value>
+  </data>
+  <data name="lb_Updateinfosuccess" xml:space="preserve">
+    <value>Update info success</value>
+  </data>
+  <data name="lb_UpdatePasswordFailed" xml:space="preserve">
+    <value>Update Password Failed</value>
+  </data>
+  <data name="lb_UpdatePasswordSucceed" xml:space="preserve">
+    <value>Update Password Succeed</value>
+  </data>
+  <data name="lb_UpdateProductSuccess" xml:space="preserve">
+    <value>Update product success!</value>
+  </data>
+  <data name="lb_UpdateRecieverSucceed" xml:space="preserve">
+    <value>Update Receiver Succeed</value>
+  </data>
+  <data name="lb_UpdateRoleSucceed" xml:space="preserve">
+    <value>Update Role Succeed</value>
+  </data>
+  <data name="lb_UpdateSenderSucceed" xml:space="preserve">
+    <value>Update Sender Succeed</value>
+  </data>
+  <data name="lb_UpdateStoreSucceed" xml:space="preserve">
+    <value>Update Store Succeed</value>
+  </data>
+  <data name="lb_UpdateSucceed" xml:space="preserve">
+    <value>Update Succeed</value>
+  </data>
+  <data name="lb_UpdateSuccessful" xml:space="preserve">
+    <value>Update Successful</value>
+  </data>
+  <data name="lb_UpdateUserSucceed" xml:space="preserve">
+    <value>Update User Succeed</value>
+  </data>
+  <data name="lb_UpdateWarehouseSucceed" xml:space="preserve">
+    <value>Update Warehouse Succeed</value>
+  </data>
+  <data name="lb_UsernameRequired" xml:space="preserve">
+    <value>Username Required</value>
+  </data>
+  <data name="lb_WrongPassword" xml:space="preserve">
+    <value>Wrong Password</value>
+  </data>
+</root>

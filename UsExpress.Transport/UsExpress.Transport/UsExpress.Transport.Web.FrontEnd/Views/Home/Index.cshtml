@@ -1,0 +1,13 @@
+﻿@using UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport
+@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>title</h2>
+@foreach (var item in (IEnumerable<Test>)Model)
+{
+    @Html.Raw(item.Name + "<br>")
+
+}

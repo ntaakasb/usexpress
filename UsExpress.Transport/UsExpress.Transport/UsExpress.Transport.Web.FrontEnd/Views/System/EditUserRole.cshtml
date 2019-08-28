@@ -1,0 +1,147 @@
+﻿@using UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport
+@{
+    tblUser user = null;
+    List<int> lstRole = new List<int> { 4 };
+    if (ViewBag.User != null)
+    {
+        user = (tblUser)ViewBag.User;
+    }
+    if (ViewBag.LstRole != null)
+    {
+        lstRole = (List<int>)ViewBag.LstRole;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangePassword - My ASP.NET Application</title>
+    <link href="/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                @if (Session[UsExpress.Transport.Web.FrontEnd.Common.Constant.SessionUsername] != null)
+                {
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Xin chào @Session["UserName"]
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/thay-doi-mat-khau">Thay đổi mật khẩu</a></li>
+                            <li><a href="/dang-xuat">Đăng xuất</a></li>
+
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="pull-right">
+                        <a style="color: #fff;" href="/dang-nhap">Đăng nhập</a>
+                        <span> | </span>
+                        <a style="color: #fff;" href="/dang-ky">Đăng ký</a>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container body-content">
+        @if (user != null)
+        {
+            <form data-ajax="true" data-ajax-failure="OnFailure" data-ajax-method="POST" data-ajax-success="OnSuccess" id="form0" method="post">
+                <div class="form-group">
+                    <div class="row form-group">
+                        <div class="col-lg-4">Tên tài khoản</div>
+                        <div class="col-lg-8">
+                            @Html.Raw(user.FullName)
+                        </div>
+                    </div>
+                    <div class="row form-group">
+
+                        <div class="col-lg-4">Role Current</div>
+                        <div class="col-lg-8">
+                            <select id="sl-role" multiple="multiple">
+                                <option value="1">Root</option>
+                                <option value="2">Admin</option>
+                                <option value="3">Manager</option>
+                                <option selected="selected" value="4">User</option>
+                                <option value="5">SupplierManager</option>
+                                <option value="6">SupplierEmployee</option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="ip-userid" value="@user.Id" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0)" onclick="submitform();" class="btn btn-info">Thay đổi</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <br />
+            <h3>User không tồn tại</h3>
+        }
+
+
+        <hr />
+        <footer>
+            <p>&copy; 2018 - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script>
+        $('#sl-role').select2({
+            placeholder: 'Set role for user',
+            allowClear: true,
+            width: '100%'
+        });
+        var lstRoleCurrent = @(Html.Raw(Json.Encode(lstRole)));
+        $("#sl-role").val(lstRoleCurrent).select2();
+        function submitform() {
+            var lstRole = $("#sl-role").val();
+            $.ajax({
+                type: 'POST',
+                url: '/System/UpdateRoleForUser',
+                data: { userId: $("#ip-userid").val(), lstRole: lstRole },
+                dataType: 'json',
+                //async: false,
+                success: function (result) {
+                    if (result.Message) {
+                        alert(result.Message);
+                    }
+                    else {
+                        alert('Update success');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

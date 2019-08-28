@@ -1,0 +1,16 @@
+﻿@model IEnumerable<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblRole>
+@if (Model != null)
+{
+    <option value="">Select Role</option>
+    foreach (var item in Model)
+    {
+        if (item.Id == ViewBag.Selected)
+        {
+            <option value="@item.Id" selected>@item.Name</option>
+        }
+        else
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    }
+}

@@ -1,0 +1,114 @@
+﻿@model  UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblStoreAccount
+
+@{
+    ViewBag.Title = "DetailStore";
+}
+<style>
+    .form_cms {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="cms_nav">
+    <div class="container">
+        <div class="left">ORDER #:</div>
+        <div class="right">07/13/2018</div>
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40">
+
+        @using (Ajax.BeginForm("InsertStore", "StoreNoLogin", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess"
+        }, new { @class = "form_cms", @id = "frm_create_store" }))
+        {
+
+
+            <h2>Create An Employee Account</h2>
+            <div class="warp">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @placeholder = "Full Name", @style = "width: 60%;display: inline-block;" })
+
+
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.StoreName, new { @class = "form-control", @placeholder = "Store's Name" })
+                    <i class="fas fa-store-alt"></i>
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Address1, new { @class = "form-control", @placeholder = "Address 1" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Address2, new { @class = "form-control", @placeholder = "Address 2" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="form-group width-100" style="width:70%">
+                    <select id="CityId" name="CityId" class="form-control">
+
+                        @Html.Action("_HtmlSelectBoxCity", "Common")
+                    </select>
+                    <i class="fa fa-university"><img src="images/icons/city.png" alt=""></i>
+                </div>
+
+
+                <div class="form-group">
+                    <div style="width:60%; display: inline-grid;">
+                        <select id="StateID" name="StateID" class="form-control">
+                            @Html.Action("_HtmlSelectBoxState", "Common")
+                        </select>
+                    </div>
+                    <div style="width: 30%; display: inline-grid; margin-left: 20px;">
+                        @Html.TextBoxFor(x => x.Zip, new { @class = "form-control", @placeholder = "Zip" })
+                    </div>
+
+
+
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "Phone" })
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email" })
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Password" })
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="form-group width-100 btn_bottom">
+                    <button type="submit" class="btn btn-default">Sign up</button>
+                    <button type="button" onclick="ResetForm()" class="btn btn-default">Reset</button>
+                </div>
+
+
+            </div>
+
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/scripts/object-prototype/store.js"></script>
+    <script>
+        Store.ValidateStoreForm();
+        function ResetForm() {
+            $('#create_store')[0].reset();
+        }
+
+        function OnSuccess(avg) {
+            alert(avg.Message);
+            if (avg.Result > 0) {
+                window.location.href = '/login';
+            }
+        }
+
+    </script>
+}

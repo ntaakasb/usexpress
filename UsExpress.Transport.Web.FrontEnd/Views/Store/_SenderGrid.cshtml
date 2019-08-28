@@ -1,0 +1,77 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.Extension.DTO.SenderDTO>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:2%">STT</th>
+                <th>Full Name</th>
+                <th>Store Name</th>
+                <th>Address line 1</th>
+                <th>Address line 2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Phone</th>
+                @if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsAdmin())
+                {
+                    <th></th>
+                }
+                else
+                {
+                    if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsStore())
+                    {
+                        <th>  </th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = ViewBag.Index ?? 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@i</td>
+                    <td style="color:#236852">@item.FullName</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.Add1</td>
+                    <td>@item.Add2</td>
+                    <td>@item.CityId </td>
+                    <td>@item.StateId</td>
+                    <td>@item.Phone</td>
+                    @if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsAdmin())
+                    {
+                        <td>
+                            <a style="color:#236852;border-bottom:1px solid #236852" href="/store/UpdateSender/@item.Id">update</a> |
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @if (!UsExpress.Transport.Web.FrontEnd.Common.Libs.IsStore())
+                            {
+                                <a style="color:#236852;border-bottom:1px solid #236852" href="javascript:void(0)" data-id="@item.Id">@(item.IsActive ? "hide" : "unhide")</a>
+                            }
+                        </td>
+                    }
+
+                </tr>
+                i++;
+            }
+
+
+
+        </tbody>
+    </table>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("SenderList", new { page }))
+        </div>
+    </div>
+</div>

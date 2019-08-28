@@ -1,0 +1,82 @@
+﻿@model UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblUser
+
+@{
+    ViewBag.Title = "DetailEmployees";
+}
+@{ 
+    bool IsUpdate = false;
+    string formtitle = "Create Employee's Account";
+    if (Model != null && Model.Id > 0)
+    {
+        IsUpdate = true;
+        formtitle = "Update Employee's Account";
+    }
+}
+
+<div class="cms_nav">
+    <div class="container">
+
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40">
+        <form id="create_order" class="form_cms">
+            <h2>@formtitle</h2>
+            <div class="warp">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x=> x.FullName, new { @placeholder = "Full Name", @style = "width: 60%;display: inline-block;" })
+
+                    <select class="form-control" style="width: 35%;display: inline-block;margin-left:5%;padding-left: 10px;">
+                        <option>CSKH</option>
+                        <option>Admin</option>
+                        <option>Nhân Viên Kho Mỹ</option>
+
+                    </select>
+
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @placeholder = "Địa Chỉ" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @placeholder = "Phone" })
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @placeholder = "Email" })
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @placeholder = "Password" })
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="form-group width-100" style="width:70%">
+                    <select id="WarehouseID" name="StoreAccount.WarehouseID" class="form-control">
+
+                        <option value="">Select Warehouse</option>
+
+                    </select>
+
+                </div>
+                <div class="form-group width-100" style="width:70%">
+                    <select id="WarehouseID" name="StoreAccount.WarehouseID" class="form-control">
+
+                        <option value="">Active</option>
+                        <option value="">Non-Active</option>
+
+                    </select>
+
+                </div>
+                <div class="form-group width-100 btn_bottom">
+                    <button type="button" class="btn btn-default">Add</button>
+                    <button type="button" class="btn btn-default">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

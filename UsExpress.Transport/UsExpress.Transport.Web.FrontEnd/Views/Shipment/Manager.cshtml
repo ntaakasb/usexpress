@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Manage shipment";
+}
+
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Shipments</h1>
+        <div class="tr tr1 mb10">
+            @using (Ajax.BeginForm("AJXSearchShipment", "Shipment", null, new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "grid-shipment",
+
+            }, new { }))
+            {
+                <div id="search" class="mb20">
+                    <input type="text" class="input_search" name="SearchKeyword" value="" placeholder="Shipment ID">
+                    <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                </div>
+                <label>from</label>
+                <div class="form-group mb20">
+
+                    <input type="date" id="myDate" name="fromdate" value="@(DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd"))">
+                </div>
+                <label>to</label>
+                <div class="form-group mb20">
+                    <input type="date" id="myDate" name="todate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+    <div class="tr tr2">
+        <div id="grid-shipment" class="table_cms mb30">
+            @Html.Action("_GridShipment", new { lsResult = Model })
+        </div>
+    </div>
+
+</div>
+
+<div id="gridPackages" class="manage_order mt20">
+    @*@Html.Partial("_GridPackage")*@
+</div>
+
+@section Scripts {
+    <script>
+        function removeShipment() {
+            var lstId = [];
+            $('.checkbox input:checked').each(function () {
+                lstId.push($(this).attr('data-id'));
+            });
+            if (lstId.length > 0) {
+                if (confirm("Bạn chắc chứ?")) {
+                    $.ajax({
+                        url: "/Shipment/RemoveItemInShipment",
+                        type: 'POST',
+                        params: { contentType: "application/json;" },
+                        dataType: 'json',
+                        data: { lstId: lstId },
+                        success: function (result) {
+                            if (result.Message) {
+                                alert(result.Message);
+                            }
+                            else {
+                                alert("Đã Update Successful!");
+                                window.location.reload();
+                            }
+
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                }
+            }
+            else {
+                alert("Bạn chưa chọn shipment!");
+            }
+        }
+        
+        function LoadDetailShipment(shipmentcode) {
+            $.ajax({
+                type: 'POST',
+                url: '/Shipment/AJXLoadPackageOrderDetail',
+                data: { ShipmentCode: shipmentcode },
+                dataType: 'json',
+                async: true,
+                success: function (result) {
+                    $('#gridPackages').html(result);
+                    if ($("input[name='chk[]']").length>0) {
+                        $("#ddlUpdateStatus").show();
+                        //$("#ddlUpdateStatus").val($($("input[name='chk[]']")[0]).attr("data-status"));
+                        $("#ddlUpdateStatus").change(function () {
+                                
+                                var strchecked = "", strcheckedCode = "";
+                                $("input[name='chk[]']").each(function () {
+                                    strchecked += $(this).attr("data-id") + ",";
+                                    strcheckedCode += $(this).attr("data-code") + ",";
+                                });
+                                strchecked = strchecked.substring(0, strchecked.length - 1);
+                                strcheckedCode = strcheckedCode.substring(0, strcheckedCode.length - 1);
+                                if (confirm("Bạn có muốn cập nhật trạng thái các đơn hàng " + strcheckedCode + " Không?")) {
+                                    $.ajax({
+                                        url: "/Order/UpdateListStatusPackageSingle",
+                                        type: 'POST',
+                                        params: { contentType: "application/json;" },
+                                        dataType: 'json',
+                                        data: { lstId: strchecked, statusUpdate: $("#ddlUpdateStatus").val() },
+                                        success: function (result) {
+                                            if (result.Message) {
+                                                notification(notifiType.success, result.Message, "Thành công");
+                                            }
+
+                                        },
+                                        error: function (err) {
+                                            notification(notifiType.error, err.statusText, "Error");
+                                        }
+                                    });
+                                }
+
+                        });
+                    }
+                    else {
+                        $("#ddlUpdateStatus").hide();
+                    }
+                    
+                }
+            });
+        }
+        function exportShipment(type) {
+            if (parseInt($("#ip-shipmentId").val()) > 0) {
+                window.open('/Shipment/ExportShipmentInvoice?typeId=' + type + '&ids=' + $("#ip-shipmentId").val());
+            }
+            else {
+                alert("Data wrong!");
+            }
+        }
+    </script>
+}

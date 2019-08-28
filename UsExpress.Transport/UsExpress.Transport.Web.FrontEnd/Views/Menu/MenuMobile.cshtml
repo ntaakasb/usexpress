@@ -1,0 +1,44 @@
+﻿
+@using UsExpress.Transport.Web.FrontEnd.Common;
+@model IEnumerable<UsExpress.Transport.Web.FrontEnd.Models.MenuModel>
+@{
+    Layout = null;
+}
+
+@if (Session[UsExpress.Transport.Web.FrontEnd.Common.Constant.SessionUsername] != null)
+{
+    <li class="before_sign">
+        <a class="user" href="/thay-doi-mat-khau">
+            <img src="/content/images/graphics/avarta.png" width="25" height="25" alt="">
+            <span>@Session["UserName"]</span>
+        </a>
+        <a href="/dang-xuat">Thoát</a>
+    </li>
+}
+else
+{
+    <li class="sign">
+        <a class="login" href="/dang-nhap">Đăng nhập</a>
+        <a href="/dang-ky">Đăng ký</a>
+    </li>
+}
+@foreach (var item in Model)
+{
+
+    @:<li>
+        @:<a href="/@item.Controller/@item.Action">@item.Name</a>
+        if (item.LstMenuChild != null && item.LstMenuChild.Any())
+    {
+        @:<ul>
+        foreach (var mc in item.LstMenuChild)
+        {
+            @:<li><a href="/@mc.Controller/@mc.Action">@mc.Name</a></li>
+        }
+        @:</ul>
+    }
+    @:</li>
+    
+}
+
+
+

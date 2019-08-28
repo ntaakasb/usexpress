@@ -1,0 +1,49 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblCategory>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Schedule B Code</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CategoryName</td>
+                        <td>@item.Code</td> 
+                        <td>
+                            @using (Ajax.BeginForm("AJXUpdateForm", "Catelogy", new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                OnSuccess = "ReloadValidate",
+                                UpdateTargetId = "divUpdate"
+                            }))
+                            {
+                                <input type="hidden" name="updateID" value="@item.id" />
+                                <button type="submit"  style="color: #236852;background: #fff;border: none;border-bottom: 1px solid;" >update</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+
+
+
+        </tbody>
+    </table>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("_CatelogyGrid", new { page }))
+        </div>
+    </div>
+</div>

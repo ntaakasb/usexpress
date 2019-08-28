@@ -1,0 +1,114 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.Web.FrontEnd", "UsExpress.Transport.Web.FrontEnd\UsExpress.Transport.Web.FrontEnd.csproj", "{A1E07DA3-2901-4770-AF35-1FA95CB6D7E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.Api", "UsExpress.Transport.Api\UsExpress.Transport.Api.csproj", "{F3FB2ACE-E5B6-4412-AAC4-063BBCBE3C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.Lib.Utilities", "UsExpress.Transport.Lib.Utilities\UsExpress.Transport.Lib.Utilities.csproj", "{716FC10E-0542-4243-828F-88E6414FBAE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7E3D7B75-C29B-43CD-AE10-812F5D4E5520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.Lib.Business.Test", "UsExpress.Transport.Lib.Business.Test\UsExpress.Transport.Lib.Business.Test.csproj", "{2EF9BFE4-7C5F-443A-9FF0-67F682CB4D08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinAppShipment", "WinAppShipment\WinAppShipment.csproj", "{4803C490-41A4-40FE-8F04-15809018DB41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test (2)", "Test (2)", "{CE008E35-3FF7-419F-92A9-57E0A7EDC8CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.Lib.Business", "UsExpress.Transport.Lib.Business\UsExpress.Transport.Lib.Business.csproj", "{C9AA3EEE-21FA-4D01-BBE6-641CA4DBA5D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.WinAppSendEmail", "UsExpress.Transport.WinAppSendEmail\UsExpress.Transport.WinAppSendEmail.csproj", "{3E353C2B-157A-46E4-AEB3-C61C532ABAC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.Logger", "UsExpress.Transport.Logger\UsExpress.Transport.Logger.csproj", "{E69B53B0-4540-4109-90CD-8EB22DBC969F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsExpress.Transport.EmailLib", "UsExpress.Transport.EmailHelper\UsExpress.Transport.EmailLib.csproj", "{4E1590AE-034F-457B-A602-0A3D4A9E877C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1E07DA3-2901-4770-AF35-1FA95CB6D7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E07DA3-2901-4770-AF35-1FA95CB6D7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E07DA3-2901-4770-AF35-1FA95CB6D7E9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A1E07DA3-2901-4770-AF35-1FA95CB6D7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E07DA3-2901-4770-AF35-1FA95CB6D7E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3FB2ACE-E5B6-4412-AAC4-063BBCBE3C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3FB2ACE-E5B6-4412-AAC4-063BBCBE3C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3FB2ACE-E5B6-4412-AAC4-063BBCBE3C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3FB2ACE-E5B6-4412-AAC4-063BBCBE3C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{716FC10E-0542-4243-828F-88E6414FBAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{716FC10E-0542-4243-828F-88E6414FBAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{716FC10E-0542-4243-828F-88E6414FBAE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{716FC10E-0542-4243-828F-88E6414FBAE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF9BFE4-7C5F-443A-9FF0-67F682CB4D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF9BFE4-7C5F-443A-9FF0-67F682CB4D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF9BFE4-7C5F-443A-9FF0-67F682CB4D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF9BFE4-7C5F-443A-9FF0-67F682CB4D08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4803C490-41A4-40FE-8F04-15809018DB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4803C490-41A4-40FE-8F04-15809018DB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4803C490-41A4-40FE-8F04-15809018DB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4803C490-41A4-40FE-8F04-15809018DB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9AA3EEE-21FA-4D01-BBE6-641CA4DBA5D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9AA3EEE-21FA-4D01-BBE6-641CA4DBA5D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9AA3EEE-21FA-4D01-BBE6-641CA4DBA5D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9AA3EEE-21FA-4D01-BBE6-641CA4DBA5D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E353C2B-157A-46E4-AEB3-C61C532ABAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E353C2B-157A-46E4-AEB3-C61C532ABAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E353C2B-157A-46E4-AEB3-C61C532ABAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E353C2B-157A-46E4-AEB3-C61C532ABAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E69B53B0-4540-4109-90CD-8EB22DBC969F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E69B53B0-4540-4109-90CD-8EB22DBC969F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E69B53B0-4540-4109-90CD-8EB22DBC969F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E69B53B0-4540-4109-90CD-8EB22DBC969F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1590AE-034F-457B-A602-0A3D4A9E877C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1590AE-034F-457B-A602-0A3D4A9E877C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1590AE-034F-457B-A602-0A3D4A9E877C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1590AE-034F-457B-A602-0A3D4A9E877C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2EF9BFE4-7C5F-443A-9FF0-67F682CB4D08} = {7E3D7B75-C29B-43CD-AE10-812F5D4E5520}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFA7CF42-6700-4A54-8427-B1D4CF5E56AA}
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 10
+		SccLocalPath0 = .
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = UsExpress.Transport.Api\\UsExpress.Transport.Api.csproj
+		SccLocalPath1 = .
+		SccProjectFilePathRelativizedFromConnection1 = UsExpress.Transport.Api\\
+		SccProjectUniqueName2 = UsExpress.Transport.Lib.Utilities\\UsExpress.Transport.Lib.Utilities.csproj
+		SccLocalPath2 = .
+		SccProjectFilePathRelativizedFromConnection2 = UsExpress.Transport.Lib.Utilities\\
+		SccProjectUniqueName3 = UsExpress.Transport.Web.FrontEnd\\UsExpress.Transport.Web.FrontEnd.csproj
+		SccLocalPath3 = .
+		SccProjectFilePathRelativizedFromConnection3 = UsExpress.Transport.Web.FrontEnd\\
+		SccProjectUniqueName4 = UsExpress.Transport.Lib.Business.Test\\UsExpress.Transport.Lib.Business.Test.csproj
+		SccProjectTopLevelParentUniqueName4 = UsExpress.Transport.sln
+		SccLocalPath4 = .
+		SccProjectFilePathRelativizedFromConnection4 = UsExpress.Transport.Lib.Business.Test\\
+		SccProjectUniqueName5 = WinAppShipment\\WinAppShipment.csproj
+		SccLocalPath5 = .
+		SccProjectFilePathRelativizedFromConnection5 = WinAppShipment\\
+		SccProjectUniqueName6 = UsExpress.Transport.Lib.Business\\UsExpress.Transport.Lib.Business.csproj
+		SccLocalPath6 = .
+		SccProjectFilePathRelativizedFromConnection6 = UsExpress.Transport.Lib.Business\\
+		SccProjectUniqueName7 = UsExpress.Transport.WinAppSendEmail\\UsExpress.Transport.WinAppSendEmail.csproj
+		SccLocalPath7 = .
+		SccProjectFilePathRelativizedFromConnection7 = UsExpress.Transport.WinAppSendEmail\\
+		SccProjectUniqueName8 = UsExpress.Transport.Logger\\UsExpress.Transport.Logger.csproj
+		SccLocalPath8 = .
+		SccProjectFilePathRelativizedFromConnection8 = UsExpress.Transport.Logger\\
+		SccProjectUniqueName9 = UsExpress.Transport.EmailHelper\\UsExpress.Transport.EmailLib.csproj
+		SccLocalPath9 = .
+		SccProjectFilePathRelativizedFromConnection9 = UsExpress.Transport.EmailHelper\\
+	EndGlobalSection
+EndGlobal

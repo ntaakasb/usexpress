@@ -1,0 +1,10 @@
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\bin\Debug\UsExpress.Transport.EmailHelper.dll.config
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\bin\Debug\UsExpress.Transport.EmailHelper.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\bin\Debug\UsExpress.Transport.EmailHelper.pdb
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\bin\Debug\Newtonsoft.Json.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\bin\Debug\Newtonsoft.Json.xml
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\obj\Debug\UsExpress.Transport.EmailLib.csprojAssemblyReference.cache
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\obj\Debug\UsExpress.Transport.EmailLib.csproj.CoreCompileInputs.cache
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\obj\Debug\UsExpress.Transport.EmailLib.csproj.CopyComplete
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\obj\Debug\UsExpress.Transport.EmailHelper.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.EmailHelper\obj\Debug\UsExpress.Transport.EmailHelper.pdb

@@ -1,0 +1,143 @@
+﻿@model UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblRecipientsInfo
+@{
+    ViewBag.Title = "RecieverManager";
+}
+
+@{
+    bool IsUpdate = Model != null && Model.id > 0 ? true : false;
+    string CityID = string.Empty;
+    string DistrictID = string.Empty;
+    string WardID = string.Empty;
+    string formTitle = "CREATE Recipients";
+    if (IsUpdate)
+    {
+        CityID = !string.IsNullOrEmpty(Model.CityId) ? Model.CityId.ToString() : string.Empty;
+        DistrictID = !string.IsNullOrEmpty(Model.DistrictId) ? Model.DistrictId.ToString() : string.Empty;
+        WardID = !string.IsNullOrEmpty(Model.WardId) ? Model.WardId.ToString() : string.Empty;
+        formTitle = "update Recipients";
+    }
+}
+
+<style>
+    .form_cms {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+</style>
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="mt30 mb40">
+        @using (Ajax.BeginForm("UpdateReciever", "Store", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "OnSuccess"
+        }, new { @class = "form_cms", @id = "frm_create_reciver" }))
+        {
+            <input type="hidden" name="FullAddress" id="FullAddress"/>
+            if (IsUpdate)
+            {
+                <input type="hidden" name="id" value="@Model.id" />
+            }
+            <h2>@formTitle</h2>
+            <div class="warp">
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @placeholder = "Full name" })
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Add1, new { @class = "form-control", @placeholder = "Address 1" })
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                @*<div class="form-group width-100">
+                        @Html.TextBoxFor(x => x.Add2, new { @class = "form-control", @placeholder = "Address 2" })
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>*@
+                <div class="margin-bottom20">
+                    <select id="CityId" name="CityId" @*class="form-control" style="width: 60%;display: inline-block;"*@ onchange="Store.CityChangeEvent(this)">
+                        <option value="">Chọn tỉnh thành phố</option>
+                        @Html.Action("_HtmlSelectBoxCity", "Common", new { Selected = CityID })
+                    </select>
+                    @*<i class="fa fa-university"><img src="images/icons/city.png" alt=""></i>*@
+                </div>
+                <div class="margin-bottom20 row">
+                    <div class="col-md-6">
+                        <select name="DistrictID" id="DistrictID" class="form-control" style="display: inline-block;" onchange="Store.DistrictChangeEvent(this)">
+                            @Html.Action("_HtmlSelectBoxDistrict", "Common", new { CityID = CityID, Selected = DistrictID })
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="WardId" name="WardId" class="form-control" style="display: inline-block;">
+                            @Html.Action("_HtmlSelectBoxWard", "Common", new { DistrictID = DistrictID, Selected = WardID })
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="form-group width-100">
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "Phone number" })
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+
+                @if (ViewBag.HadStore != null && bool.Parse(ViewBag.HadStore.ToString()))
+                {
+                    <div class="form-group width-100 btn_bottom">
+                        <input type="hidden" name="StoreId" value="@ViewBag.StoreID" />
+                        @if (IsUpdate)
+                        {
+                            <button type="submit" class="btn btn-default">Update</button>
+                            <a href="/Store/RecipientList" class="btn btn-default">Cancel</a>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-default">Add</button>
+                            <a href="/Store/RecipientList" class="btn btn-default">Cancel</a>
+                        }
+                    </div>
+                }
+                else if (UsExpress.Transport.Web.FrontEnd.Common.Libs.IsAdmin())
+                {
+                    int storeID = Model != null && Model.StoreId != null ? int.Parse(Model.StoreId.ToString()) : 0;
+                    <div class="form-group width-100">
+                        <select name="StoreId" class="form-control">
+                            @Html.Action("_HtmlSelectBoxStore", new { selected = storeID })
+                        </select>
+                        <i class="fa fa-university"><img src="images/icons/city.png" alt=""></i>
+                    </div>
+                    <div class="form-group width-100 btn_bottom">
+                        <button type="submit" class="btn btn-default">@(IsUpdate ? "Update" : "Add")</button>
+                        <a type="button" href="/Store/RecipientList" class="btn btn-default">Cancel</a>
+                    </div>
+                }
+                else
+                {
+                    <label class="error">Bạn không có quyền tạo Recipients</label>
+                }
+
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/scripts/object-prototype/store.js"></script>
+    <script>
+        Store.ValidateFormReciver();
+        $('#CityId').select2();
+        $('#DistrictID').select2();
+        $('#WardId').select2();
+
+
+        function OnSuccess(avg) {
+            Store.UpdateRecipientSuccess(avg);
+        }
+    </script>
+}
+
+

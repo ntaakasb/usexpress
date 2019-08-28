@@ -1,0 +1,11 @@
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\bin\Debug\UsExpress.Transport.Logger.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\bin\Debug\UsExpress.Transport.Logger.pdb
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\bin\Debug\log4net.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\bin\Debug\Newtonsoft.Json.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\bin\Debug\log4net.xml
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\bin\Debug\Newtonsoft.Json.xml
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\obj\Debug\UsExpress.Transport.Logger.csprojAssemblyReference.cache
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\obj\Debug\UsExpress.Transport.Logger.csproj.CoreCompileInputs.cache
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\obj\Debug\UsExpress.Transport.Logger.csproj.CopyComplete
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\obj\Debug\UsExpress.Transport.Logger.dll
+D:\WorkSpace\outsource\Usexpress\UsExpress.Transport.Logger\obj\Debug\UsExpress.Transport.Logger.pdb

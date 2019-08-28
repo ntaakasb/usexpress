@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "ProductCatelogy";
+}
+
+@*<div class="cms_nav">
+        <div class="container">
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="manage_order mt20">
+            <h1>Manage Category</h1>
+
+
+            <div class="tr tr3">
+                <div class="mb20 cms_col_left">
+
+                </div>
+                <div class="table_cms mb20 cms_col_right">
+                    <div class="tr tr1 mb10 right">
+                        @using (Ajax.BeginForm("AJXSearch", "Catelogy", new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "divSearchResult"
+                        }, new { @id= "search" }))
+                        {
+                            <input type="text" class="input_search" name="txtkeyword" value="" placeholder="Tìm kiếm">
+                            <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                        }
+                    </div>
+                    <div id="divSearchResult">
+
+                        @Html.Action("_CatelogyGrid");
+                    </div>
+
+
+                </div>
+
+                <div id="divUpdate" class="mb20 cms_col_300">
+
+                    @Html.Partial("_CatelogyDetailForm");
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>*@
+
+<div class="cms_nav">
+    <div class="container">
+
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Category</h1>
+        <div class="tr tr1 mb10">
+            <form id="search" class="mb20">
+                <input type="text" class="input_search" name="" value="" placeholder="Tìm kiếm">
+                <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+            </form>
+            <div class="form-group mb20">
+                <select class="form-control">
+                    <option>Code</option>
+                    <option>Category</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tr tr3">
+            <div id="divSearchResult">
+
+                @Html.Action("_CatelogyGrid");
+            </div>
+
+            <div  id="divUpdate" class="mb20 cms_col_300">
+                @Html.Partial("_CatelogyDetailForm");
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/scripts/object-prototype/catelogy.js"></script>
+
+    <script>
+        Catelogy.ValidateInsertForm();
+        function OnSuccess(avg) {
+            alert(avg.Message);
+        }
+        function ReloadValidate() {
+            Catelogy.ValidateInsertForm();
+        }
+    </script>
+}

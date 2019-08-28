@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "ListStore";
+}
+<div class="cms_nav">
+    <div class="container">
+        @Html.Action("_HeaderPage", "Home")
+    </div>
+</div>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage Stores</h1>
+        <div class="tr tr1 mb10">
+            @using (Ajax.BeginForm("AJXSearchStore", "Store", null, new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "tblGrid",
+
+            }, new { @id = "search", @class = "mb20" }))
+            {
+                <input type="text" class="input_search" name="SearchKeyword" placeholder="Tìm kiếm">
+                <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+            }
+            @*<form id="search" class="mb20">
+                    <input type="text" class="input_search" name="" placeholder="Tìm kiếm">
+                    <button type="submit" class="icon_seach_web"><i class="fa fa-search"></i></button>
+                </form>*@
+        </div>
+
+        <div class="tr tr2">
+            <div class="table_cms mb30">
+                <div id="tblGrid" class="table-responsive">
+                    <div class="form-group">
+                        <button class="btn btn-default" id="btnHide">Hide</button>
+                    </div>
+                    @Html.Action("_StoreGrid", new { model = Model, pageIndex = ViewBag.Index })
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $(document).on("click", "a[name=active]", function () {
+                var arr = [+$(this).attr("data-id")]
+                setActive(arr)
+            })
+
+            $("#btnHide").click(function () {
+                var lstID = $("input[name=chkActive]").filter((index, _this) => $(_this).is(":checked")).map((index, _this) => +$(_this).attr("data-id")).get();
+                if (lstID.length === 0) {
+                    notification(notifiType.error, "Please select store", "Error");
+                    return false;
+                }
+                setActive(lstID);
+            })
+
+            function setActive(arr) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Store/SetActiveStore",
+                    data: { arrId: arr },
+                    dataType: "json",
+                    success: function (rs) {
+                        if (rs) {
+                            notification(notifiType.success, "Hide store successfully", "Success");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500)
+                        } else {
+                            notification(notifiType.error, "Hide store faile. Please try again", "Error");
+                        }
+                    },
+                    error: function (rs) { }
+                })
+            }
+        })
+    </script>
+}

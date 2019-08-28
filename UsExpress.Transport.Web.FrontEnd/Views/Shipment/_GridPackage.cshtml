@@ -1,0 +1,116 @@
+﻿@using UsExpress.Transport.Lib.Utilities;
+@using UsExpress.Transport.Lib.Business.Common;
+@model IEnumerable<UsExpress.Transport.Lib.Business.Models.DBContext.UsTransport.tblPackageInfo>
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="manage_order mt20">
+        <h1>Shipment Details</h1>
+        <div>
+            <div class="col-xs-3">Update Status</div>
+            <div class="col-xs-3">
+                <select class="form-control" id="ddlUpdateStatus" data-id="@Model.FirstOrDefault().ShipmentCode">
+                    <option value="0">New</option>
+                    <option value="1">Pickup</option>
+                    <option value="2">SendToVN</option>
+                </select>
+            </div>
+            <div class="col-xs-6"></div>
+        </div>
+        <br/>
+        <h2>Shipment number: @Model.FirstOrDefault().ShipmentCode</h2>
+        
+        <div class="table_cms mb30">
+            <div class="table-responsive" style="overflow: scroll;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Code</th>
+                            <th>SENDER</th>
+                            @*<th>No of package</th>*@
+                            <th>weight(lbs) - (kg)</th>
+                            @*<th>Expedite</th>*@
+                            <th>Created date</th>
+                            <th>Pickup date</th>
+                            <th>Ngày chuyển đi</th>
+                            <th>Clear vn custom</th>
+                            <th>Deliver</th>
+                            <th>Starts</th>
+                            <th>Destination</th>
+                            <th>Tracking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            decimal totalWeigh = 0;
+                            int total = 0;
+
+                            foreach (var item in Model)
+                            {
+                                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-GB");
+                                DateTime currendate = DateTime.Now;
+                                string strCreatedate = DateTime.TryParse(item.CreateDate.ToString(), out currendate) ? DateTime.Parse(item.CreateDate.ToString()).ToString("MMM-dd-yyyy", culture) : "";
+                                <tr>
+                                    <td><label class="checkbox"><input type="checkbox" name="chk[]" data-id="@item.id" data-code="@item.Code" data-status="@item.Status"></label></td>
+                                    <td style="color:#236852">@item.Code</td>
+                                    <td></td>
+                                    @*<td>@item.Ordinal</td>*@
+                                    <td>@($"{item.Weight}(lb) - {item.Weight * Constant.PoundToKg}(kg)")</td>
+                                    @*<td>@item.Expedite</td>*@
+                                    <td>@strCreatedate</td>
+                                    <td>@(item.PickupTime != null ? ((long)item.PickupTime).UnixTimeStampToDateTime().ToString() : "" )</td>
+                                    <td>@(item.ShippingTime != null ? ((long)item.ShippingTime).UnixTimeStampToDateTime().ToString() : "")</td>
+                                    <td>@(item.ClearCustomTime != null ? ((long)item.ClearCustomTime).UnixTimeStampToDateTime().ToString() : "")</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="color:#236852">@item.Tracking</td>
+                                </tr>
+                                totalWeigh += item != null ? decimal.Parse(item.Weight.ToString()) : 0;
+                                total += item != null ? int.Parse(item.Ordinal.ToString()) : 0;
+                            }
+
+                        }
+                        <tr>
+                            <td>Total:</td>
+                            <td></td>
+                            <td></td>
+                            <td>@($"{totalWeigh}(lb) - {Math.Round(totalWeigh * Constant.PoundToKg, 2)}(kg)")</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb20 export_cms">
+            <div class="export mb10">
+                <button type="button" class="btn btn-default" onclick="exportShipment(1)">Export US invoice</button>
+                <button type="button" class="btn btn-default" onclick="exportShipment(2)">Export VN invoice</button>
+                <input type="hidden" id="ip-shipmentId" value="@Model.FirstOrDefault().ShipmentId" />
+            </div>
+            <div class="btn_bottom">
+                <button type="button" class="btn btn-default">Save</button>
+                <button type="button" onclick="removeShipment()" class="btn btn-default">Remove</button>
+                <button type="button" class="btn btn-default">Upload</button>
+            </div>
+        </div>
+
+        <div class="mb40 download_cms">
+            <h3>Download File</h3>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+            <a href="#">Adidas Origanls Women's Shohe CF QT Racer Rungnning Mystery</a>
+        </div>
+
+    </div>
+                            }

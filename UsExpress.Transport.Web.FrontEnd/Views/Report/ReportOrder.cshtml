@@ -1,0 +1,129 @@
+﻿@using UsExpress.Transport.Web.FrontEnd.Models
+@using UsExpress.Transport.Web.FrontEnd.Common
+@{
+    ViewBag.Title = "ReportOrder";
+    List<SelectItemBase> wareHouseList = (List<SelectItemBase>)ViewBag.Warehouse;
+
+}
+<style>
+    .manage_order .tr1 .form-group {
+        width: 80%;
+    }
+
+    nav:not(.mm-menu) {
+        display: inherit;
+    }
+</style>
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Report Order</h1>
+
+        <div class="tr tr1">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (Libs.IsAdmin() || Libs.IsCSKH())
+                    {
+                        <div class="form-group" style="width: 300px;">
+                            <select id="slStore" class="form-control">
+                                @Html.Action("_HtmlSelectBoxStore", "Store")
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="width: 300px;">
+                            <select id="slWareHouse" class="form-control">
+                                <option>-- Select Warehouse --</option>
+                                @if (wareHouseList != null && wareHouseList.Any())
+                                {
+                                    foreach (var item in wareHouseList)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    }
+
+                    <label>from</label>
+                    <div class="form-group" style="width: 200px;">
+
+                        <input type="date" id="myDate" name="fromdate" value="@(DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd"))">
+                    </div>
+                    <label>to</label>
+                    <div class="form-group" style="width: 200px;">
+                        <input type="date" id="myDate" name="todate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                    </div>
+                    <input type="checkbox" id="chkIsActive" checked /> <label>Kích hoạt</label>
+                    <button class="btn btn-default" onclick="ajaxCall(1, true)">Search</button>
+
+
+                </div>
+            </div>
+            <div class="tr tr1">
+                <div class="form-group">
+                    <button class="btn btn-default" onclick="exportOrder()">Export Excel</button>
+                </div>
+            </div>
+            <div class="table_cms mb30">
+                <div id="divReportOrder" style="overflow-x: scroll">
+                    @{Html.RenderAction("_gridReportOrder"); }
+                </div>
+            </div>
+            <nav class="text-center">
+                <ul id="pagination" class="pagination"></ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/scripts/jquery.paging.js"></script>
+    <script src="~/scripts/object-prototype/common.js"></script>
+    <script>
+        var pagesize = '@Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PageSize"])';
+        $(function () {
+            InitControl.Pagination("#tbReportOrder", ajaxCall);
+        })
+        function ajaxCall(page, isLoadPaing) {
+            var storeId = $('#slStore option:selected').val();
+            var wareHouseID = $('#slWareHouse option:selected').val();
+            var fromdate = $('input[name=fromdate]').val();
+            var todate = $('input[name=todate]').val();
+            var isActive = $('#chkIsActive').is(':checked') ? 1 : 0;
+            $.ajax({
+                type: "POST",
+                url: "/Report/_gridReportOrder",
+                data: {
+                    storeID: storeId,
+                    wareHouseId: wareHouseID,
+                    fromdate: fromdate,
+                    todate: todate,
+                    pageIndex: page,
+                    isActive: isActive
+                },
+                dataType: "html",
+                //contentType: "application/json;charset:utf-8",
+                success: function (rs) {
+                    if (rs !== "") {
+                        $("#divReportOrder").empty().html(rs);
+                        if (isLoadPaing)
+                            InitControl.Pagination("#tbReportOrder", ajaxCall);
+
+                    }
+                },
+                error: function (rs) {
+
+                }
+            });
+            return false;
+        };
+
+        function exportOrder() {
+            var storeId = $('#slStore option:selected').val();
+            var wareHouseID = $('#slWareHouse option:selected').val();
+            var fromdate = $('input[name=fromdate]').val();
+            var todate = $('input[name=todate]').val();
+            var isActive = $('#chkIsActive').is(':checked') ? 1 : 0;
+            window.open('/Report/ExportOrder?storeID=' + storeId + '&wareHouseId=' + wareHouseID + '&fromdate=' + fromdate + '&todate=' + todate + '&isActive=' + isActive);
+        }
+    </script>
+}

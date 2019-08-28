@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2"/>
+    </startup>
+  <appSettings>
+    <add key="ConnectionStringModel" value="Data Source=118.69.198.215; Initial Catalog=UsTransport; uid=cuonglv;pwd=1234Abcd"/>
+    <add key="UHNWeight" value="200"/>
+    <add key="USGWeight" value="70"/>
+    <add key="DestinationHNId" value="1"/>
+    <add key="DestinationSGId" value="2"/>
+  </appSettings>
+</configuration>

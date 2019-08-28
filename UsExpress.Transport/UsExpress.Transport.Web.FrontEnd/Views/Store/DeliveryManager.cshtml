@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "DeliveryManager";
+}
+<div class="cms_nav">
+    <div class="container">
+        <div class="left">ORDER #:</div>
+        <div class="right">07/13/2018</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="manage_order mt20">
+        <h1>Manage</h1>
+
+
+        <div class="tr tr2">
+            <div class="mb20 cms_col_left">
+                <ul>
+                    @if (ViewBag.StoreID != null)
+                    {
+                        <li><a href="/Store/SenderManager">Create Sender</a></li>
+                        <li><a href="/Store/RecieverManager">Create Recipients</a></li>
+                    }
+                    <li><a href="/Catelogy">Catelogy Manager</a></li>
+                    @*<li><a class="active" href="#">Manage Shipments</a></li>
+                        <li><a href="#">Manage Order</a></li>
+                        <li><a href="#">Tracking</a></li>
+                        <li><a href="#">Category Codes</a></li>
+                        <li><a href="#">Employee Accounts</a></li>
+                        <li><a href="#">Store Accounts</a></li>
+                        <li><a href="#">Reports</a></li>*@
+                </ul>
+            </div>
+            <div class="table_cms mb30 cms_col_right">
+
+                <div id="exTab1" class="container">
+                    <ul class="nav nav-pills">
+                        <li class="active">
+                            <a href="#sendertab" data-toggle="tab">Sender manager</a>
+                        </li>
+                        <li>
+                            <a href="#recievertab" data-toggle="tab">Recipients manager</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="sendertab">
+
+
+                            @Html.Action("_SenderGrid")
+                        </div>
+                        <div class="tab-pane" id="recievertab">
+
+                            @Html.Action("_RecieverGrid")
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

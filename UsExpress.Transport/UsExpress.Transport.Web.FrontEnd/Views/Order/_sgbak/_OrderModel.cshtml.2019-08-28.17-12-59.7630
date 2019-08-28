@@ -1,0 +1,256 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style>
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+    }
+
+    input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            background-color: DodgerBlue;
+            color: #fff;
+            cursor: pointer;
+        }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+            color: black;
+            font-size: 16px;
+        }
+
+            .autocomplete-items div:hover {
+                /*when hovering an item:*/
+                background-color: #e9e9e9;
+            }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
+<div class="cms_nav">
+    <div class="container">
+        <div class="left">ORDER #:{{orderCtrl.orderDetail.Code}}</div>
+        <div class="right">{{orderCtrl.orderDetail.CreateDate}}</div>
+    </div>
+</div>
+<div class="container">
+    <div class="order_details">
+        <div class="mt20 tr1">
+            <h2>{{orderCtrl.Title}}</h2>
+            <p>NGÀY ĐẶT {{orderCtrl.orderDetail.CreateDate}}</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xs-6 col-tn-12">
+                <form id="create_order1" class="form_cms">
+                    <h2>Sender's Info</h2>
+                    <div class="warp">
+                        <div class="form-group width-100" style="width:60%">
+                            <input class="form-control" ng-model="orderCtrl.senderInfo.FullName" placeholder="Full Name">
+                            @*<span class="error">thông báo</span>*@
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control" ng-model="orderCtrl.senderInfo.AddressLine1" id="" placeholder="Address line 1">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control" id="" ng-model="orderCtrl.senderInfo.AddressLine2" placeholder="Address line 2">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="form-group width-100" style="width:70%">
+                            <input class="form-control" id="" ng-model="orderCtrl.senderInfo.CityName" placeholder="City">
+                            @*<select id="sl-city-sender" class="form-control">
+                                    <option ng-repeat="item in orderCtrl.citySender" value="{{item.Id}}">{{item.Name}}</option>
+                                </select>*@
+                            <i class=""><img src="/images/icons/city.png" alt=""></i>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="" ng-model="orderCtrl.senderInfo.StateName" placeholder="State">
+                            @*<select id="sl-state-sender" class="form-control" style="width:45%;    display: inline-block;">
+                                    <option ng-repeat="item in orderCtrl.citySender" value="{{item.Id}}">{{item.Name}}</option>
+                                </select>*@
+                            <input type="" class="form-control" id="" ng-model="orderCtrl.senderInfo.Zip" placeholder="ZIP" style="width:50%;    display: inline-block;margin-left:5%;">
+                            @*<span class="error">thông báo</span>*@
+                        </div>
+                        <div class="form-group width-100">
+                            <input type="" class="form-control autocomplete" ng-model="orderCtrl.senderInfo.Phone" id="ip-sender-phone" placeholder="Iphone">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="form-group width-100">
+                            <input type="email" class="form-control" ng-model="orderCtrl.senderInfo.Email" id="" placeholder="Email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 col-xs-6 col-tn-12">
+                <form id="create_order2" class="form_cms">
+                    <h2>Recipient's info</h2>
+                    <div class="warp">
+                        <div class="form-group width-100" style="width:60%">
+                            <input class="form-control" ng-model="orderCtrl.recipientInfo.FullName" id="" placeholder="Full Name">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control" id="" ng-model="orderCtrl.recipientInfo.AddressLine1" placeholder="Address line 1">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="form-group width-100">
+                            <input class="form-control" id="" ng-model="orderCtrl.recipientInfo.AddressLine2" placeholder="Address line 2">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="form-group width-100" style="width:70%">
+                            <select id="sl-city-recipient" class="form-control">
+                                <option value="-1">Tỉnh thành phố</option>
+                                <option ng-repeat="item in orderCtrl.cityRecipient" value="{{item.Id}}" data-airport="{{item.AttributeId}}">{{item.Name}}</option>
+                            </select>
+                            <i class=""><img src="images/icons/city.png" alt=""></i>
+                        </div>
+                        <div class="form-group">
+                            <select id="sl-district-recipient" class="form-control">
+                                <option>Quận huyện</option>
+                                <option ng-repeat="item in orderCtrl.districtRecipient" value="{{item.Id}}">{{item.Name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group width-100">
+                            <input type="" class="form-control autocomplete" ng-model="orderCtrl.recipientInfo.Phone" id="ip-recipient-phone" placeholder="Iphone">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="tr tr2">
+            <div class="row">
+                <div class="col-md-9 col-tn-12 mb30">
+                    <h2>Package's info</h2>
+                    <div class="checkbox_cms row">
+                        @*<div class="col-md-2 col-xs-2 col-tn-12 mb10">
+                                <label class="checkbox"><input type="checkbox" ng-model="orderCtrl.orderDetail.Expedite">Expedite</label>
+                            </div>*@
+                        <div class="col-md-5 col-xs-5 col-tn-12 mb10">
+                            <input type="number" class="form-control" ng-model="orderCtrl.packageShow.Weight" value="orderCtrl.packageShow.Weight" placeholder="Weight">
+                            <input type="number" class="form-control" ng-model="orderCtrl.packageShow.Fee" value="orderCtrl.packageShow.Fee" placeholder="Fee/lbs">
+                        </div>
+                        <div class="col-3 col-md-5 col-xs-5 col-tn-12 mb10">
+                            <input type="number" class="form-control" ng-model="orderCtrl.packageShow.Height" value="orderCtrl.packageShow.Height" placeholder="Height">
+                            <input type="number" class="form-control" ng-model="orderCtrl.packageShow.Width" value="orderCtrl.packageShow.Width" placeholder="Width">
+                            <input type="number" class="form-control" ng-model="orderCtrl.packageShow.Depth" value="orderCtrl.packageShow.Depth" placeholder="Depth">
+                        </div>
+                    </div>
+                    <div class="table_cms mt30">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Description</th>
+                                        <th>Categories</th>
+                                        <th>Code</th>
+                                        <th>Quanity</th>
+                                        <th>Unit</th>
+                                        <th>Value</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in orderCtrl.packageShow.Items">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{item.Description}}</td>
+                                        <td>
+                                            {{orderCtrl.getNameCategory(item.CategoryId)}}
+                                        </td>
+                                        <td>{{item.Code}}</td>
+                                        <td>{{item.Quantity}}</td>
+                                        <td>{{item.Unit}}</td>
+                                        <td>{{item.Value}}</td>
+                                        <td><button ng-click="orderCtrl.removeItemPackage(item)" class="btn btn-default">Remove</button></td>
+                                    </tr>
+                                    <tr ng-show="orderCtrl.showItemPackageInfo">
+                                        <td></td>
+                                        <td><input ng-model="orderCtrl.itemPackageInfo.Description" placeholder="Description" /></td>
+                                        <td>
+                                            <select id="sl-category">
+                                                <option ng-repeat="item in orderCtrl.categoryStore" data-code="{{item.Code}}" value="{{item.Id}}">{{item.Name}}</option>
+                                            </select>
+                                        </td>
+                                        <td id="td-code-selected"></td>
+                                        <td><input type="number" ng-model="orderCtrl.itemPackageInfo.Quantity" placeholder="Quantity" /></td>
+                                        <td><input ng-model="orderCtrl.itemPackageInfo.Unit" placeholder="Unit" /></td>
+                                        <td><input type="number" ng-model="orderCtrl.itemPackageInfo.Value" placeholder="Value" /></td>
+                                        <td>
+                                            <button ng-click="orderCtrl.addItemPackage()" class="btn btn-default">Add</button>
+                                            <button ng-click="orderCtrl.clearItemPackage()" class="btn btn-default">Clear</button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="orderCtrl.showItemPackageInfo">
+                                        <td></td>
+                                        <td colspan="7"> <button ng-click="orderCtrl.oneMoreItemPackage()" class="btn btn-default">One more</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-tn-12 mb30">
+                    <h2>Your Cart</h2>
+                    <div ng-repeat="item in orderCtrl.lstPackage" ng-click="orderCtrl.setPackageSelected($index)" class="form-control mb20">Package {{item.Ordinal}}</div>
+                    <button ng-show="orderCtrl.packageIndexSelected != -1" ng-click="orderCtrl.oneMorePackage()" type="button" class="btn btn-default mt20">One more package</button>
+                    <button ng-show="orderCtrl.lstPackage.length > 0 && orderCtrl.showbtnSubmit" ng-click="orderCtrl.submitOrder()" type="button" class="btn btn-default mt20">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tr tr3">
+            <div class="tr mb30">
+                <button type="button" class="btn btn-default">Total items:{{orderCtrl.calc_TotalItem()}}</button>
+                <button type="button" class="btn btn-default">Total declare Values:{{orderCtrl.calc_TotalValue()}}</button>
+                <button type="button" class="btn btn-default">Shipping Fee($):{{orderCtrl.calc_TotalFee()| currency:"":2}}</button>
+            </div>
+            <div class="tr center mb30">
+                <button ng-show="orderCtrl.packageIndexSelected == -1" type="button" ng-click="orderCtrl.addPackage()" class="btn btn-default">Add</button>
+                <button ng-show="orderCtrl.packageIndexSelected != -1" type="button" ng-click="orderCtrl.updatePackage()" class="btn btn-default">Update</button>
+                <button ng-show="orderCtrl.packageIndexSelected != -1" ng-click="orderCtrl.removePackage()" type="button" class="btn btn-default">Clear</button>
+                <button ng-show="orderCtrl.orderId > 0" type="button" ng-click="orderCtrl.printLabel()" class="btn btn-default">Print this labels</button>
+                <button ng-show="orderCtrl.orderId > 0" ng-click="orderCtrl.printInvoice()" type="button" class="btn btn-default">Print this invoices</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
