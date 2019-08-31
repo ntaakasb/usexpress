@@ -1,5 +1,5 @@
 ﻿{  
-  "Environment":"Prod",
+  "Environment":"Dev",
   "Dev":{  
     "Database":{  
       "ConnectionString":"Data Source=103.1.210.65; Initial Catalog=UsTransport; uid=cuonglv;pwd=1234Abcd",
